@@ -1062,6 +1062,9 @@
             .event-meta-grid {
                 grid-template-columns: 1fr !important;
             }
+            .hero {
+                overflow: hidden !important;
+            }
         }
         @media (max-width: 600px) {
             header {
@@ -1082,6 +1085,21 @@
             }
             h1 {
                 font-size: clamp(2rem, 6.5vw, 2.5rem) !important;
+            }
+            /* Hide the decorative wings and cards to prevent horizontal swipe overflow on mobile */
+            .phone-frame-back,
+            .floating-card {
+                display: none !important;
+            }
+            .phone-stack {
+                width: 240px !important;
+                height: 480px !important;
+            }
+            .phone-frame {
+                height: 480px !important;
+            }
+            .hero-right {
+                height: 500px !important;
             }
         }
         /* --- End Mobile Responsiveness Overrides --- */
