@@ -1041,7 +1041,51 @@
         @media(max-width:480px){ 
             .brand-nav-group { grid-template-columns:1fr; } 
         }
-        </style>
+        
+        /* --- Brand Subpage Mobile Responsiveness Overrides --- */
+        @media (max-width: 768px) {
+            .hero-grid,
+            .services-grid,
+            .metrics-grid,
+            .analytics-grid,
+            .cert-grid,
+            .roster-grid,
+            .hospital-grid,
+            .case-study-grid {
+                grid-template-columns: 1fr !important;
+                gap: 24px !important;
+            }
+            .metric-card.wide,
+            .metric-card.full-width {
+                grid-column: span 1 !important;
+            }
+            .event-meta-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column !important;
+                gap: 16px !important;
+                padding: 20px 5% !important;
+                align-items: center !important;
+                text-align: center !important;
+            }
+            .brand-intro {
+                flex-direction: column !important;
+                text-align: center !important;
+                gap: 16px !important;
+                align-items: center !important;
+            }
+            .brand-logo-frame {
+                margin: 0 auto !important;
+            }
+            h1 {
+                font-size: clamp(2rem, 6.5vw, 2.5rem) !important;
+            }
+        }
+        /* --- End Mobile Responsiveness Overrides --- */
+</style>
 </head>
 <body>
 

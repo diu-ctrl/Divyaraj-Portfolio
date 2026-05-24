@@ -1292,9 +1292,14 @@
             color: var(--primary);
         }
 
-        /* Responsive: scale down on smaller screens */
+        /* Responsive: scale down and center on smaller screens */
         @media (max-width: 860px) {
+            #portfolio {
+                overflow: hidden;
+            }
             .orbit-stage {
+                left: 50%;
+                margin-left: -400px;
                 transform: scale(0.8);
                 transform-origin: center center;
                 margin-top: 10px;
@@ -1303,7 +1308,9 @@
         }
         @media (max-width: 680px) {
             .orbit-stage {
-                transform: scale(0.6);
+                left: 50%;
+                margin-left: -400px;
+                transform: scale(0.55);
                 transform-origin: center center;
                 margin-top: 0px;
                 margin-bottom: -180px;
@@ -1311,7 +1318,9 @@
         }
         @media (max-width: 480px) {
             .orbit-stage {
-                transform: scale(0.45);
+                left: 50%;
+                margin-left: -400px;
+                transform: scale(0.42);
                 transform-origin: center center;
                 margin-top: -30px;
                 margin-bottom: -260px;
@@ -1688,11 +1697,54 @@
             }
             .mobile-menu-btn {
                 display: block;
+                z-index: 101;
             }
             .nav-container {
                 justify-content: space-between;
-                min-width: 300px;
+                min-width: 280px;
+                width: 90vw;
+                border-radius: 100px;
+                position: relative;
+                transition: border-radius 0.3s ease, padding 0.3s ease;
             }
+            
+            .nav-container.mobile-open {
+                flex-direction: column;
+                align-items: stretch;
+                border-radius: 24px;
+                padding: 20px 24px;
+                gap: 16px;
+            }
+            
+            .nav-container.mobile-open .nav-links {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 18px;
+                padding-top: 16px;
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                width: 100%;
+            }
+            
+            .nav-container.mobile-open .nav-cta {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 14px;
+                padding-top: 16px;
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                border-left: none;
+                margin-left: 0;
+                padding-left: 0;
+                width: 100%;
+            }
+            
+            .nav-container.mobile-open .mobile-menu-btn {
+                position: absolute;
+                top: 14px;
+                right: 24px;
+            }
+            
             .about-grid {
                 grid-template-columns: 1fr;
             }
@@ -1727,35 +1779,6 @@
             .hero {
                 padding-top: 100px;
             }
-        }
-
-        /* Mobile menu open state */
-        .nav-container.mobile-open .nav-links,
-        .nav-container.mobile-open .nav-cta {
-            display: flex;
-            flex-direction: column;
-            position: absolute;
-            top: calc(100% + 12px);
-            left: 0;
-            right: 0;
-            background: rgba(14, 25, 45, 0.95);
-            backdrop-filter: blur(24px);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 20px 50px -10px rgba(0,0,0,0.5);
-        }
-
-        .nav-container.mobile-open .nav-links {
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-
-        .nav-container.mobile-open .nav-cta {
-            border-left: none;
-            padding-left: 0;
-            margin-left: 0;
-            gap: 12px;
         }
 
         /* Custom scrollbar */
@@ -2476,8 +2499,8 @@
             menuBtn.textContent = navContainer.classList.contains('mobile-open') ? '✕' : '☰';
         });
 
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
+        // Close mobile menu when clicking a link or CTA button
+        document.querySelectorAll('.nav-links a, .nav-cta a').forEach(link => {
             link.addEventListener('click', () => {
                 navContainer.classList.remove('mobile-open');
                 menuBtn.textContent = '☰';
