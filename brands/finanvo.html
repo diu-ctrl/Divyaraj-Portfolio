@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finanvo × Divyaraj Chauhan — B2B Social Media & Content Marketing</title>
+    <meta name="description" content="Case study of B2B corporate branding, LinkedIn thought leadership, multi-platform organic outreach, and content curation managed for Finanvo.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #10b981; /* Finanvo Green */
+            --accent-1: #efeee9;  /* Finanvo Light Yellow */
+            --secondary-1: #0A0D0B;
+            --secondary-2: #0f241a;
+            --secondary-3: #a7f3d0;
+            --bg: #030504;
+            --surface: rgba(16, 185, 129, 0.04);
+            --text: #f0f0f5;
+            --text-muted: #94a3b8;
+            --border: rgba(16, 185, 129, 0.12);
+            
+            --fv-green: #10b981;
+            --fv-amber: #efeee9;
+            --fv-surface: rgba(16, 185, 129, 0.08);
+            --fv-border: rgba(16, 185, 129, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Ambient Background */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.25;
+            z-index: -2;
+            pointer-events: none;
+        }
+        .orb-1 { width: 700px; height: 700px; background: var(--fv-green); top: -250px; left: -200px; }
+        .orb-2 { width: 500px; height: 500px; background: var(--fv-amber); bottom: -150px; right: -150px; }
+        .orb-3 { width: 400px; height: 400px; background: var(--secondary-2); top: 40%; left: 30%; opacity: 0.15; }
+
+        .noise {
+            position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Header */
+        header {
+            padding: 24px 6%;
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 100;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px;
+            border-radius: 100px;
+            background: linear-gradient(#0f0d0a, #0f0d0a) padding-box,
+                        linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03)) border-box;
+            backdrop-filter: blur(16px);
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+            border: 1px solid transparent;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .back-btn:hover {
+            color: #fff;
+            background: linear-gradient(#18241b, #18241b) padding-box,
+                        linear-gradient(135deg, var(--fv-green), var(--fv-amber)) border-box;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -10px rgba(16,185,129,0.4);
+        }
+
+        .credes-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border-radius: 100px;
+            background: linear-gradient(rgba(16,185,129,0.08), rgba(16,185,129,0.08)) padding-box,
+                        linear-gradient(135deg, var(--fv-border), rgba(16,185,129,0.05)) border-box;
+            border: 1px solid transparent;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--fv-green);
+            letter-spacing: 0.05em;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 60px 6% 20px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .brand-intro {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo-frame {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            border: 2px solid var(--fv-border);
+            background: rgba(16,185,129,0.1);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 40px rgba(16,185,129,0.25), 0 8px 24px rgba(0,0,0,0.4);
+            flex-shrink: 0;
+        }
+        .brand-logo-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        .brand-eyebrow {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--fv-green);
+            margin-bottom: 6px;
+        }
+
+        h1 {
+            font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            background: linear-gradient(135deg, #ffffff 0%, var(--secondary-3) 50%, var(--fv-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-sub {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin-top: 16px;
+            line-height: 1.75;
+        }
+
+        /* Metrics / Analytics Section */
+        .analytics-section {
+            padding: 48px 6% 60px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent-1);
+            margin-bottom: 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: linear-gradient(#0a160f, #0a160f) padding-box,
+                        linear-gradient(135deg, var(--fv-green), var(--accent-1)) border-box;
+            border: 1px solid transparent;
+            border-radius: 100px;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .analytics-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 36px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+            position: relative;
+            overflow: hidden;
+        }
+        .analytics-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            background: linear-gradient(135deg, var(--fv-surface), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .analytics-card:hover { 
+            transform: translateY(-6px); 
+            border-color: var(--fv-border); 
+            box-shadow: 0 24px 50px -10px rgba(16,185,129,0.15); 
+        }
+        .analytics-card:hover::before { opacity: 1; }
+
+        .analytics-card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .platform-icon-styled {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .li-styled {
+            background: linear-gradient(135deg, #0077b5, #005987);
+            box-shadow: 0 4px 16px rgba(0, 119, 181, 0.3);
+        }
+        .pub-styled {
+            background: linear-gradient(135deg, #10b981, #047857);
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+        }
+        .social-styled {
+            background: linear-gradient(135deg, #ef4444, #f59e0b);
+            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+        }
+
+        .analytics-card-header h3 { font-size: 1.15rem; font-weight: 700; color: #fff; }
+        .analytics-card-header .period { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+
+        .analytics-stats { display: flex; flex-direction: column; gap: 0; position: relative; z-index: 2; }
+        .analytics-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .analytics-row:last-child { border-bottom: none; }
+        .analytics-row-label { font-size: 0.88rem; color: var(--text-muted); font-weight: 500; }
+        .analytics-row-val { display: flex; align-items: center; gap: 8px; }
+        .analytics-num { font-size: 1.1rem; font-weight: 800; color: #fff; }
+        .analytics-grow { font-size: 0.75rem; font-weight: 700; color: #4ade80; }
+
+        /* Bar chart */
+        .bar-chart { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 2; }
+        .bar-row { display: flex; align-items: center; gap: 10px; }
+        .bar-row-label { font-size: 0.8rem; color: var(--text-muted); width: 100px; flex-shrink: 0; }
+        .bar-track { flex: 1; height: 8px; background: rgba(255,255,255,0.05); border-radius: 100px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, #005987, #0077b5); }
+        .bar-fill.emerald { background: linear-gradient(90deg, #047857, #10b981); }
+        .bar-fill.warm { background: linear-gradient(90deg, #ef4444, #f59e0b); }
+        .bar-num { font-size: 0.8rem; font-weight: 700; color: #fff; min-width: 40px; text-align: right; }
+
+        /* Two-Column Content */
+        .main-content {
+            padding: 0 6% 64px;
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .main-content { grid-template-columns: 1fr; gap: 40px; }
+        }
+
+        .case-study h2 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            margin-bottom: 22px;
+            letter-spacing: -0.02em;
+            color: #fff;
+        }
+        .case-study h2 span {
+            background: linear-gradient(135deg, var(--secondary-3), var(--fv-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .case-study p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.85;
+            margin-bottom: 22px;
+        }
+        .case-study p strong { color: #fff; }
+
+        .highlight-block {
+            background: var(--fv-surface);
+            border: 1px solid var(--fv-border);
+            border-left: 3px solid var(--fv-green);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 28px 0;
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-style: italic;
+        }
+        .highlight-block strong { color: var(--secondary-3); }
+
+        /* Sidebar & Tags */
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+        .sidebar-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .sidebar-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: #fff;
+            border-left: 3px solid var(--fv-green);
+            padding-left: 12px;
+        }
+
+        .task-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .task-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.93rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .task-list li .check {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid var(--fv-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.65rem;
+            color: var(--fv-green);
+            margin-top: 2px;
+        }
+
+        .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.08); }
+        .tag {
+            padding: 5px 14px;
+            background: linear-gradient(rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.05)) padding-box,
+                        linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05)) border-box;
+            border: 1px solid transparent;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            color: var(--secondary-3);
+            font-weight: 600;
+            transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+        }
+        .tag:hover {
+            background: linear-gradient(rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.12)) padding-box,
+                        linear-gradient(135deg, var(--fv-green), var(--fv-amber)) border-box;
+            color: #ffffff;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px -6px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Showcase Grid Gallery */
+        .gallery-section {
+            padding: 0 6% 80px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .gallery-section-title {
+            font-size: 1.9rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+        .gallery-section-title span {
+            background: linear-gradient(135deg, var(--secondary-3), var(--fv-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .grid-image-wrap {
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .grid-image-wrap:hover {
+            border-color: var(--fv-border);
+            box-shadow: 0 30px 60px -10px rgba(16, 185, 129, 0.2);
+        }
+        .grid-full-img {
+            width: 100%;
+            display: block;
+        }
+
+        /* Footer Nav */
+        .project-nav-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 60px 6%;
+            text-align: center;
+        }
+        .next-project-link {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            gap: 12px;
+        }
+        .next-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); transition: color 0.3s; }
+        .next-title { font-size: 2.2rem; font-weight: 900; color: #fff; transition: all 0.3s; letter-spacing: -0.02em; }
+        .next-project-link:hover .next-label { color: var(--fv-green); }
+        .next-project-link:hover .next-title { background: linear-gradient(135deg, var(--secondary-3), var(--fv-green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; transform: translateY(-2px); }
+
+        /* Reveal Animations */
+        .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+        .reveal.visible { opacity: 1; transform: none; }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
+        @media (max-width: 600px) {
+            .hero { padding: 40px 5% 0; }
+            h1 { font-size: 2.2rem; }
+            .analytics-grid { grid-template-columns: 1fr; }
+            .analytics-card { padding: 24px; }
+        }
+    
+                /* --- Brand Nav Bar --- */
+        .brand-nav-bar { background:rgba(8,10,20,0.97); backdrop-filter:blur(24px); border-top:1px solid rgba(255,255,255,0.06); padding:40px 5% 52px; }
+        .brand-nav-inner { max-width:1240px; margin:0 auto; }
+        .brand-nav-label { text-align:center; font-size:0.68rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-bottom:28px; }
+        .brand-nav-grid { display:flex; justify-content:center; align-items:center; gap:24px; }
+        .brand-nav-group { display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; flex:1; max-width:520px; }
+        .brand-nav-divider { width:1px; height:84px; background:rgba(255,255,255,0.12); flex-shrink:0; }
+        .brand-nav-btn { display:inline-flex; align-items:center; gap:9px; padding:9px 18px 9px 10px; border-radius:100px; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.7); font-size:0.8rem; font-weight:600; text-decoration:none; transition:all 0.25s cubic-bezier(0.16,1,0.3,1); white-space:nowrap; }
+        .brand-nav-btn:hover { border-color:rgba(92,88,237,0.5); background:rgba(92,88,237,0.1); color:#fff; transform:translateY(-2px); box-shadow:0 8px 24px rgba(92,88,237,0.2); }
+        .brand-nav-btn.active-brand { border-color:rgba(92,88,237,0.45); background:rgba(92,88,237,0.14); color:#B3B0FF; pointer-events:none; }
+        .brand-nav-btn .bnb-logo { width:26px; height:26px; border-radius:50%; object-fit:cover; flex-shrink:0; border:1px solid rgba(255,255,255,0.1); }
+        .brand-nav-btn.dc-home {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(92,88,237,0.15);
+            border: 2px solid rgba(92,88,237,0.35);
+            color: #B3B0FF;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 0.02em;
+            padding: 0;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+        }
+        .brand-nav-btn.dc-home:hover {
+            background: rgba(92,88,237,0.28);
+            border-color: rgba(92,88,237,0.7);
+            color: #fff;
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 8px 32px rgba(92,88,237,0.35);
+        }
+        @media(max-width:1150px) {
+            .brand-nav-grid { flex-direction:column; gap:20px; }
+            .brand-nav-divider { display:none; }
+            .brand-nav-group { max-width: 500px; width: 100%; }
+        }
+        @media(max-width:640px){ 
+            .brand-nav-group { grid-template-columns:repeat(2, 1fr); gap:8px; } 
+            .brand-nav-btn { font-size:0.72rem; padding:7px 14px 7px 8px; gap:7px; } 
+            .brand-nav-btn .bnb-logo { width:22px; height:22px; } 
+        }
+        @media(max-width:480px){ 
+            .brand-nav-group { grid-template-columns:1fr; } 
+        }
+        </style>
+</head>
+<body>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="noise"></div>
+
+    <header>
+        <a href="../index.html#hero" class="back-btn" id="back-btn">← Back to Portfolio</a>
+        <div class="credes-badge">Finanvo B2B Intelligence Project</div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="brand-intro reveal">
+                <div class="brand-logo-frame">
+                    <img src="../images/Logos of the brands/finanvo.png" alt="Finanvo Logo">
+                </div>
+                <div>
+                    <div class="brand-eyebrow">
+        Feb 2025 — Mar 2025 · B2B Social Media
+    </div>
+                    <h1>Finanvo<br>B2B Intelligence</h1>
+                </div>
+            </div>
+            <p class="hero-sub reveal reveal-delay-1">India's leading business intelligence and corporate research engine. During my tenure as Social Media Manager and Content Lead, I conceptualized and deployed a cross-platform corporate communication strategy—managing executive narratives across LinkedIn, X (Twitter), Facebook, and Instagram, while driving organic discovery through published thought leadership on Medium, Quora, and Tumblr.</p>
+        </section>
+
+        <!-- SMM Performance Cards -->
+        <section class="analytics-section">
+            <div class="section-label reveal">Campaign Analytics Overview</div>
+            <div class="analytics-grid">
+
+                <!-- LinkedIn Authority -->
+                <div class="analytics-card reveal">
+                    <div class="analytics-card-header">
+                        <div class="platform-icon-styled li-styled">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                <rect x="2" y="9" width="4" height="12" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="4" cy="4" r="2" fill="white"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3>LinkedIn Authority</h3>
+                            <div class="period">B2B Core Engagement</div>
+                        </div>
+                    </div>
+                    <div class="analytics-stats">
+                        <div class="analytics-row">
+                            <span class="analytics-row-label">Monthly Impressions</span>
+                            <div class="analytics-row-val">
+                                <span class="analytics-num">350K</span>
+                                <span class="analytics-grow">↑ 420%</span>
+                            </div>
+                        </div>
+                        <div class="analytics-row">
+                            <span class="analytics-row-label">Profile Visits</span>
+                            <div class="analytics-row-val">
+                                <span class="analytics-num">18K</span>
+                                <span class="analytics-grow">↑ 280%</span>
+                            </div>
+                        </div>
+                        <div class="analytics-row">
+                            <span class="analytics-row-label">Executive Engagement</span>
+                            <div class="analytics-row-val">
+                                <span class="analytics-num">5.4K</span>
+                                <span class="analytics-grow">↑ 350%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-chart">
+                        <div class="bar-row">
+                            <span class="bar-row-label">Impressions</span>
+                            <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+                            <span class="bar-num">350K</span>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-row-label">Visits</span>
+                            <div class="bar-track"><div class="bar-fill" style="width:18%"></div></div>
+                            <span class="bar-num">18K</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Articles & Publishing -->
+                <div class="analytics-card reveal reveal-delay-1">
+                    <div class="analytics-card-header">
+                        <div class="platform-icon-styled pub-styled">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
+                                <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3>Publishing &amp; SEO</h3>
+                            <div class="period">Quora, Medium &amp; Tumblr Columns</div>
+                        </div>
+                    </div>
+                    <div class="analytics-stats">
+                        <div class="analytics-row">
+                            <span class="analytics-row-label">Article Reads</span>
+                            <div class="analytics-row-val">
+                                <span class="analytics-num">120K</span>
+                                <span class="analytics-grow">↑ 680%</span>
+                            </div>
+                        </div>
+                        <div class="analytics-row">
+                            <span class="analytics-row-label">Answers Upvotes</span>
+                            <div class="analytics-row-val">
+                                <span class="analytics-num">8.5K</span>
+                                <span class="analytics-grow">↑ 540%</span>
+                            </div>
+                        </div>
+                        <div class="analytics-row">
+                            <span class="analytics-row-label">Link Conversions</span>
+                            <div class="analytics-row-val">
+                                <span class="analytics-num">2.1K</span>
+                                <span class="analytics-grow">↑ 410%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-chart">
+                        <div class="bar-row">
+                            <span class="bar-row-label">Reads</span>
+                            <div class="bar-track"><div class="bar-fill emerald" style="width:100%"></div></div>
+                            <span class="bar-num">120K</span>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-row-label">Conversions</span>
+                            <div class="bar-track"><div class="bar-fill emerald" style="width:17%"></div></div>
+                            <span class="bar-num">2.1K</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Multi-Channel Social -->
+                <div class="analytics-card reveal reveal-delay-2">
+                    <div class="analytics-card-header">
+                        <div class="platform-icon-styled social-styled">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+                                <circle cx="9" cy="7" r="4" stroke="white" stroke-width="1.8"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3>Social Integration</h3>
+                            <div class="period">Instagram, FB &amp; X Channels</div>
+                        </div>
+                    </div>
+                    <div class="analytics-stats">
+                        <div class="analytics-row">
+                            <span class="analytics-row-label">Monthly Reach</span>
+                            <div class="analytics-row-val">
+                                <span class="analytics-num">450K</span>
+                                <span class="analytics-grow">↑ 520%</span>
+                            </div>
+                        </div>
+                        <div class="analytics-row">
+                            <span class="analytics-row-label">Interactions</span>
+                            <div class="analytics-row-val">
+                                <span class="analytics-num">32K</span>
+                                <span class="analytics-grow">↑ 380%</span>
+                            </div>
+                        </div>
+                        <div class="analytics-row">
+                            <span class="analytics-row-label">Net Followers Added</span>
+                            <div class="analytics-row-val">
+                                <span class="analytics-num">+8.5K</span>
+                                <span class="analytics-grow">↑ 290%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-chart">
+                        <div class="bar-row">
+                            <span class="bar-row-label">Reach</span>
+                            <div class="bar-track"><div class="bar-fill warm" style="width:100%"></div></div>
+                            <span class="bar-num">450K</span>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-row-label">Interactions</span>
+                            <div class="bar-track"><div class="bar-fill warm" style="width:12%"></div></div>
+                            <span class="bar-num">32K</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Case Study Content -->
+        <section class="main-content">
+            <div class="case-study reveal">
+                <h2>The Strategy &amp; <span>Corporate Positioning</span></h2>
+                <p>
+                    B2B marketing for business intelligence engines requires a highly authoritative and informative communication model. Startups, banks, and corporate analysts do not seek hype; they seek <strong>trust, reliable data, and actionable intelligence</strong>. 
+                </p>
+                <p>
+                    Our approach with Finanvo focused on translating complex corporate research capabilities (GST lookup, legal registry tracking, director verification, EPF analytics) into highly readable, educative content sets. By utilizing <strong>LinkedIn carousels and industry thought-leadership articles</strong>, we built Prabhaat Somani and the core Finanvo brand into key figures on corporate compliance and private market statistics.
+                </p>
+                <p>
+                    Simultaneously, we established an authority presence on external publication platforms. Crafting high-intent answers on <strong>Quora</strong>, writing analysis-backed breakdowns on <strong>Medium</strong>, and curating trends on <strong>Tumblr</strong> drove direct backlink referrals and organic B2B product registrations.
+                </p>
+                <div class="highlight-block">
+                    <strong>"Simplifying corporate search into digestible B2B insight."</strong> — Synchronizing executive updates on LinkedIn/X with targeted articles on Medium and Quora transformed corporate compliance topics into organic traffic drivers, scaling monthly impressions past 350K.
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="sidebar-card reveal">
+                    <h3>Services Provided</h3>
+                    <ul class="task-list">
+                        <li><span class="check">✓</span>LinkedIn B2B Positioning</li>
+                        <li><span class="check">✓</span>Quora Question-Answer Authority</li>
+                        <li><span class="check">✓</span>Medium Article Writing &amp; SEO</li>
+                        <li><span class="check">✓</span>Cross-Platform Social Sync</li>
+                        <li><span class="check">✓</span>Tumblr Creative Content Curation</li>
+                        <li><span class="check">✓</span>Corporate Branding Layouts</li>
+                    </ul>
+                    <div class="tags">
+                        <span class="tag">B2B SMM</span>
+                        <span class="tag">Corporate Branding</span>
+                        <span class="tag">Thought Leadership</span>
+                        <span class="tag">Quora Strategy</span>
+                        <span class="tag">Medium Columns</span>
+                        <span class="tag">LinkedIn Growth</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Showcase Grid Gallery Section -->
+        <section class="gallery-section reveal">
+            <div class="gallery-section-title">Creative <span>Grid</span></div>
+            <div class="grid-image-wrap">
+                <img src="Finanvo/Grid.jpeg" alt="Finanvo Campaign Deliverables Creative Grid" class="grid-full-img" loading="lazy">
+            </div>
+        </section>
+    
+            <!-- Brand Navigation Bar -->
+    <nav class="brand-nav-bar">
+        <div class="brand-nav-inner">
+            <div class="brand-nav-label">Explore All Brands</div>
+            <div class="brand-nav-grid">
+                <div class="brand-nav-group left-group">
+                    <a href="credes.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/credes techlabs.jpg" alt="">Credes</a>
+                    <a href="gujarat-tigers.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/Gujarat Tigers.png" alt="">Gujarat Tigers</a>
+                    <a href="sattvik.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/Sattvik Certifications.jpg" alt="">Sattvik</a>
+                    <a href="scuff.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/scuff.jpeg" alt="">Scuff</a>
+                    <a href="highrocks.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/highrocks.jpg" alt="">HighRocks</a>
+                    <a href="shelf.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/shelf.png" alt="">Shelf</a>
+                </div>
+                <div class="brand-nav-divider"></div>
+                <a href="../index.html#hero" class="brand-nav-btn dc-home">DC.</a>
+                <div class="brand-nav-divider"></div>
+                <div class="brand-nav-group right-group">
+                    <a href="esfi.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/esfi.jpg" alt="">ESFI</a>
+                    <a href="white-horse.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/white horse.jpg" alt="">White Horse</a>
+                    <a href="finanvo.html" class="brand-nav-btn active-brand"><img class="bnb-logo" src="../images/Logos of the brands/finanvo.png" alt="">Finanvo</a>
+                    <a href="shift.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/shift.jpg" alt="">Shift</a>
+                    <a href="giffy.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/giffy.jpg" alt="">Giffy</a>
+                    <a href="hashlite.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/hashlite.png" alt="">Hashlite</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</main>
+
+    <script>
+        // Reveal on scroll
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            for (let i = 0; i < revealElements.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = revealElements[i].getBoundingClientRect().top;
+                const elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    revealElements[i].classList.add('visible');
+                }
+            }
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        // Initial check
+        revealOnScroll();
+    </script>
+</body>
+</html>

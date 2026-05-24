@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HighRocks — SMM Case Study</title>
+    <meta name="description" content="Orchestrated SMM content strategy, athlete outreach, and data visualization across Instagram, Facebook, and Threads for HighRocks.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #cbd5e1; 
+            --accent-1: #5C58ED;  
+            --secondary-1: #0A0505;
+            --secondary-2: #220909;
+            --secondary-3: #ff8080;
+            --bg: #050202;
+            --surface: rgba(203, 213, 225, 0.05);
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: rgba(203, 213, 225, 0.25);
+            
+            --brand-color: #cbd5e1;
+            --brand-accent: #5C58ED;
+            --brand-surface: rgba(203, 213, 225, 0.05);
+            --brand-border: rgba(203, 213, 225, 0.25);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Ambient Background */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.25;
+            z-index: -2;
+            pointer-events: none;
+        }
+        .orb-1 { width: 700px; height: 700px; background: var(--brand-color); top: -250px; left: -200px; }
+        .orb-2 { width: 500px; height: 500px; background: var(--brand-accent); bottom: -150px; right: -150px; }
+        .orb-3 { width: 400px; height: 400px; background: var(--secondary-2); top: 40%; left: 30%; opacity: 0.12; }
+
+        .noise {
+            position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Header */
+        header {
+            padding: 24px 6%;
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 100;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px;
+            border-radius: 100px;
+            background: linear-gradient(#0a0505, #0a0505) padding-box,
+                        linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03)) border-box;
+            backdrop-filter: blur(16px);
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+            border: 1px solid transparent;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .back-btn:hover {
+            color: #fff;
+            background: linear-gradient(#240a0a, #240a0a) padding-box,
+                        linear-gradient(135deg, var(--brand-color), var(--brand-accent)) border-box;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -10px rgba(255,31,31,0.4);
+        }
+
+        .credes-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border-radius: 100px;
+            background: linear-gradient(rgba(255,31,31,0.08), rgba(255,31,31,0.08)) padding-box,
+                        linear-gradient(135deg, var(--brand-border), rgba(255,31,31,0.05)) border-box;
+            border: 1px solid transparent;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--brand-color);
+            letter-spacing: 0.05em;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 60px 6% 20px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .brand-intro {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo-frame {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            border: 2px solid var(--brand-border);
+            background: rgba(255,255,255,0.02);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 40px rgba(92,88,237,0.1), 0 8px 24px rgba(0,0,0,0.4);
+            flex-shrink: 0;
+        }
+        .brand-logo-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        .brand-eyebrow {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--brand-color);
+            margin-bottom: 6px;
+        }
+
+        h1 {
+            font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            background: linear-gradient(135deg, #ffffff 0%, var(--secondary-3) 50%, var(--brand-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-sub {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin-top: 16px;
+            line-height: 1.75;
+        }
+
+        /* Metrics / Analytics Section */
+        .analytics-section {
+            padding: 48px 6% 60px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--brand-color);
+            margin-bottom: 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: linear-gradient(#0a0d16, #0a0d16) padding-box,
+                        linear-gradient(135deg, var(--brand-color), var(--brand-accent)) border-box;
+            border: 1px solid transparent;
+            border-radius: 100px;
+            box-shadow: 0 4px 12px rgba(92,88,237,0.1);
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .analytics-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 36px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+            position: relative;
+            overflow: hidden;
+        }
+        .analytics-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            background: linear-gradient(135deg, var(--brand-surface), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .analytics-card:hover { 
+            transform: translateY(-6px); 
+            border-color: var(--brand-border); 
+            box-shadow: 0 24px 50px -10px rgba(92,88,237,0.15); 
+        }
+        .analytics-card:hover::before { opacity: 1; }
+
+        .analytics-card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .platform-icon-styled {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .insta-styled {
+            background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
+            box-shadow: 0 4px 16px rgba(253, 29, 29, 0.3);
+        }
+
+        .analytics-card-header h3 { font-size: 1.1rem; font-weight: 700; color: #fff; }
+        .analytics-card-header .period { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+
+        .analytics-stats { display: flex; flex-direction: column; gap: 0; position: relative; z-index: 2; }
+        .analytics-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .analytics-row:last-child { border-bottom: none; }
+        .analytics-row-label { font-size: 0.88rem; color: var(--text-muted); font-weight: 500; }
+        .analytics-row-val { display: flex; align-items: center; gap: 8px; }
+        .analytics-num { font-size: 1.1rem; font-weight: 800; color: #fff; }
+        .analytics-grow { font-size: 0.75rem; font-weight: 700; color: #4ade80; }
+
+        /* Bar chart */
+        .bar-chart { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 2; }
+        .bar-row { display: flex; align-items: center; gap: 10px; }
+        .bar-row-label { font-size: 0.8rem; color: var(--text-muted); width: 100px; flex-shrink: 0; }
+        .bar-track { flex: 1; height: 8px; background: rgba(255,255,255,0.05); border-radius: 100px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--brand-color), var(--brand-accent)); }
+        .bar-fill.pink { background: linear-gradient(90deg, #833ab4, #fd1d1d); }
+        .bar-num { font-size: 0.8rem; font-weight: 700; color: #fff; min-width: 40px; text-align: right; }
+
+        /* Two-Column Content */
+        .main-content {
+            padding: 0 6% 64px;
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .main-content { grid-template-columns: 1fr; gap: 40px; }
+        }
+
+        .case-study h2 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            margin-bottom: 22px;
+            letter-spacing: -0.02em;
+            color: #fff;
+        }
+        .case-study h2 span {
+            background: linear-gradient(135deg, var(--secondary-3), var(--brand-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .case-study p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.85;
+            margin-bottom: 22px;
+        }
+        .case-study p strong { color: #fff; }
+
+        .highlight-block {
+            background: var(--brand-surface);
+            border: 1px solid var(--brand-border);
+            border-left: 3px solid var(--brand-color);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 28px 0;
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-style: italic;
+        }
+        .highlight-block strong { color: var(--secondary-3); }
+
+        /* Sidebar & Tags */
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+        .sidebar-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .sidebar-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: #fff;
+            border-left: 3px solid var(--brand-color);
+            padding-left: 12px;
+        }
+
+        .task-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .task-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.93rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .task-list li .check {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(92,88,237,0.15);
+            border: 1px solid var(--brand-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.65rem;
+            color: var(--brand-color);
+            margin-top: 2px;
+        }
+
+        .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.08); }
+        .tag {
+            padding: 5px 14px;
+            background: linear-gradient(rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)) padding-box,
+                        linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)) border-box;
+            border: 1px solid transparent;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            color: #B3B0FF;
+            font-weight: 600;
+            transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+        }
+        .tag:hover {
+            background: linear-gradient(rgba(92, 88, 237, 0.15), rgba(92, 88, 237, 0.15)) padding-box,
+                        linear-gradient(135deg, var(--brand-color), var(--brand-accent)) border-box;
+            color: #ffffff;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px -6px rgba(92, 88, 237, 0.3);
+        }
+
+        /* Showcase Grid Gallery */
+        .gallery-section {
+            padding: 0 6% 60px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .gallery-section-title {
+            font-size: 1.9rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+        .gallery-section-title span {
+            background: linear-gradient(135deg, var(--secondary-3), var(--brand-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gallery-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .grid-image-wrap {
+            max-width: 720px;
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+            position: relative;
+        }
+        .grid-image-wrap:hover {
+            border-color: var(--brand-border);
+            box-shadow: 0 30px 60px -10px rgba(92,88,237,0.25);
+        }
+        .grid-full-img {
+            width: 100%;
+            display: block;
+        }
+
+                /* --- Brand Nav Bar --- */
+        .brand-nav-bar { background:rgba(8,10,20,0.97); backdrop-filter:blur(24px); border-top:1px solid rgba(255,255,255,0.06); padding:40px 5% 52px; }
+        .brand-nav-inner { max-width:1240px; margin:0 auto; }
+        .brand-nav-label { text-align:center; font-size:0.68rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-bottom:28px; }
+        .brand-nav-grid { display:flex; justify-content:center; align-items:center; gap:24px; }
+        .brand-nav-group { display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; flex:1; max-width:520px; }
+        .brand-nav-divider { width:1px; height:84px; background:rgba(255,255,255,0.12); flex-shrink:0; }
+        .brand-nav-btn { display:inline-flex; align-items:center; gap:9px; padding:9px 18px 9px 10px; border-radius:100px; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.7); font-size:0.8rem; font-weight:600; text-decoration:none; transition:all 0.25s cubic-bezier(0.16,1,0.3,1); white-space:nowrap; }
+        .brand-nav-btn:hover { border-color:rgba(92,88,237,0.5); background:rgba(92,88,237,0.1); color:#fff; transform:translateY(-2px); box-shadow:0 8px 24px rgba(92,88,237,0.2); }
+        .brand-nav-btn.active-brand { border-color:rgba(92,88,237,0.45); background:rgba(92,88,237,0.14); color:#B3B0FF; pointer-events:none; }
+        .brand-nav-btn .bnb-logo { width:26px; height:26px; border-radius:50%; object-fit:cover; flex-shrink:0; border:1px solid rgba(255,255,255,0.1); }
+        .brand-nav-btn.dc-home {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(92,88,237,0.15);
+            border: 2px solid rgba(92,88,237,0.35);
+            color: #B3B0FF;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 0.02em;
+            padding: 0;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+        }
+        .brand-nav-btn.dc-home:hover {
+            background: rgba(92,88,237,0.28);
+            border-color: rgba(92,88,237,0.7);
+            color: #fff;
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 8px 32px rgba(92,88,237,0.35);
+        }
+        @media(max-width:1150px) {
+            .brand-nav-grid { flex-direction:column; gap:20px; }
+            .brand-nav-divider { display:none; }
+            .brand-nav-group { max-width: 500px; width: 100%; }
+        }
+        @media(max-width:640px){ 
+            .brand-nav-group { grid-template-columns:repeat(2, 1fr); gap:8px; } 
+            .brand-nav-btn { font-size:0.72rem; padding:7px 14px 7px 8px; gap:7px; } 
+            .brand-nav-btn .bnb-logo { width:22px; height:22px; } 
+        }
+        @media(max-width:480px){ 
+            .brand-nav-group { grid-template-columns:1fr; } 
+        }
+    </style>
+</head>
+<body>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="noise"></div>
+
+    <header>
+        <a href="../index.html#hero" class="back-btn" id="back-btn">← Back to Portfolio</a>
+        <div class="credes-badge">Active SMM Project</div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="brand-intro reveal">
+                <div class="brand-logo-frame">
+                    <img src="../images/Logos of the brands/highrocks.jpg" alt="Highrocks Logo">
+                </div>
+                <div>
+                    <div class="brand-eyebrow">
+        PRESENT · Product & Brand
+    </div>
+                    <h1>Highrocks</h1>
+                </div>
+            </div>
+            <p class="hero-sub reveal reveal-delay-1">Orchestrated the complete social media marketing, visual data design, and community growth strategy for HighRocks. Translated complex athletic pacing analytics and race metrics into highly shareable, platform-native content across Instagram, Facebook, and Threads to capture the attention of fitness competitors.</p>
+        </section>
+
+        <!-- SMM Performance Cards -->
+        <section class="analytics-section">
+            <div class="section-label reveal">Monthly Performance Summary</div>
+            <div class="analytics-grid" style="display: flex; justify-content: center;">
+
+                <!-- Instagram & Threads Performance -->
+                <div class="analytics-card reveal" style="max-width: 480px; width: 100%;">
+                    <div class="analytics-card-header">
+                        <div class="platform-icon-styled insta-styled">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="2" y="2" width="20" height="20" rx="6" stroke="white" stroke-width="1.8"/>
+                                <circle cx="12" cy="12" r="4.5" stroke="white" stroke-width="1.8"/>
+                                <circle cx="17.5" cy="6.5" r="1" fill="white"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3>Social Media Performance</h3>
+                            <div class="period">Instagram, Facebook, &amp; Threads</div>
+                        </div>
+                    </div>
+                    <div class="analytics-stats">
+                        <div class="analytics-row">
+                            <span class="analytics-row-label">Pacing Reels Views</span>
+                            <div class="analytics-row-val">
+                                <span class="analytics-num">520K+</span>
+                                <span class="analytics-grow">↑ 340%</span>
+                            </div>
+                        </div>
+                        <div class="analytics-row">
+                            <span class="analytics-row-label">Profile Interactions</span>
+                            <div class="analytics-row-val">
+                                <span class="analytics-num">190K+</span>
+                                <span class="analytics-grow">↑ 280%</span>
+                            </div>
+                        </div>
+                        <div class="analytics-row">
+                            <span class="analytics-row-label">Athlete Link Clicks</span>
+                            <div class="analytics-row-val">
+                                <span class="analytics-num">+14K</span>
+                                <span class="analytics-grow">↑ 210%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-chart">
+                        <div class="bar-row">
+                            <span class="bar-row-label">Pacing Reels Views</span>
+                            <div class="bar-track"><div class="bar-fill pink" style="width:100%"></div></div>
+                            <span class="bar-num">520K+</span>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-row-label">Profile Interactions</span>
+                            <div class="bar-track"><div class="bar-fill pink" style="width:25%"></div></div>
+                            <span class="bar-num">190K+</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Case Study Content -->
+        <section class="main-content">
+            <div class="case-study reveal">
+                <h2>Translating Analytics into <span>Viral Engagement</span></h2>
+                <p>HYROX racing is highly analytical, centered on pacing, splits, and station split strategies. HighRocks was built to solve pacing guesswork, and our SMM strategy focused on communicating this data visually. We turned complex race analytics into digestible pacing guides and clean, shareable infographics on Instagram.</p>
+                <p>Using reels, we highlighted training splits, athlete breakdowns, and tool tutorials that fit native mobile formats. On Threads, we built interactive Q&As where athletes could get custom pacing splits, transforming the channel into a conversational utility that drove high click-through rates back to the tool.</p>
+                <div class="highlight-block">
+                    <strong>"Data visualization and interactive tools drive organic saves."</strong> — We created high-value pacing cards that athletes saved and shared, leveraging interactive thread discussions to build HighRocks' reputation as a pacing expert.
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="sidebar-card reveal">
+                    <h3>SMM Deliverables</h3>
+                    <ul class="task-list">
+                        <li><span class="check">✓</span>Fitness Data Visualization Infographics</li>
+                        <li><span class="check">✓</span>Athlete Training & Pacing Reel Editing</li>
+                        <li><span class="check">✓</span>Threads Strategy & Fitness Q&A Campaigns</li>
+                        <li><span class="check">✓</span>Lead Distribution Campaigns via DMs</li>
+                        <li><span class="check">✓</span>Consistent Analytical Brand Voice</li>
+                        <li><span class="check">✓</span>Direct Outreach to Hyrox Competitors</li>
+                    </ul>
+                    <div class="tags">
+                        <span class="tag">Fitness SMM</span>
+                        <span class="tag">Data Infographics</span>
+                        <span class="tag">Athlete Outreach</span>
+                        <span class="tag">Reel Production</span>
+                        <span class="tag">Product Marketing</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SMM Reports & Creative Gallery Section -->
+        <section class="gallery-section reveal">
+            <div class="gallery-section-title">Case Study <span>Showcase</span></div>
+            <div class="gallery-grid">
+                <div class="grid-image-wrap">
+                    <img src="Highrocks/Screenshot_2026-05-24-01-41-57-563_com.instagram.android-edit.jpg.jpeg" alt="HighRocks SMM Analytics and Instagram Growth Overview" class="grid-full-img" loading="lazy">
+                </div>
+            </div>
+        </section>
+        
+                <!-- Brand Navigation Bar -->
+    <nav class="brand-nav-bar">
+        <div class="brand-nav-inner">
+            <div class="brand-nav-label">Explore All Brands</div>
+            <div class="brand-nav-grid">
+                <div class="brand-nav-group left-group">
+                    <a href="credes.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/credes techlabs.jpg" alt="">Credes</a>
+                    <a href="gujarat-tigers.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/Gujarat Tigers.png" alt="">Gujarat Tigers</a>
+                    <a href="sattvik.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/Sattvik Certifications.jpg" alt="">Sattvik</a>
+                    <a href="scuff.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/scuff.jpeg" alt="">Scuff</a>
+                    <a href="highrocks.html" class="brand-nav-btn active-brand"><img class="bnb-logo" src="../images/Logos of the brands/highrocks.jpg" alt="">HighRocks</a>
+                    <a href="shelf.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/shelf.png" alt="">Shelf</a>
+                </div>
+                <div class="brand-nav-divider"></div>
+                <a href="../index.html#hero" class="brand-nav-btn dc-home">DC.</a>
+                <div class="brand-nav-divider"></div>
+                <div class="brand-nav-group right-group">
+                    <a href="esfi.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/esfi.jpg" alt="">ESFI</a>
+                    <a href="white-horse.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/white horse.jpg" alt="">White Horse</a>
+                    <a href="finanvo.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/finanvo.png" alt="">Finanvo</a>
+                    <a href="shift.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/shift.jpg" alt="">Shift</a>
+                    <a href="giffy.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/giffy.jpg" alt="">Giffy</a>
+                    <a href="hashlite.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/hashlite.png" alt="">Hashlite</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    </main>
+
+    <script>
+        // Reveal on scroll
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            for (let i = 0; i < revealElements.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = revealElements[i].getBoundingClientRect().top;
+                const elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    revealElements[i].classList.add('visible');
+                }
+            }
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        // Initial check
+        revealOnScroll();
+    </script>
+</body>
+</html>

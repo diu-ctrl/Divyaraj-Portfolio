@@ -1,0 +1,854 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HashLite × Divyaraj Chauhan — SMM & Video Shorts Case Study</title>
+    <meta name="description" content="How Divyaraj Chauhan built HashLite's digital authority — custom short-form video editing, visual campaigns, and cross-platform tech incubation strategy.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #06b6d4; /* HashLite Cyan Core Color (Left Side) */
+            --accent-1: #5C58ED; /* Credes Indigo Theme Color (Right Side) */
+            --secondary-1: #080a12;
+            --secondary-2: #1e1b4b;
+            --secondary-3: #c7d2fe;
+            --bg: #03040a;
+            
+            /* HashLite Brand Colors (Left Side) */
+            --hashlite-cyan: var(--primary);
+            --hashlite-light: #a5f3fc;
+            --hashlite-surface: rgba(6, 182, 212, 0.05);
+            --hashlite-border: rgba(6, 182, 212, 0.15);
+
+            --surface: rgba(92, 88, 237, 0.04);
+            --border: rgba(92, 88, 237, 0.12);
+            --text: #f0f3fa;
+            --text-muted: #8fa0b5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ---- Ambient BG ---- */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.25;
+            z-index: -2;
+            pointer-events: none;
+        }
+        .orb-1 { width: 700px; height: 700px; background: var(--hashlite-cyan); top: -250px; left: -200px; }
+        .orb-2 { width: 500px; height: 500px; background: var(--accent-1); bottom: -150px; right: -150px; }
+        .orb-3 { width: 400px; height: 400px; background: var(--secondary-2); top: 40%; left: 30%; opacity: 0.15; }
+
+        .noise {
+            position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* ---- Header ---- */
+        header {
+            padding: 24px 6%;
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 100;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px;
+            border-radius: 100px;
+            background: linear-gradient(#080a12, #080a12) padding-box,
+                        linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03)) border-box;
+            backdrop-filter: blur(16px);
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+            border: 1px solid transparent;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .back-btn:hover {
+            color: #fff;
+            background: linear-gradient(#1e1b4b, #1e1b4b) padding-box,
+                        linear-gradient(135deg, var(--hashlite-cyan), var(--accent-1)) border-box;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -10px rgba(6,182,212,0.4);
+        }
+
+        .credes-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border-radius: 100px;
+            background: linear-gradient(rgba(6,182,212,0.08), rgba(6,182,212,0.08)) padding-box,
+                        linear-gradient(135deg, var(--border), rgba(6,182,212,0.05)) border-box;
+            border: 1px solid transparent;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--hashlite-cyan);
+            letter-spacing: 0.05em;
+        }
+
+        /* ---- Hero ---- */
+        .hero {
+            padding: 60px 6% 20px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .brand-intro {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo-frame {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            border: 2px solid var(--hashlite-border);
+            background: rgba(6,182,212,0.1);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 40px rgba(6,182,212,0.25), 0 8px 24px rgba(0,0,0,0.4);
+            flex-shrink: 0;
+        }
+        .brand-logo-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        .brand-eyebrow {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--hashlite-cyan);
+            margin-bottom: 6px;
+        }
+
+        h1 {
+            font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            background: linear-gradient(135deg, #ffffff 0%, var(--hashlite-light) 50%, var(--accent-1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-sub {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 640px;
+            margin-top: 16px;
+            line-height: 1.75;
+        }
+
+        /* ---- Metrics Grid ---- */
+        .metrics-section {
+            padding: 48px 6% 0;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--hashlite-light);
+            margin-bottom: 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: linear-gradient(#080a12, #080a12) padding-box,
+                        linear-gradient(135deg, var(--hashlite-cyan), var(--accent-1)) border-box;
+            border: 1px solid transparent;
+            border-radius: 100px;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.15);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .metric-card {
+            background: var(--surface);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px 24px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+            position: relative;
+            overflow: hidden;
+        }
+        .metric-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--hashlite-surface), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .metric-card:hover { transform: translateY(-6px); border-color: var(--hashlite-cyan); box-shadow: 0 20px 40px -10px rgba(6,182,212,0.15); }
+        .metric-card:hover::before { opacity: 1; }
+
+        .metric-platform {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .metric-platform.youtube { color: #FF0000; }
+        .metric-platform.linkedin { color: #0077b5; }
+        .metric-platform.social { color: var(--hashlite-cyan); }
+
+        .metric-value {
+            font-size: 2.4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 4px;
+            background: linear-gradient(135deg, #fff, var(--hashlite-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .metric-growth {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #4ade80;
+            margin-bottom: 6px;
+        }
+        .metric-label {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* ---- Two-Column Content ---- */
+        .main-content {
+            padding: 64px 6%;
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .main-content { grid-template-columns: 1fr; gap: 40px; }
+        }
+
+        .case-study h2 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            margin-bottom: 22px;
+            letter-spacing: -0.02em;
+            color: #fff;
+            position: relative;
+        }
+        .case-study h2 span {
+            background: linear-gradient(135deg, var(--hashlite-cyan), var(--accent-1));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .case-study p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.85;
+            margin-bottom: 22px;
+        }
+        .case-study p strong { color: #fff; }
+
+        .highlight-block {
+            background: var(--hashlite-surface);
+            border: 1px solid var(--hashlite-border);
+            border-left: 3px solid var(--hashlite-cyan);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 28px 0;
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-style: italic;
+        }
+        .highlight-block strong { color: var(--hashlite-light); }
+
+        /* ---- Sidebar ---- */
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+
+        .sidebar-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+        }
+        .sidebar-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: #fff;
+            border-left: 3px solid var(--hashlite-cyan);
+            padding-left: 12px;
+        }
+
+        .task-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .task-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.93rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .task-list li .check {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(6, 182, 212, 0.15);
+            border: 1px solid var(--hashlite-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.65rem;
+            color: var(--hashlite-cyan);
+            margin-top: 2px;
+        }
+
+        .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.08); }
+        .tag {
+            padding: 5px 14px;
+            background: linear-gradient(var(--hashlite-surface), var(--hashlite-surface)) padding-box,
+                        linear-gradient(135deg, var(--hashlite-border), rgba(6, 182, 212, 0.05)) border-box;
+            border: 1px solid transparent;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            color: var(--hashlite-light);
+            font-weight: 600;
+            transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+        }
+        .tag:hover {
+            background: linear-gradient(rgba(6, 182, 212, 0.12), rgba(6, 182, 212, 0.12)) padding-box,
+                        linear-gradient(135deg, var(--hashlite-cyan), var(--accent-1)) border-box;
+            color: #ffffff;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px -6px rgba(6, 182, 212, 0.3);
+        }
+
+        .platform-stat-mini {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .platform-stat-mini:last-child { border-bottom: none; }
+        .psm-label { font-size: 0.85rem; color: var(--text-muted); }
+        .psm-val { font-size: 0.95rem; font-weight: 700; color: #fff; }
+
+        /* ---- Short-Form Video Section ---- */
+        .video-section {
+            padding: 0 6% 80px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 36px;
+        }
+
+        .video-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+            display: flex;
+            flex-direction: column;
+        }
+        .video-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--hashlite-cyan);
+            box-shadow: 0 20px 40px -10px rgba(6, 182, 212, 0.25);
+        }
+
+        .video-container {
+            width: 100%;
+            aspect-ratio: 9/16;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .video-info {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+        .video-info h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .video-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ---- Creative Grid Section ---- */
+        .grid-section {
+            padding: 0 6% 80px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .grid-wrapper {
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.2);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+            transition: all 0.5s ease;
+        }
+        .grid-wrapper:hover {
+            border-color: var(--hashlite-cyan);
+            box-shadow: 0 20px 60px -10px rgba(6, 182, 212, 0.25);
+        }
+        .grid-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+        .grid-wrapper:hover img {
+            transform: scale(1.02);
+        }
+
+        /* ---- Footer Nav ---- */
+        .project-nav-footer {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding: 60px 6%;
+            text-align: center;
+        }
+        .next-project-link {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            gap: 12px;
+        }
+        .next-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); transition: color 0.3s; }
+        .next-title { font-size: 2.2rem; font-weight: 900; color: #fff; transition: all 0.3s; letter-spacing: -0.02em; }
+        .next-project-link:hover .next-label { color: var(--primary); }
+        .next-project-link:hover .next-title { background: linear-gradient(135deg, var(--hashlite-cyan), var(--accent-1)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; transform: translateY(-2px); }
+
+        /* ---- Reveal Animations ---- */
+        .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+        .reveal.visible { opacity: 1; transform: none; }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
+        @media (max-width: 600px) {
+            .hero { padding: 40px 5% 0; }
+            h1 { font-size: 2.2rem; }
+            .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+            .video-grid { grid-template-columns: 1fr; }
+        }
+    
+                /* --- Brand Nav Bar --- */
+        .brand-nav-bar { background:rgba(8,10,20,0.97); backdrop-filter:blur(24px); border-top:1px solid rgba(255,255,255,0.06); padding:40px 5% 52px; }
+        .brand-nav-inner { max-width:1240px; margin:0 auto; }
+        .brand-nav-label { text-align:center; font-size:0.68rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-bottom:28px; }
+        .brand-nav-grid { display:flex; justify-content:center; align-items:center; gap:24px; }
+        .brand-nav-group { display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; flex:1; max-width:520px; }
+        .brand-nav-divider { width:1px; height:84px; background:rgba(255,255,255,0.12); flex-shrink:0; }
+        .brand-nav-btn { display:inline-flex; align-items:center; gap:9px; padding:9px 18px 9px 10px; border-radius:100px; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.7); font-size:0.8rem; font-weight:600; text-decoration:none; transition:all 0.25s cubic-bezier(0.16,1,0.3,1); white-space:nowrap; }
+        .brand-nav-btn:hover { border-color:rgba(92,88,237,0.5); background:rgba(92,88,237,0.1); color:#fff; transform:translateY(-2px); box-shadow:0 8px 24px rgba(92,88,237,0.2); }
+        .brand-nav-btn.active-brand { border-color:rgba(92,88,237,0.45); background:rgba(92,88,237,0.14); color:#B3B0FF; pointer-events:none; }
+        .brand-nav-btn .bnb-logo { width:26px; height:26px; border-radius:50%; object-fit:cover; flex-shrink:0; border:1px solid rgba(255,255,255,0.1); }
+        .brand-nav-btn.dc-home {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(92,88,237,0.15);
+            border: 2px solid rgba(92,88,237,0.35);
+            color: #B3B0FF;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 0.02em;
+            padding: 0;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+        }
+        .brand-nav-btn.dc-home:hover {
+            background: rgba(92,88,237,0.28);
+            border-color: rgba(92,88,237,0.7);
+            color: #fff;
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 8px 32px rgba(92,88,237,0.35);
+        }
+        @media(max-width:1150px) {
+            .brand-nav-grid { flex-direction:column; gap:20px; }
+            .brand-nav-divider { display:none; }
+            .brand-nav-group { max-width: 500px; width: 100%; }
+        }
+        @media(max-width:640px){ 
+            .brand-nav-group { grid-template-columns:repeat(2, 1fr); gap:8px; } 
+            .brand-nav-btn { font-size:0.72rem; padding:7px 14px 7px 8px; gap:7px; } 
+            .brand-nav-btn .bnb-logo { width:22px; height:22px; } 
+        }
+        @media(max-width:480px){ 
+            .brand-nav-group { grid-template-columns:1fr; } 
+        }
+        </style>
+</head>
+<body>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="noise"></div>
+
+    <header>
+        <a href="../index.html#hero" class="back-btn">← Back to Portfolio</a>
+        <div class="credes-badge">Credes Techlabs Project</div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="brand-intro reveal">
+                <div class="brand-logo-frame">
+                    <img src="../images/Logos of the brands/hashlite.png" alt="HashLite Logo">
+                </div>
+                <div>
+                    <span class="brand-eyebrow">
+        Feb 2026 — April 2026 · SMM
+    </span>
+                    <h1>HashLite</h1>
+                </div>
+            </div>
+            <p class="hero-sub reveal reveal-delay-1">
+                How I designed and engineered a tech-forward content pipeline to capture B2B interest, build a developer community, and grow organic multi-channel reach.
+            </p>
+        </section>
+
+        <!-- SMM Metrics Section -->
+        <section class="metrics-section reveal reveal-delay-2">
+            <div class="section-label">SMM Performance Summary</div>
+            <div class="metrics-grid">
+                <!-- Stat 1 -->
+                <div class="metric-card">
+                    <div class="metric-platform youtube">YouTube Shorts</div>
+                    <div class="metric-value">50K+</div>
+                    <div class="metric-growth">▲ High Retention</div>
+                    <div class="metric-label">Organic Video Views</div>
+                </div>
+                <!-- Stat 2 -->
+                <div class="metric-card">
+                    <div class="metric-platform linkedin">LinkedIn Authority</div>
+                    <div class="metric-value">15%</div>
+                    <div class="metric-growth">▲ +4.2% Growth</div>
+                    <div class="metric-label">B2B Software Updates Engagement</div>
+                </div>
+                <!-- Stat 3 -->
+                <div class="metric-card">
+                    <div class="metric-platform social">Instagram & Threads</div>
+                    <div class="metric-value">80K+</div>
+                    <div class="metric-growth">▲ Steady Impressions</div>
+                    <div class="metric-label">Monthly Brand Impressions</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Two Column Detailed Case Study -->
+        <section class="main-content reveal">
+            <!-- Left Column: Copywriting -->
+            <div class="case-study">
+                <h2>The <span>Challenge</span></h2>
+                <p>
+                    Software engineering studios, incubators, and B2B tech platforms often struggle to translate abstract technical workflows into visually compelling social media narratives. <strong>HashLite</strong> needed a structured social presence that spoke directly to developer talent, startup founders, and corporate partners. 
+                </p>
+                <p>
+                    The objective was to move away from generic stock images and build an authentic content stream that showcased developer culture, design system engineering, and startup incubator highlights.
+                </p>
+
+                <h2 style="margin-top: 40px;">The <span>Strategy & Delivery</span></h2>
+                <p>
+                    I engineered a robust content funnel centered around short-form developer-focused videos ("Shorts/Reels") and high-fidelity creative layouts. By targeting developers with workstation tours, frontend workflow walkthroughs, and UI/UX design previews, we built a highly engaged audience base:
+                </p>
+                <div class="highlight-block">
+                    "Short-form technical content acts as a B2B trust magnet. By displaying the actual <strong>UI design code flow and workspace environments</strong>, we turned developer vlogs into recruiting and partner-sourcing tools."
+                </div>
+                <p>
+                    In addition to editing video shorts, I established unified grid structures for visual posts and managed content distribution across LinkedIn, Threads, Instagram, and YouTube.
+                </p>
+            </div>
+
+            <!-- Right Column: Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-card">
+                    <h3>My Contributions</h3>
+                    <ul class="task-list">
+                        <li>
+                            <div class="check">✓</div>
+                            <span><strong>Short-Form Editing</strong>: Cut, color-graded, and structured 6 video shorts explaining software concepts.</span>
+                        </li>
+                        <li>
+                            <div class="check">✓</div>
+                            <span><strong>Aesthetic Styling</strong>: Maintained brand compliance using custom Cyan templates.</span>
+                        </li>
+                        <li>
+                            <div class="check">✓</div>
+                            <span><strong>Platform Management</strong>: Drafted developer copy for LinkedIn, Instagram, and Threads.</span>
+                        </li>
+                        <li>
+                            <div class="check">✓</div>
+                            <span><strong>Dev Vlogs Curation</strong>: Coordinated workstation setups and workflow videos.</span>
+                        </li>
+                        <li>
+                            <div class="check">✓</div>
+                            <span><strong>Organic Distribution</strong>: Leveraged YouTube and IG reels algorithms for maximum exposure.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>Campaign Info</h3>
+                    <div style="display: flex; flex-direction: column;">
+                        <div class="platform-stat-mini">
+                            <span class="psm-label">Campaign Span</span>
+                            <span class="psm-val">2 Months</span>
+                        </div>
+                        <div class="platform-stat-mini">
+                            <span class="psm-label">Key Channels</span>
+                            <span class="psm-val">LI, YT, IG, Threads</span>
+                        </div>
+                        <div class="platform-stat-mini">
+                            <span class="psm-label">Lead Goal</span>
+                            <span class="psm-val">Talent & Incubations</span>
+                        </div>
+                    </div>
+                    <div class="tags">
+                        <span class="tag">#VideoEditing</span>
+                        <span class="tag">#B2BTech</span>
+                        <span class="tag">#SocialMediaMarketing</span>
+                        <span class="tag">#ShortFormContent</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Shorts Section -->
+        <section class="video-section reveal">
+            <div class="gallery-section-title">Edited Video <span>Shorts</span></div>
+            <p style="color:var(--text-muted); margin-bottom: 12px; max-width:700px; font-size:1.05rem;">
+                Official video deliverables edited to highlight modern developer workflows, workstations, UI/UX systems, and startup promo content:
+            </p>
+            <div class="video-grid">
+                <!-- Video 1 -->
+                <div class="video-card">
+                    <div class="video-container">
+                        <video controls loop muted preload="metadata">
+                            <source src="HashLite/video 1.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="video-info">
+                        <div>
+                            <h4>SMM Growth Hack Strategies</h4>
+                            <p>Optimization hacks and engagement tactics used to double B2B software engineering community reach.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Video 2 -->
+                <div class="video-card">
+                    <div class="video-container">
+                        <video controls loop muted preload="metadata">
+                            <source src="HashLite/video 2.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="video-info">
+                        <div>
+                            <h4>Behind the Tech Stack Setup</h4>
+                            <p>A closer look at dev tools, configuration files, and efficient local software environments.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Video 3 -->
+                <div class="video-card">
+                    <div class="video-container">
+                        <video controls loop muted preload="metadata">
+                            <source src="HashLite/video 3.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="video-info">
+                        <div>
+                            <h4>B2B UI/UX Design System Flow</h4>
+                            <p>Interactive walk-through of UI tokens, layouts, and system transitions inside Figma and frontend code.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Video 4 -->
+                <div class="video-card">
+                    <div class="video-container">
+                        <video controls loop muted preload="metadata">
+                            <source src="HashLite/video 4.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="video-info">
+                        <div>
+                            <h4>Developer Setup & Workstation Vlog</h4>
+                            <p>Touring a clean, high-performance developer workstation setup built for multi-window focus.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Video 5 -->
+                <div class="video-card">
+                    <div class="video-container">
+                        <video controls loop muted preload="metadata">
+                            <source src="HashLite/video 5.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="video-info">
+                        <div>
+                            <h4>Frontend Dev Workflow Tips</h4>
+                            <p>Productivity tips and extensions for React and CSS layouts to streamline coding cycles.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Video 6 -->
+                <div class="video-card">
+                    <div class="video-container">
+                        <video controls loop muted preload="metadata">
+                            <source src="HashLite/video 6.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="video-info">
+                        <div>
+                            <h4>HashLite App Launch Promo</h4>
+                            <p>Promotional teaser and software release overview celebrating the incubator's latest startup launch.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Creative Grid Showcase Section -->
+        <section class="grid-section reveal">
+            <div class="gallery-section-title">Campaign <span>Creative Grid</span></div>
+            <p style="color:var(--text-muted); margin-bottom: 30px; max-width:700px; font-size:1.05rem;">
+                Curated campaign creative grid showing the unified design system, templates, and tech aesthetic implemented for the social channels:
+            </p>
+            <div class="grid-wrapper">
+                <img src="HashLite/Grid.jpeg" alt="HashLite Creative Campaign Grid">
+            </div>
+        </section>
+    
+            <!-- Brand Navigation Bar -->
+    <nav class="brand-nav-bar">
+        <div class="brand-nav-inner">
+            <div class="brand-nav-label">Explore All Brands</div>
+            <div class="brand-nav-grid">
+                <div class="brand-nav-group left-group">
+                    <a href="credes.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/credes techlabs.jpg" alt="">Credes</a>
+                    <a href="gujarat-tigers.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/Gujarat Tigers.png" alt="">Gujarat Tigers</a>
+                    <a href="sattvik.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/Sattvik Certifications.jpg" alt="">Sattvik</a>
+                    <a href="scuff.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/scuff.jpeg" alt="">Scuff</a>
+                    <a href="highrocks.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/highrocks.jpg" alt="">HighRocks</a>
+                    <a href="shelf.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/shelf.png" alt="">Shelf</a>
+                </div>
+                <div class="brand-nav-divider"></div>
+                <a href="../index.html#hero" class="brand-nav-btn dc-home">DC.</a>
+                <div class="brand-nav-divider"></div>
+                <div class="brand-nav-group right-group">
+                    <a href="esfi.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/esfi.jpg" alt="">ESFI</a>
+                    <a href="white-horse.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/white horse.jpg" alt="">White Horse</a>
+                    <a href="finanvo.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/finanvo.png" alt="">Finanvo</a>
+                    <a href="shift.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/shift.jpg" alt="">Shift</a>
+                    <a href="giffy.html" class="brand-nav-btn "><img class="bnb-logo" src="../images/Logos of the brands/giffy.jpg" alt="">Giffy</a>
+                    <a href="hashlite.html" class="brand-nav-btn active-brand"><img class="bnb-logo" src="../images/Logos of the brands/hashlite.png" alt="">Hashlite</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</main>
+
+    <script>
+        // Reveal on scroll
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            for (let i = 0; i < revealElements.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = revealElements[i].getBoundingClientRect().top;
+                const elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    revealElements[i].classList.add('visible');
+                }
+            }
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        // Initial check
+        revealOnScroll();
+    </script>
+</body>
+</html>

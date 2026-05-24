@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divyaraj Chauhan — Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e293b;       /* Premium Dark Slate */
+            --primary-light: #475569; /* Slate Gray */
+            --accent: #4f46e5;        /* Premium Indigo */
+            --bg: #ffffff;
+            --surface: #f8fafc;
+            --border: #e2e8f0;
+            --text: #0f172a;          /* Off-black text */
+            --text-muted: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f1f5f9;
+            color: var(--text);
+            line-height: 1.5;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Resume Container */
+        .resume-container {
+            background: var(--bg);
+            max-width: 900px;
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08), 
+                        0 0 0 1px rgba(15, 23, 42, 0.04);
+            padding: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Top Action Bar (hidden in print) */
+        .action-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 30px;
+            gap: 12px;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid var(--border);
+            background: #ffffff;
+            color: var(--primary-light);
+        }
+
+        .btn-action:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #ffffff;
+            border-color: var(--accent);
+        }
+
+        .btn-primary:hover {
+            background: #4338ca;
+            color: #ffffff;
+        }
+
+        /* Header styling */
+        header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 30px;
+            margin-bottom: 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-left h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+
+        .header-left .title-sub {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: -0.01em;
+        }
+
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            text-align: right;
+        }
+
+        .header-right a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .header-right a:hover {
+            color: var(--accent);
+        }
+
+        /* Main Grid */
+        .resume-grid {
+            display: grid;
+            grid-template-columns: 1fr 2.1fr;
+            gap: 40px;
+        }
+
+        /* Sidebar Column */
+        .sidebar-col {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* Main Column */
+        .main-col {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+        }
+
+        /* Section blocks */
+        .section-block h3 {
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            margin-bottom: 16px;
+            border-bottom: 1.5px solid var(--border);
+            padding-bottom: 6px;
+        }
+
+        /* Contact Details list */
+        .contact-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 0.88rem;
+        }
+
+        .contact-list li {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-list span.label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            margin-bottom: 2px;
+        }
+
+        .contact-list a, .contact-list span.value {
+            color: var(--text);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .contact-list a:hover {
+            color: var(--accent);
+        }
+
+        /* Skills badges */
+        .skills-group {
+            margin-bottom: 16px;
+        }
+
+        .skills-group h4 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary-light);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .skill-tag {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary-light);
+        }
+
+        /* Education block */
+        .edu-item {
+            margin-bottom: 14px;
+        }
+
+        .edu-degree {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .edu-school {
+            font-size: 0.85rem;
+            color: var(--primary-light);
+            font-weight: 500;
+            margin: 2px 0 4px;
+        }
+
+        .edu-date {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        /* Experience Timeline Items */
+        .exp-item {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .exp-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 6px;
+        }
+
+        .exp-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .exp-company {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin: 1px 0 4px;
+        }
+
+        .exp-date {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary-light);
+            background: var(--surface);
+            padding: 3px 10px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+
+        .exp-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+            margin-bottom: 8px;
+        }
+
+        .exp-bullets {
+            list-style: none;
+            padding-left: 12px;
+        }
+
+        .exp-bullets li {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            position: relative;
+            margin-bottom: 4px;
+            line-height: 1.5;
+        }
+
+        .exp-bullets li::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            position: absolute;
+            left: -12px;
+        }
+
+        /* Highlights Grid */
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .highlight-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .highlight-val {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1.1;
+            margin-bottom: 2px;
+        }
+
+        .highlight-lbl {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--primary-light);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Responsive Layout styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .resume-container {
+                padding: 30px 20px;
+            }
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            .header-right {
+                text-align: left;
+                align-items: flex-start;
+            }
+            .resume-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .highlights-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+
+        /* Print stylesheet optimization */
+        @media print {
+            body {
+                background: #ffffff;
+                color: #000000;
+                padding: 0;
+                margin: 0;
+            }
+            .resume-container {
+                box-shadow: none;
+                padding: 0;
+                border-radius: 0;
+                max-width: 100%;
+            }
+            .action-bar {
+                display: none;
+            }
+            .btn-action {
+                display: none;
+            }
+            .skill-tag {
+                background: #ffffff !important;
+                border: 1px solid #94a3b8 !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            .highlight-card {
+                background: #ffffff !important;
+                border: 1px solid #cbd5e1 !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            a {
+                text-decoration: none;
+                color: #000000;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="resume-container">
+        <!-- Action Bar (Hidden when printed) -->
+        <div class="action-bar">
+            <a href="index.html" class="btn-action">← Back to Portfolio</a>
+            <button onclick="window.print()" class="btn-action btn-primary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:-1px"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                Print / Save PDF
+            </button>
+        </div>
+
+        <!-- Header -->
+        <header>
+            <div class="header-left">
+                <h1>Divyaraj Chauhan</h1>
+                <div class="title-sub">Social Media Manager &amp; Content Creator</div>
+            </div>
+            <div class="header-right">
+                <span>Ahmedabad, Gujarat, India</span>
+                <a href="mailto:divyarajc@gmail.com">divyarajc@gmail.com</a>
+                <span>+91 99797 87087</span>
+                <a href="https://wa.me/qr/KQJFSZ2WY5FSO1" target="_blank">WhatsApp Business</a>
+            </div>
+        </header>
+
+        <!-- SMM Impact Summary Grid -->
+        <div class="section-block" style="margin-bottom: 30px;">
+            <h3>Key Accomplishments</h3>
+            <div class="highlights-grid">
+                <div class="highlight-card">
+                    <div class="highlight-val">34+</div>
+                    <div class="highlight-lbl">Brands Managed</div>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-val">3+</div>
+                    <div class="highlight-lbl">Years Experience</div>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-val">1.5K+</div>
+                    <div class="highlight-lbl">Assets Delivered</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Two Column Content -->
+        <div class="resume-grid">
+            
+            <!-- Left Side Column -->
+            <div class="sidebar-col">
+                
+                <!-- Contact Meta Links -->
+                <div class="section-block">
+                    <h3>Connect</h3>
+                    <ul class="contact-list">
+                        <li>
+                            <span class="label">Portfolio Website</span>
+                            <a href="https://divyaraj.co" target="_blank">divyaraj.co</a>
+                        </li>
+                        <li>
+                            <span class="label">LinkedIn Profile</span>
+                            <a href="https://linkedin.com/in/divyaraj-chauhan" target="_blank">linkedin.com/in/divyaraj-chauhan</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Education -->
+                <div class="section-block">
+                    <h3>Education</h3>
+                    <div class="edu-item">
+                        <div class="edu-degree">B.E. in Electronics &amp; Communication</div>
+                        <div class="edu-school">GEC Gandhinagar</div>
+                        <div class="edu-date">Ongoing</div>
+                    </div>
+                </div>
+
+                <!-- Technical Skills -->
+                <div class="section-block">
+                    <h3>Core Skills</h3>
+                    
+                    <div class="skills-group">
+                        <h4>Platform &amp; Campaign SMM</h4>
+                        <div class="skills-list">
+                            <span class="skill-tag">Instagram Strategy</span>
+                            <span class="skill-tag">LinkedIn Authority</span>
+                            <span class="skill-tag">Meta Ads</span>
+                            <span class="skill-tag">X / Threads Strategy</span>
+                            <span class="skill-tag">Local SEO</span>
+                        </div>
+                    </div>
+
+                    <div class="skills-group">
+                        <h4>Content &amp; Editing Suite</h4>
+                        <div class="skills-list">
+                            <span class="skill-tag">Adobe Premiere Pro</span>
+                            <span class="skill-tag">Adobe Photoshop</span>
+                            <span class="skill-tag">CapCut</span>
+                            <span class="skill-tag">Alight Motion</span>
+                            <span class="skill-tag">Canva Pro</span>
+                        </div>
+                    </div>
+
+                    <div class="skills-group">
+                        <h4>Community &amp; Operations</h4>
+                        <div class="skills-list">
+                            <span class="skill-tag">Community Architecture</span>
+                            <span class="skill-tag">Discord Moderation</span>
+                            <span class="skill-tag">Esports League Ops</span>
+                            <span class="skill-tag">Videography</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side Column -->
+            <div class="main-col">
+                
+                <!-- Professional Experience -->
+                <div class="section-block">
+                    <h3>Work Experience</h3>
+
+                    <!-- Credes Techlabs -->
+                    <div class="exp-item">
+                        <div class="exp-header">
+                            <span class="exp-title">Social Media Manager &amp; Content Writer</span>
+                            <span class="exp-date">Oct 2025 — Present</span>
+                        </div>
+                        <div class="exp-company">Credes Techlabs · Remote / Hybrid</div>
+                        <p class="exp-desc">
+                            Direct SMM initiatives and execute digital positioning for high-growth client products (including Giffy, HashLite, Slyth, FTF, and Shift).
+                        </p>
+                        <ul class="exp-bullets">
+                            <li>Manage end-to-end content distribution pipelines, scheduling, and community engagement.</li>
+                            <li>Develop high-performing copy, vlogs, and 3D visual assets to establish unified social grid aesthetics.</li>
+                            <li>Coordinated product beta-launch pipelines and managed feedback pipelines to streamline development releases.</li>
+                        </ul>
+                    </div>
+
+                    <!-- HashLite -->
+                    <div class="exp-item">
+                        <div class="exp-header">
+                            <span class="exp-title">SMM / Content Pipeline Lead</span>
+                            <span class="exp-date">Feb 2026 — April 2026</span>
+                        </div>
+                        <div class="exp-company">HashLite Tech · Freelance / Campaign</div>
+                        <p class="exp-desc">
+                            Engineered a developer-focused content loop to establish B2B brand trust and drive organic incubator conversions.
+                        </p>
+                        <ul class="exp-bullets">
+                            <li>Produced and edited 6 high-retention video shorts highlighting workspace setups, UI/UX flows, and frontend configurations.</li>
+                            <li>Scaled monthly organic brand impressions across Instagram, LinkedIn, and Threads.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Sattvik Certifications -->
+                    <div class="exp-item">
+                        <div class="exp-header">
+                            <span class="exp-title">Event Digital Campaign Manager</span>
+                            <span class="exp-date">Jan 2026 — Feb 2026</span>
+                        </div>
+                        <div class="exp-company">Sattvik Certifications · Singapore / New Delhi</div>
+                        <p class="exp-desc">
+                            Managed the complete digital SMM rollout and creative production for Sattvik Certifications' flagship global event, SATCON Conclave 2026, held at Le Meridien, New Delhi.
+                        </p>
+                        <ul class="exp-bullets">
+                            <li>Orchestrated the creation of over 100 promotional visual and video content pieces distributed across 6 global channels.</li>
+                            <li>Drove localized event engagement and broadcast support for delegates from over 6 countries.</li>
+                        </ul>
+                    </div>
+
+                    <!-- WHMS -->
+                    <div class="exp-item">
+                        <div class="exp-header">
+                            <span class="exp-title">SMM &amp; Content Creation Manager</span>
+                            <span class="exp-date">Nov 2025 — Dec 2025</span>
+                        </div>
+                        <div class="exp-company">White Horse Media Solutions · WFO</div>
+                        <p class="exp-desc">
+                            Managed local client growth accounts, lead videographer assignments, and video editor pipelines.
+                        </p>
+                        <ul class="exp-bullets">
+                            <li>Executed Google My Business Local SEO optimization campaigns resulting in positive localized conversions.</li>
+                            <li>Managed Meta Ads and created video promo assets for medical and healthcare clients.</li>
+                        </ul>
+                    </div>
+
+                    <!-- ESFI -->
+                    <div class="exp-item">
+                        <div class="exp-header">
+                            <span class="exp-title">League Operations &amp; Production Support</span>
+                            <span class="exp-date">Jul 2025 — Sep 2025</span>
+                        </div>
+                        <div class="exp-company">Esports Federation of India · Remote</div>
+                        <p class="exp-desc">
+                            Provided digital broadcast layout designs and video editing assets for national-level event streams.
+                        </p>
+                        <ul class="exp-bullets">
+                            <li>Designed overlays, edit cuts, and graphic promotional collateral for pan-India tournament broadcasts.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Gujarat Tigers -->
+                    <div class="exp-item">
+                        <div class="exp-header">
+                            <span class="exp-title">Social Media Manager &amp; Video Editor</span>
+                            <span class="exp-date">Aug 2023 — Feb 2025</span>
+                        </div>
+                        <div class="exp-company">Gujarat Tigers Esports · Hybrid</div>
+                        <p class="exp-desc">
+                            Pioneered SMM and editing operations from scratch, establishing the esports team's organic fanbase.
+                        </p>
+                        <ul class="exp-bullets">
+                            <li>Edited and released gaming montages, rosters reels, and team announcements.</li>
+                            <li>Coordinated league roster communications and logistics support for offline esports events.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Copyright / Attribution -->
+        <div class="copyright-above" style="font-size:0.75rem; text-align:center; color:var(--text-muted); margin-top:40px; padding-top:20px; border-top:1.5px solid var(--border)">
+            Divyaraj Chauhan — SMM Portfolio Resume. Print to PDF using the button above or standard browser dialog (Ctrl+P).
+        </div>
+    </div>
+
+</body>
+</html>
