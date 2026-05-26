@@ -236,6 +236,11 @@
             margin: 0 auto;
             position: relative;
             z-index: 1;
+            scroll-margin-top: 0px; /* Default scroll margin to align section content nicely below navbar */
+        }
+
+        #about {
+            scroll-margin-top: -230px; /* Accounts for the -220px margin-top overlap to hide hero bleed */
         }
 
         /* ─── Hero ─── */
@@ -1658,7 +1663,7 @@
         /* ─── Dot Matrix Section ─── */
         .dot-matrix-wrap {
             width: 100%;
-            height: 900px;
+            height: 360px;
             background: var(--bg);
             overflow: hidden;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -1776,6 +1781,11 @@
             }
             section {
                 padding: 80px 5%;
+                scroll-margin-top: 20px; /* Prevents mobile navbar overlap due to smaller padding */
+            }
+            #about {
+                padding-top: 180px;
+                scroll-margin-top: -80px; /* Aligns perfectly on mobile viewports */
             }
             .hero {
                 padding-top: 100px;
@@ -2401,6 +2411,19 @@
                         </svg>
                         <a href="tel:+919979787087" style="color: inherit; text-decoration: none;">+91 99797 87087</a>
                     </span>
+                    <span>
+                        <svg class="contact-icon" viewBox="0 0 24 24">
+                            <defs>
+                                <linearGradient id="grad-contact-linkedin" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#5C58ED" />
+                                    <stop offset="100%" stop-color="#B3B0FF" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z" stroke="url(#grad-contact-linkedin)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="4" cy="4" r="2" stroke="url(#grad-contact-linkedin)" stroke-width="1.8" fill="none"/>
+                        </svg>
+                        <a href="https://www.linkedin.com/in/divyarajchauhan33/" target="_blank" rel="noopener" style="color: inherit; text-decoration: none;">divyarajchauhan33</a>
+                    </span>
                 </div>
             </div>
 
@@ -2624,7 +2647,7 @@
             
             function resize() {
                 canvas.width  = canvas.parentElement.offsetWidth;
-                canvas.height = canvas.parentElement.offsetHeight || 900;
+                canvas.height = canvas.parentElement.offsetHeight || 360;
                 barWidth = canvas.width < 768 ? 12 : 16;
             }
             window.addEventListener('resize', resize);
@@ -2730,6 +2753,25 @@
                 // Clear and draw solid dark background
                 ctx.fillStyle = '#03040a';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Draw giant scrolling text watermark ("timeline") in the background (Inter font, off-white)
+                ctx.save();
+                ctx.font = '900 320px Inter, -apple-system, sans-serif';
+                ctx.fillStyle = 'rgba(240, 240, 245, 0.08)'; // Subtle premium watermark opacity matching Image 2
+                ctx.textBaseline = 'middle';
+                
+                const textSegment = " Divyaraj Chauhan ";
+                const textWidth = ctx.measureText(textSegment).width;
+                const scrollSpeed = 0.05; // Smooth slow scroll speed
+                const scrollX = (now * scrollSpeed) % textWidth;
+                
+                const yPos = canvas.height / 2;
+                let startX = -scrollX;
+                while (startX < canvas.width + textWidth) {
+                    ctx.fillText(textSegment, startX, yPos);
+                    startX += textWidth;
+                }
+                ctx.restore();
 
                 // Initialize positions on first frame to prevent origin jumping
                 if (!initialized) {
