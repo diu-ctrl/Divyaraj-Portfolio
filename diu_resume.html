@@ -99,9 +99,17 @@
             margin-bottom: 36px;
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .header-main-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             gap: 20px;
+            flex: 1;
+            min-width: 280px;
         }
 
         .header-left h1 {
@@ -123,11 +131,11 @@
         .header-right {
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
+            align-items: flex-start;
             gap: 6px;
             font-size: 0.88rem;
             color: var(--text-muted);
-            text-align: right;
+            text-align: left;
         }
 
         .header-right a {
@@ -138,6 +146,76 @@
 
         .header-right a:hover {
             color: var(--accent);
+        }
+
+        /* Media Slot (Showcase video online, photo in PDF print) */
+        .header-media {
+            width: 350px;
+            height: 350px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: #000;
+            flex-shrink: 0;
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.1),
+                        0 8px 16px -6px rgba(15, 23, 42, 0.05);
+        }
+
+        .resume-video, .resume-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .resume-photo {
+            display: none !important;
+        }
+
+        /* Video Controls Overlay */
+        .video-controls {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+            opacity: 0.75;
+            transition: opacity 0.3s ease, transform 0.2s ease;
+        }
+
+        .header-media:hover .video-controls {
+            opacity: 1;
+        }
+
+        .control-btn {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            padding: 0;
+        }
+
+        .control-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+
+        .control-btn svg {
+            display: block;
         }
 
         /* Main Grid */
@@ -371,12 +449,29 @@
             }
             header {
                 flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
+                align-items: center;
+                text-align: center;
+                gap: 20px;
+            }
+            .header-main-info {
+                align-items: center;
+                text-align: center;
+                width: 100%;
+                height: auto;
+            }
+            .header-left {
+                text-align: center;
+                margin-bottom: 10px;
             }
             .header-right {
-                text-align: left;
-                align-items: flex-start;
+                text-align: center;
+                align-items: center;
+            }
+            .header-media {
+                width: 100%;
+                max-width: 350px;
+                aspect-ratio: 1 / 1;
+                height: auto;
             }
             .resume-grid {
                 grid-template-columns: 1fr;
@@ -441,15 +536,52 @@
 
         <!-- Header -->
         <header>
-            <div class="header-left">
-                <h1>Divyaraj Chauhan</h1>
-                <div class="title-sub">Social Media Manager &amp; Content Creator</div>
+            <div class="header-main-info">
+                <div class="header-left">
+                    <h1>Divyaraj Chauhan</h1>
+                    <div class="title-sub">Social Media Manager &amp; Content Creator</div>
+                </div>
+                <div class="header-right">
+                    <span>Ahmedabad, Gujarat, India</span>
+                    <a href="mailto:divyarajc2@gmail.com">divyarajc2@gmail.com</a>
+                    <a href="tel:+919979787087">+91 99797 87087</a>
+                    <a href="https://wa.me/qr/KQJFSZ2WY5FSO1" target="_blank">Chat on Whatsapp</a>
+                </div>
             </div>
-            <div class="header-right">
-                <span>Ahmedabad, Gujarat, India</span>
-                <a href="mailto:divyarajc2@gmail.com">divyarajc2@gmail.com</a>
-                <a href="tel:+919979787087">+91 99797 87087</a>
-                <a href="https://wa.me/qr/KQJFSZ2WY5FSO1" target="_blank">WhatsApp Business</a>
+            <div class="header-media">
+                <!-- Video for showcase (online screen view only) -->
+                <video class="resume-video" id="resumeVideo" autoplay loop muted playsinline oncontextmenu="return false;" disablepictureinpicture controlslist="nodownload">
+                    <source src="images/divyaraj intro 2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <!-- Custom controls overlay (screen only) -->
+                <div class="video-controls">
+                    <button class="control-btn" id="playPauseBtn" aria-label="Play/Pause">
+                        <!-- Play Icon -->
+                        <svg class="play-icon" viewBox="0 0 24 24" width="16" height="16" style="display: none;">
+                            <polygon points="5,3 19,12 5,21" fill="currentColor"/>
+                        </svg>
+                        <!-- Pause Icon -->
+                        <svg class="pause-icon" viewBox="0 0 24 24" width="16" height="16">
+                            <rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor"/>
+                            <rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor"/>
+                        </svg>
+                    </button>
+                    <button class="control-btn" id="muteUnmuteBtn" aria-label="Mute/Unmute">
+                        <!-- Muted Icon -->
+                        <svg class="muted-icon" viewBox="0 0 24 24" width="16" height="16">
+                            <path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor"/>
+                            <path d="M23 9l-2.5 2.5L18 9l-1 1 2.5 2.5L17 15l1 1 2.5-2.5 2.5 2.5 1-1-2.5-2.5 2.5-2.5z" fill="currentColor"/>
+                        </svg>
+                        <!-- Unmuted/Volume Icon -->
+                        <svg class="volume-icon" viewBox="0 0 24 24" width="16" height="16" style="display: none;">
+                            <path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor"/>
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        </svg>
+                    </button>
+                </div>
+                <!-- Photo for PDF download / print only -->
+                <img class="resume-photo" src="images/divyaraj pp 2.png" alt="Divyaraj Chauhan">
             </div>
         </header>
 
@@ -484,11 +616,11 @@
                     <ul class="contact-list">
                         <li>
                             <span class="label">Portfolio Website</span>
-                            <a href="https://divyaraj.co" target="_blank">divyaraj.co</a>
+                            <a href="https://divyaraj-exhibit.vercel.app" target="_blank">divyaraj-exhibit.vercel.app</a>
                         </li>
                         <li>
                             <span class="label">LinkedIn Profile</span>
-                            <a href="https://linkedin.com/in/divyaraj-chauhan" target="_blank">linkedin.com/in/divyaraj-chauhan</a>
+                            <a href="https://www.linkedin.com/in/divyarajchauhan33/" target="_blank">linkedin.com/in/divyarajchauhan33</a>
                         </li>
                     </ul>
                 </div>
@@ -655,5 +787,65 @@
         </div>
     </div>
 
+    <!-- Video Player Controls Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.getElementById('resumeVideo');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const muteUnmuteBtn = document.getElementById('muteUnmuteBtn');
+            
+            if (!video || !playPauseBtn || !muteUnmuteBtn) return;
+            
+            const playIcon = playPauseBtn.querySelector('.play-icon');
+            const pauseIcon = playPauseBtn.querySelector('.pause-icon');
+            const mutedIcon = muteUnmuteBtn.querySelector('.muted-icon');
+            const volumeIcon = muteUnmuteBtn.querySelector('.volume-icon');
+
+            const updatePlayPauseUI = () => {
+                if (video.paused) {
+                    playIcon.style.display = 'block';
+                    pauseIcon.style.display = 'none';
+                } else {
+                    playIcon.style.display = 'none';
+                    pauseIcon.style.display = 'block';
+                }
+            };
+
+            const updateMuteUI = () => {
+                if (video.muted) {
+                    mutedIcon.style.display = 'block';
+                    volumeIcon.style.display = 'none';
+                } else {
+                    mutedIcon.style.display = 'none';
+                    volumeIcon.style.display = 'block';
+                }
+            };
+
+            // Run initial sync
+            updatePlayPauseUI();
+            updateMuteUI();
+
+            playPauseBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (video.paused) {
+                    video.play().then(updatePlayPauseUI).catch(err => console.log('Playback error:', err));
+                } else {
+                    video.pause();
+                    updatePlayPauseUI();
+                }
+            });
+
+            muteUnmuteBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                video.muted = !video.muted;
+                updateMuteUI();
+            });
+
+            // Sync UI with video events
+            video.addEventListener('play', updatePlayPauseUI);
+            video.addEventListener('pause', updatePlayPauseUI);
+            video.addEventListener('volumechange', updateMuteUI);
+        });
+    </script>
 </body>
 </html>

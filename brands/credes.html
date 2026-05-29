@@ -1104,6 +1104,68 @@
             }
         }
         /* --- End Mobile Responsiveness Overrides --- */
+
+        /* Custom top-right phone mute/unmute button */
+        .phone-mute-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.25s;
+            z-index: 15;
+            padding: 0;
+            outline: none;
+        }
+        .phone-mute-btn:hover {
+            background: rgba(92, 88, 237, 0.9);
+            border-color: transparent;
+            transform: scale(1.1);
+        }
+        .phone-mute-btn svg {
+            display: block;
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Custom bottom-right card mute/unmute button */
+        .card-mute-btn {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.25s;
+            z-index: 12;
+            padding: 0;
+            outline: none;
+        }
+        .card-mute-btn:hover {
+            background: rgba(92, 88, 237, 0.9);
+            border-color: transparent;
+            transform: scale(1.1);
+        }
+        .card-mute-btn svg {
+            display: block;
+            width: 14px;
+            height: 14px;
+        }
 </style>
 </head>
 <body>
@@ -1119,7 +1181,6 @@
         ← Back to Portfolio
     </a>
     <div class="header-badge">
-        <span></span>
         Active Engagement
     </div>
 </header>
@@ -1130,7 +1191,6 @@
     <section class="hero">
         <div class="hero-left reveal" style="position:relative;z-index:1;">
             <div class="hero-eyebrow">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.8"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
         Oct 2025 — Present · Social Media Manager
     </div>
             <h1 class="hero-title">
@@ -1169,6 +1229,17 @@
 
                 <!-- Main phone -->
                 <div class="phone-frame" id="mainPhone">
+                    <!-- Custom Mute/Unmute Button (Top Right) -->
+                    <button class="phone-mute-btn" id="heroMuteBtn" aria-label="Mute/Unmute">
+                        <!-- Muted Icon -->
+                        <svg class="muted-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM12 4L9.91 6.09 12 8.18V4zm-8.8 1.9L2 7.1 6.9 12 2 16.9l1.1 1.1 4.9-4.9L12 17.2V14.5l3.8 3.8c-.7.5-1.5.9-2.3 1.1v2.1c1.4-.3 2.6-.9 3.7-1.8l3.7 3.7 1.1-1.1L3.2 5.9z"/>
+                        </svg>
+                        <!-- Volume/Unmuted Icon -->
+                        <svg class="volume-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="display: none;">
+                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                        </svg>
+                    </button>
                     <video class="reel-video" id="heroReel" muted loop playsinline
                            src="Credes/Videos/But Why.mp4"
                            poster="Credes/Videos/But Why.png">
@@ -1179,17 +1250,17 @@
                             <svg id="heroPlayIcon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         </div>
                     </div>
-                    <div class="reel-badge">
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style="color:var(--secondary-3)"><polygon points="5 3 19 12 5 21 5 3"/></svg> 1.2M+ Views
+                    <div class="reel-badge" id="heroReelBadge">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style="color:var(--secondary-3)"><polygon points="5 3 19 12 5 21 5 3"/></svg> <span class="badge-text">1.2M+ Views</span>
                     </div>
                 </div>
 
                 <!-- Dots -->
                 <div class="reel-dots">
-                    <div class="reel-dot active" data-src="Credes/Videos/But Why.mp4" data-poster="Credes/Videos/But Why.png"></div>
-                    <div class="reel-dot" data-src="Credes/Videos/HB.mp4" data-poster="Credes/Videos/HB.png"></div>
-                    <div class="reel-dot" data-src="Credes/Videos/MPL.mp4" data-poster="Credes/Videos/MPL.png"></div>
-                    <div class="reel-dot" data-src="Credes/Videos/Success.mp4" data-poster="Credes/Videos/Success.png"></div>
+                    <div class="reel-dot active" data-src="Credes/Videos/But Why.mp4" data-poster="Credes/Videos/But Why.png" data-views="1.2M+"></div>
+                    <div class="reel-dot" data-src="Credes/Videos/HB.mp4" data-poster="Credes/Videos/HB.png" data-views="438K+"></div>
+                    <div class="reel-dot" data-src="Credes/Videos/MPL.mp4" data-poster="Credes/Videos/MPL.png" data-views="179K+"></div>
+                    <div class="reel-dot" data-src="Credes/Videos/Success.mp4" data-poster="Credes/Videos/Success.png" data-views="520K+"></div>
                 </div>
             </div>
         </div>
@@ -1290,6 +1361,17 @@
                 <div class="reel-card-info">
                     <div class="reel-views">1.5M+ views</div>
                 </div>
+                <!-- Bottom Right Mute/Unmute Button -->
+                <button class="card-mute-btn" aria-label="Mute/Unmute">
+                    <!-- Muted Icon -->
+                    <svg class="muted-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM12 4L9.91 6.09 12 8.18V4zm-8.8 1.9L2 7.1 6.9 12 2 16.9l1.1 1.1 4.9-4.9L12 17.2V14.5l3.8 3.8c-.7.5-1.5.9-2.3 1.1v2.1c1.4-.3 2.6-.9 3.7-1.8l3.7 3.7 1.1-1.1L3.2 5.9z"/>
+                    </svg>
+                    <!-- Volume/Unmuted Icon -->
+                    <svg class="volume-icon" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                    </svg>
+                </button>
             </div>
             <div class="reel-card" id="reelCard2">
                 <video poster="Credes/Videos/HB.png" muted loop playsinline preload="metadata">
@@ -1302,6 +1384,17 @@
                 <div class="reel-card-info">
                     <div class="reel-views">438K+ views</div>
                 </div>
+                <!-- Bottom Right Mute/Unmute Button -->
+                <button class="card-mute-btn" aria-label="Mute/Unmute">
+                    <!-- Muted Icon -->
+                    <svg class="muted-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM12 4L9.91 6.09 12 8.18V4zm-8.8 1.9L2 7.1 6.9 12 2 16.9l1.1 1.1 4.9-4.9L12 17.2V14.5l3.8 3.8c-.7.5-1.5.9-2.3 1.1v2.1c1.4-.3 2.6-.9 3.7-1.8l3.7 3.7 1.1-1.1L3.2 5.9z"/>
+                    </svg>
+                    <!-- Volume/Unmuted Icon -->
+                    <svg class="volume-icon" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                    </svg>
+                </button>
             </div>
             <div class="reel-card" id="reelCard3">
                 <video poster="Credes/Videos/Success.png" muted loop playsinline preload="metadata">
@@ -1314,6 +1407,17 @@
                 <div class="reel-card-info">
                     <div class="reel-views">520K+ views</div>
                 </div>
+                <!-- Bottom Right Mute/Unmute Button -->
+                <button class="card-mute-btn" aria-label="Mute/Unmute">
+                    <!-- Muted Icon -->
+                    <svg class="muted-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM12 4L9.91 6.09 12 8.18V4zm-8.8 1.9L2 7.1 6.9 12 2 16.9l1.1 1.1 4.9-4.9L12 17.2V14.5l3.8 3.8c-.7.5-1.5.9-2.3 1.1v2.1c1.4-.3 2.6-.9 3.7-1.8l3.7 3.7 1.1-1.1L3.2 5.9z"/>
+                    </svg>
+                    <!-- Volume/Unmuted Icon -->
+                    <svg class="volume-icon" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                    </svg>
+                </button>
             </div>
             <div class="reel-card" id="reelCard4">
                 <video poster="Credes/Videos/MPL.png" muted loop playsinline preload="metadata">
@@ -1326,6 +1430,17 @@
                 <div class="reel-card-info">
                     <div class="reel-views">179K+ views</div>
                 </div>
+                <!-- Bottom Right Mute/Unmute Button -->
+                <button class="card-mute-btn" aria-label="Mute/Unmute">
+                    <!-- Muted Icon -->
+                    <svg class="muted-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM12 4L9.91 6.09 12 8.18V4zm-8.8 1.9L2 7.1 6.9 12 2 16.9l1.1 1.1 4.9-4.9L12 17.2V14.5l3.8 3.8c-.7.5-1.5.9-2.3 1.1v2.1c1.4-.3 2.6-.9 3.7-1.8l3.7 3.7 1.1-1.1L3.2 5.9z"/>
+                    </svg>
+                    <!-- Volume/Unmuted Icon -->
+                    <svg class="volume-icon" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                    </svg>
+                </button>
             </div>
         </div>
     </section>
@@ -1548,6 +1663,23 @@
         if (!heroPlaying) heroPlayOverlay.style.opacity = '1';
     });
 
+    // Mute/Unmute toggle for Hero Video
+    const heroMuteBtn = document.getElementById('heroMuteBtn');
+    const heroMutedIcon = heroMuteBtn.querySelector('.muted-icon');
+    const heroVolumeIcon = heroMuteBtn.querySelector('.volume-icon');
+
+    heroMuteBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Avoid toggling play/pause
+        heroReel.muted = !heroReel.muted;
+        if (heroReel.muted) {
+            heroMutedIcon.style.display = 'block';
+            heroVolumeIcon.style.display = 'none';
+        } else {
+            heroMutedIcon.style.display = 'none';
+            heroVolumeIcon.style.display = 'block';
+        }
+    });
+
     dots.forEach((dot) => {
         dot.addEventListener('click', () => {
             dots.forEach(d => d.classList.remove('active'));
@@ -1556,13 +1688,21 @@
             heroReel.poster = dot.dataset.poster;
             heroReel.load();
             setHeroState(false);
+
+            // Sync views dynamically
+            const views = dot.dataset.views;
+            document.querySelector('#heroReelBadge .badge-text').textContent = `${views} Views`;
+            document.querySelector('.floating-card.top-left .fc-value').textContent = views;
         });
     });
 
-    // ─── Reel Cards: click to toggle play/pause ───
+    // ─── Reel Cards: click to toggle play/pause & mute ───
     document.querySelectorAll('.reel-card').forEach(card => {
         const vid = card.querySelector('video');
         const playBtn = card.querySelector('.reel-play-btn');
+        const muteBtn = card.querySelector('.card-mute-btn');
+        const mutedIcon = muteBtn.querySelector('.muted-icon');
+        const volumeIcon = muteBtn.querySelector('.volume-icon');
         let playing = false;
 
         card.addEventListener('click', () => {
@@ -1585,9 +1725,32 @@
             }
         });
 
-        // Show play btn on hover
-        card.addEventListener('mouseenter', () => { if(!playing) { playBtn.style.opacity = '1'; playBtn.style.transform = 'translate(-50%,-50%) scale(1)'; } });
-        card.addEventListener('mouseleave', () => { if(!playing) { playBtn.style.opacity = '0'; playBtn.style.transform = 'translate(-50%,-50%) scale(0.85)'; } });
+        // Mute button click listener
+        muteBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Avoid triggering card play/pause toggle
+            vid.muted = !vid.muted;
+            if (vid.muted) {
+                mutedIcon.style.display = 'block';
+                volumeIcon.style.display = 'none';
+            } else {
+                mutedIcon.style.display = 'none';
+                volumeIcon.style.display = 'block';
+            }
+        });
+
+        // Show overlay buttons on card hover
+        card.addEventListener('mouseenter', () => { 
+            if(!playing) { 
+                playBtn.style.opacity = '1'; 
+                playBtn.style.transform = 'translate(-50%,-50%) scale(1)'; 
+            } 
+        });
+        card.addEventListener('mouseleave', () => { 
+            if(!playing) { 
+                playBtn.style.opacity = '0'; 
+                playBtn.style.transform = 'translate(-50%,-50%) scale(0.85)'; 
+            } 
+        });
     });
 
     // ─── Role Overview Pills Reveal ───
