@@ -483,6 +483,24 @@
             }
         }
 
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            .resume-container {
+                padding: 24px 14px;
+            }
+            .highlights-grid {
+                gap: 8px;
+            }
+            .highlight-card {
+                padding: 12px;
+            }
+            .title-sub {
+                font-size: 0.95rem;
+            }
+        }
+
         /* Print stylesheet optimization */
         @media print {
             body {
@@ -518,6 +536,15 @@
             a {
                 text-decoration: none;
                 color: #000000;
+            }
+            .resume-video {
+                display: none !important;
+            }
+            .video-controls {
+                display: none !important;
+            }
+            .resume-photo {
+                display: block !important;
             }
         }
     </style>
@@ -670,6 +697,18 @@
                             <span class="skill-tag">Videography</span>
                         </div>
                     </div>
+
+                    <div class="skills-group">
+                        <h4>Web Design &amp; Development</h4>
+                        <div class="skills-list">
+                            <span class="skill-tag">HTML5 &amp; CSS3</span>
+                            <span class="skill-tag">Vanilla JavaScript</span>
+                            <span class="skill-tag">UX/UI Design System</span>
+                            <span class="skill-tag">Vercel Deployment</span>
+                            <span class="skill-tag">Git Version Control</span>
+                            <span class="skill-tag">Responsive Design</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -777,6 +816,46 @@
                     </div>
 
                 </div>
+
+                <!-- Web Design & Development -->
+                <div class="section-block" style="margin-top: 36px;">
+                    <h3>Web Design &amp; Development Projects</h3>
+
+                    <!-- Abhushan -->
+                    <div class="exp-item">
+                        <div class="exp-header">
+                            <span class="exp-title">Lead Web Designer &amp; Developer</span>
+                            <span class="exp-date">May 2026 — Present</span>
+                        </div>
+                        <div class="exp-company">Abhushan · E-Commerce Project</div>
+                        <p class="exp-desc">
+                            Conceived, designed, and engineered a premium, high-end interactive luxury jewelry storefront to elevate brand positioning.
+                        </p>
+                        <ul class="exp-bullets">
+                            <li>Established complete luxury brand identity, including gold/blush/cream color systems and sophisticated typography.</li>
+                            <li>Coded a dynamic cursive logo entry motion and responsive interactive sliders using pure CSS and vanilla JavaScript.</li>
+                            <li>Optimized assets and layout structure, achieving fast page load times and seamless mobile responsiveness.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Detailing Cars -->
+                    <div class="exp-item">
+                        <div class="exp-header">
+                            <span class="exp-title">Frontend Developer &amp; UI Designer</span>
+                            <span class="exp-date">May 2026 — June 2026</span>
+                        </div>
+                        <div class="exp-company">Detailing Cars (DC) · Digital Showroom</div>
+                        <p class="exp-desc">
+                            Designed and built a precision dark-mode digital showroom and scheduler for a premium mobile car detailing service.
+                        </p>
+                        <ul class="exp-bullets">
+                            <li>Created a dark high-contrast aesthetic mirroring surgical-grade garage studios, paired with performance-blue interactions.</li>
+                            <li>Designed and coded an intuitive interactive appointment scheduling workflow with persistent mobile calls to action.</li>
+                            <li>Integrated fluid media galleries showcasing high-gloss photography and interactive videography.</li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
 
         </div>
