@@ -8,19 +8,23 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #5C58ED;
+            --primary: #5C3AED;
             --accent-1: #4D55CC;
             --secondary-1: #0E192D;
             --secondary-2: #262276;
             --secondary-3: #B3B0FF;
             --bg: #03040a;
             --surface: rgba(14, 25, 45, 0.45);
+            --surface-flat: #0a0d1a;
             --text: #f0f0f5;
             --text-muted: #8a8fb5;
             --border: rgba(255, 255, 255, 0.06);
+            --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+            --font-mono:  'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
         }
 
         * {
@@ -152,9 +156,7 @@
             white-space: nowrap;
         }
 
-        .nav-links a:hover {
-            color: var(--text);
-        }
+        /* Underline animation hover styling is handled in ::after */
 
         .nav-links a::after {
             content: '';
@@ -199,7 +201,7 @@
             align-items: center;
             padding: 10px 24px;
             background: linear-gradient(#0e192d, #0e192d) padding-box,
-                        linear-gradient(135deg, var(--primary), var(--secondary-3)) border-box;
+                        linear-gradient(135deg, #ffffff, rgba(255, 255, 255, 0.5)) border-box;
             color: #ffffff;
             border: 1px solid transparent;
             border-radius: 100px;
@@ -210,14 +212,14 @@
             cursor: pointer;
             white-space: nowrap;
             letter-spacing: 0.03em;
-            box-shadow: 0 4px 15px -5px rgba(92, 88, 237, 0.2);
+            box-shadow: 0 4px 15px -5px rgba(255, 255, 255, 0.15);
         }
 
         .btn-nav:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 30px -8px rgba(92, 88, 237, 0.4);
+            box-shadow: 0 12px 30px -8px rgba(255, 255, 255, 0.3);
             background: linear-gradient(#16223f, #16223f) padding-box,
-                        linear-gradient(135deg, var(--secondary-3), var(--primary)) border-box;
+                        linear-gradient(135deg, rgba(255, 255, 255, 0.8), #ffffff) border-box;
         }
 
         .mobile-menu-btn {
@@ -332,10 +334,11 @@
         }
 
         h1 {
+            font-family: var(--font-serif);
             font-size: clamp(3.2rem, 8vw, 6.5rem);
             font-weight: 800;
             line-height: 1.05;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.01em; /* serifs need less tight tracking than Inter */
             margin-bottom: 24px;
         }
 
@@ -353,17 +356,13 @@
         }
 
         .tagline {
-            font-size: 1.1rem;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            text-transform: none;
             color: var(--text-muted);
             margin-bottom: 24px;
-        }
-
-        .tagline span {
-            color: var(--primary);
-            margin: 0 8px;
         }
 
         .hero-subtitle {
@@ -377,31 +376,76 @@
 
         .hero-stats {
             display: flex;
-            gap: 50px;
+            gap: 0;
             margin-top: 20px;
-            flex-wrap: wrap;
+            align-items: center;
         }
 
         .stat {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
         }
 
-        .stat-value {
-            font-size: 2.8rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--secondary-3));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* --- Dominant stat --- */
+        .stat-featured {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding-right: 28px;
+        }
+
+        .stat-featured .stat-value {
+            font-size: 5.5rem;
+            font-weight: 900;
+            color: #ffffff;
+            -webkit-text-fill-color: #ffffff;
+            line-height: 0.9;
+            letter-spacing: -0.02em;
+        }
+
+        /* --- Divider line --- */
+        .stats-divider {
+            width: 1px;
+            height: 52px;
+            background: rgba(255,255,255,0.15);
+            flex-shrink: 0;
+            margin-right: 24px;
+        }
+
+        /* --- Secondary stats cluster --- */
+        .stats-secondary {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .stat-minor {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .stat-value-minor {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-muted);
             line-height: 1;
         }
 
         .stat-label {
-            font-size: 0.85rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
             color: var(--text-muted);
-            font-weight: 500;
-            letter-spacing: 0.02em;
+            font-weight: 400;
+            letter-spacing: 0.03em;
+            opacity: 0.7;
+        }
+
+        .stat-featured .stat-label {
+            font-size: 0.76rem;
+            opacity: 0.9;
         }
 
         /* ─── Section Headers ─── */
@@ -431,15 +475,14 @@
 
         h2 {
             font-size: clamp(2rem, 5vw, 3.2rem);
-            font-weight: 800;
-            letter-spacing: -0.02em;
+            font-weight: 900;
+            letter-spacing: -0.025em;
             line-height: 1.15;
         }
 
         /* ─── Glass Cards ─── */
         .glass-card {
-            background: var(--surface);
-            backdrop-filter: blur(24px) saturate(1.2);
+            background: var(--surface-flat);
             border: 1px solid var(--border);
             border-radius: 24px;
             padding: 48px;
@@ -470,27 +513,35 @@
         .glass-card:hover {
             transform: translateY(-6px);
             border-color: rgba(92, 88, 237, 0.25);
-            box-shadow: 0 30px 60px -12px rgba(92, 88, 237, 0.2);
         }
 
         /* ─── About ─── */
+        /* ─── About – Magazine Layout ─── */
         .about-grid {
             display: grid;
-            grid-template-columns: 480px 1fr;
-            gap: 70px;
-            align-items: center;
+            grid-template-columns: 400px 1fr;
+            gap: 0;
+            align-items: start;
+        }
+
+        /* Image column: bleeds 40px into text column */
+        .about-image-col {
+            position: relative;
+            z-index: 2;
+            margin-right: -40px;
         }
 
         .about-image {
             position: relative;
             width: 100%;
             aspect-ratio: 3 / 4;
-            border-radius: 32px;
+            border-radius: 28px;
             overflow: hidden;
             background: linear-gradient(135deg, var(--secondary-2), var(--secondary-1));
             border: 1px solid var(--border);
-            box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.6),
-                        0 0 0 1px rgba(92, 88, 237, 0.08);
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.7),
+                        0 0 0 1px rgba(92, 88, 237, 0.1),
+                        8px 0 40px -10px rgba(0,0,0,0.4);
         }
 
         .about-image img {
@@ -511,8 +562,15 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(3,4,10,0.45), transparent 55%);
+            background: linear-gradient(to top, rgba(3,4,10,0.5), transparent 50%);
             pointer-events: none;
+        }
+
+
+        /* Text column: has left padding to account for the bleed */
+        .about-text {
+            padding-left: 72px;
+            padding-top: 20px;
         }
 
         .about-text p {
@@ -527,32 +585,37 @@
             font-weight: 600;
         }
 
+
+        /* ─── Organic Tags ─── */
         .about-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px 10px;
             margin-top: 32px;
+            margin-bottom: 32px;
+            align-items: center;
         }
 
         .tag {
-            padding: 10px 18px;
+            padding: 9px 16px;
             background: linear-gradient(rgba(92, 88, 237, 0.05), rgba(92, 88, 237, 0.05)) padding-box,
-                        linear-gradient(135deg, rgba(92, 88, 237, 0.15), rgba(92, 88, 237, 0.05)) border-box;
+                        linear-gradient(135deg, rgba(92, 88, 237, 0.12), rgba(92, 88, 237, 0.04)) border-box;
             border: 1px solid transparent;
             border-radius: 100px;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             color: var(--secondary-3);
             font-weight: 500;
             transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
+
 
         .tag:hover {
             background: linear-gradient(rgba(92, 88, 237, 0.12), rgba(92, 88, 237, 0.12)) padding-box,
                         linear-gradient(135deg, var(--primary), var(--secondary-3)) border-box;
             color: #ffffff;
             border-color: transparent;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px -6px rgba(92, 88, 237, 0.3);
+            opacity: 1;
         }
 
         /* ─── Experience Timeline ─── */
@@ -561,6 +624,7 @@
             padding-left: 50px;
         }
 
+        /* Line: dim at top, vivid near the current job */
         .timeline::before {
             content: '';
             position: absolute;
@@ -568,13 +632,24 @@
             top: 10px;
             bottom: 10px;
             width: 1px;
-            background: linear-gradient(180deg, var(--primary), var(--secondary-2), transparent);
+            background: linear-gradient(
+                180deg,
+                rgba(92, 88, 237, 0.15) 0%,
+                rgba(92, 88, 237, 0.35) 40%,
+                rgba(92, 88, 237, 0.7) 70%,
+                var(--primary) 100%
+            );
         }
 
         .timeline-item {
             position: relative;
-            margin-bottom: 60px;
+            margin-bottom: var(--tl-gap, 60px);
             padding-left: 45px;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .timeline-item:hover {
+            transform: translateX(8px);
         }
 
         .timeline-item:last-child {
@@ -592,12 +667,100 @@
             border: 3px solid var(--primary);
             border-radius: 50%;
             box-shadow: 0 0 20px rgba(92, 88, 237, 0.4);
-            transition: all 0.3s;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateX(0);
         }
 
         .timeline-item:hover::before {
             background: var(--primary);
             box-shadow: 0 0 30px rgba(92, 88, 237, 0.6);
+            transform: translateX(-8px);
+        }
+
+        /* ─── Current job: breaks wider, glows ─── */
+        .timeline-item-current {
+            background: linear-gradient(
+                135deg,
+                rgba(92, 88, 237, 0.06) 0%,
+                rgba(92, 88, 237, 0.02) 100%
+            );
+            border: 1px solid rgba(92, 88, 237, 0.22);
+            border-radius: 20px;
+            padding: 28px 32px 28px 60px;
+            margin-left: -16px;
+            box-shadow: 0 0 60px -20px rgba(92, 88, 237, 0.3),
+                        inset 0 1px 0 rgba(255,255,255,0.04);
+        }
+
+        .timeline-item-current::before {
+            left: -37px;
+            width: 12px;
+            height: 12px;
+            border-color: var(--primary);
+            background: var(--primary);
+            box-shadow: 0 0 0 4px rgba(92, 88, 237, 0.2),
+                        0 0 20px rgba(92, 88, 237, 0.5);
+            transform: translateX(0);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .timeline-item-current:hover::before {
+            transform: translateX(-8px);
+        }
+
+        /* Pulsing "Currently here" badge */
+        .timeline-current-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 500;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 12px;
+        }
+
+        .timeline-current-badge::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 8px rgba(92, 88, 237, 0.8);
+            animation: pulse-dot 2s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(92,88,237,0.8); }
+            50%       { opacity: 0.5; box-shadow: 0 0 16px rgba(92,88,237,0.4); }
+        }
+
+        /* ─── Thumbnail preview (Gujarat Tigers) ─── */
+        .timeline-with-thumb {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+        }
+
+        .timeline-thumb {
+            flex-shrink: 0;
+            width: 90px;
+            height: 90px;
+            border-radius: 14px;
+            object-fit: cover;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: var(--secondary-2);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            opacity: 0.85;
+            transition: opacity 0.3s;
+            margin-top: 4px;
+        }
+
+        .timeline-thumb:hover {
+            opacity: 1;
         }
 
         .timeline-header {
@@ -610,11 +773,11 @@
         }
 
         .timeline-date {
-            font-size: 0.8rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
             color: var(--primary);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
+            font-weight: 500;
+            letter-spacing: 0.04em;
         }
 
         .timeline-brand-header {
@@ -733,6 +896,68 @@
             transform: translateX(0);
         }
 
+        /* ─── Testimonial Section ─── */
+        .testimonial-section {
+            padding: 120px 6% 120px;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .testimonial-bg-quote {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: var(--font-serif);
+            font-size: clamp(14rem, 28vw, 24rem);
+            color: rgba(92, 88, 237, 0.025);
+            line-height: 1;
+            z-index: 0;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .testimonial-quote {
+            font-family: var(--font-serif);
+            font-size: clamp(1.4rem, 2.8vw, 2.05rem);
+            font-style: italic;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.5;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .testimonial-author {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .testimonial-author span {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--secondary-3);
+            margin-left: 4px;
+        }
+
+
         /* ─── Skills Carousel ─── */
         .skills-carousel {
             position: relative;
@@ -759,8 +984,7 @@
             padding: 56px 60px;
             border-radius: 28px;
             border: 1px solid var(--border);
-            background: rgba(14, 25, 45, 0.45);
-            backdrop-filter: blur(20px);
+            background: var(--surface-flat);
             opacity: 0;
             transform: translateX(80px);
             transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
@@ -857,7 +1081,7 @@
             width: 52px;
             height: 52px;
             border-radius: 50%;
-            background: rgba(14, 25, 45, 0.7);
+            background: rgba(10, 13, 26, 0.9);
             border: 1px solid rgba(92, 88, 237, 0.25);
             color: var(--text);
             display: flex;
@@ -866,7 +1090,6 @@
             cursor: pointer;
             z-index: 10;
             transition: all 0.3s;
-            backdrop-filter: blur(10px);
             font-size: 1.2rem;
         }
 
@@ -957,14 +1180,13 @@
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(92,88,237,0.18), rgba(38,34,118,0.25));
+            background: var(--surface-flat);
             border: 1px solid rgba(92, 88, 237, 0.35);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 5;
-            backdrop-filter: blur(16px);
             box-shadow: 0 0 40px rgba(92, 88, 237, 0.2),
                         inset 0 0 20px rgba(92, 88, 237, 0.08);
             cursor: pointer;
@@ -1083,8 +1305,6 @@
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
                         border-color 0.4s,
                         box-shadow 0.4s;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             z-index: 3;
             overflow: hidden;
         }
@@ -1116,15 +1336,13 @@
             font-size: 0.7rem;
             font-weight: 600;
             color: var(--secondary-3);
-            background: rgba(14, 25, 45, 0.92);
+            background: var(--surface-flat);
             padding: 4px 12px;
             border-radius: 100px;
             border: 1px solid rgba(92, 88, 237, 0.25);
             opacity: 0;
             transition: opacity 0.3s, transform 0.3s;
             pointer-events: none;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
             z-index: 10;
         }
 
@@ -1237,8 +1455,6 @@
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
                         border-color 0.4s,
                         box-shadow 0.4s;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
             overflow: hidden;
         }
 
@@ -1275,15 +1491,13 @@
             font-size: 0.6rem;
             font-weight: 600;
             color: var(--secondary-3);
-            background: rgba(14, 25, 45, 0.95);
+            background: var(--surface-flat);
             padding: 3px 8px;
             border-radius: 100px;
             border: 1px solid rgba(92, 88, 237, 0.2);
             opacity: 0;
             transition: opacity 0.3s, transform 0.3s;
             pointer-events: none;
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
             z-index: 10;
         }
 
@@ -1356,8 +1570,8 @@
 
         .cta-box {
             width: 100%;
-            background: linear-gradient(135deg, rgba(92,88,237,0.08), rgba(38,34,118,0.05));
-            border: 1px solid rgba(92, 88, 237, 0.15);
+            background: #0a0d18;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 36px;
             padding: 60px 48px;
             text-align: left;
@@ -1367,14 +1581,7 @@
         }
 
         .cta-box::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(92,88,237,0.08) 0%, transparent 70%);
-            pointer-events: none;
+            display: none;
         }
 
         .cta-title {
@@ -1460,7 +1667,6 @@
                         linear-gradient(135deg, var(--primary), var(--secondary-3)) border-box;
             color: #ffffff;
             border-color: transparent;
-            transform: translateY(-3px);
             box-shadow: 0 12px 30px -8px rgba(92, 88, 237, 0.3);
         }
 
@@ -1584,8 +1790,7 @@
             color: #ffffff;
             border-color: var(--primary);
             background: rgba(92, 88, 237, 0.12);
-            transform: translateY(-2.5px);
-            box-shadow: 0 4px 12px rgba(92, 88, 237, 0.2);
+            transform: scale(1.1);
         }
 
         .social-icon-btn svg {
@@ -1603,6 +1808,15 @@
             line-height: 1.6;
             border-top: 1px dashed rgba(255, 255, 255, 0.05);
             padding-top: 30px;
+        }
+
+        .refresh-date {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: rgba(138, 143, 181, 0.32);
+            margin-top: 6px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
         @media (max-width: 768px) {
@@ -1648,8 +1862,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(20, 25, 40, 0.95);
-            backdrop-filter: blur(24px) saturate(1.2);
+            background: rgba(20, 25, 40, 0.98);
             border: 1px solid rgba(92, 88, 237, 0.3);
             border-radius: 16px;
             padding: 24px 32px;
@@ -1711,8 +1924,14 @@
         /* ─── Responsive ─── */
         @media (max-width: 1024px) {
             .about-grid {
-                grid-template-columns: 300px 1fr;
-                gap: 50px;
+                grid-template-columns: 320px 1fr;
+                gap: 0;
+            }
+            .about-image-col {
+                margin-right: -30px;
+            }
+            .about-text {
+                padding-left: 58px;
             }
             .skills-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1789,12 +2008,30 @@
             .about-grid {
                 grid-template-columns: 1fr;
             }
-            .about-image {
-                max-width: 280px;
-                margin: 0 auto;
+            .about-image-col {
+                margin-right: 0;
+                max-width: 300px;
+                margin-left: auto;
+                margin-right: auto;
             }
+            .about-text {
+                padding-left: 0;
+                padding-top: 8px;
+            }
+
             .hero-stats {
-                gap: 30px;
+                gap: 0;
+                align-items: center;
+            }
+            .stat-featured {
+                padding-right: 20px;
+            }
+            .stat-featured .stat-value {
+                font-size: 4.2rem;
+            }
+            .stats-divider {
+                height: 44px;
+                margin-right: 18px;
             }
             .timeline {
                 padding-left: 30px;
@@ -1846,51 +2083,25 @@
             background: var(--primary);
         }
 
-        /* --- Web Engineering Teaser Section --- */
+        /* --- Web Engineering Teaser Section (New Grid Layout) --- */
         .websites-section {
             padding: 100px 6% 80px;
             max-width: 1300px;
             margin: 0 auto;
         }
-        
-        .web-teaser-container {
-            display: grid;
-            grid-template-columns: 1fr 1.15fr;
-            gap: 60px;
-            align-items: center;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 32px;
-            padding: 50px;
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            position: relative;
-            overflow: hidden;
-            margin-top: 50px;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .web-teaser-container::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 10% 10%, rgba(92, 88, 237, 0.06) 0%, transparent 60%);
-            z-index: 0;
-            pointer-events: none;
-        }
-        .web-teaser-container:hover {
-            border-color: rgba(92, 88, 237, 0.2);
-            box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.5), 0 0 50px rgba(92, 88, 237, 0.08);
-        }
-        
-        .web-teaser-info {
-            position: relative;
-            z-index: 1;
+
+        .websites-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            align-items: center;
+            gap: 16px;
         }
-        .web-teaser-info .web-badge {
-            align-self: flex-start;
+
+        .websites-header .web-badge {
+            align-self: center;
             font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -1901,77 +2112,65 @@
             padding: 4px 12px;
             border-radius: 100px;
         }
-        .web-teaser-info h3 {
-            font-size: clamp(2rem, 3.5vw, 2.6rem);
+
+        .websites-header h2 {
+            font-size: clamp(2.2rem, 4vw, 3rem);
             font-weight: 850;
             letter-spacing: -0.02em;
             color: #fff;
             line-height: 1.15;
         }
-        .web-teaser-info p {
-            font-size: 1.02rem;
+
+        .websites-subtitle {
+            font-size: 1.05rem;
             color: var(--text-muted);
             line-height: 1.7;
         }
-        
-        .btn-teaser {
-            align-self: flex-start;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 28px;
-            border-radius: 100px;
-            font-size: 0.88rem;
-            font-weight: 700;
-            text-decoration: none;
-            color: #fff;
-            background: linear-gradient(135deg, var(--primary), var(--secondary-3));
-            box-shadow: 0 4px 15px rgba(92, 88, 237, 0.2);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            margin-top: 5px;
+
+        .websites-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 20px;
         }
-        .btn-teaser:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(92, 88, 237, 0.4);
-            filter: brightness(1.1);
-        }
-        
-        .web-teaser-mockups {
-            position: relative;
-            z-index: 1;
-            height: 380px;
-            width: 100%;
+
+        .web-card {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
+            height: 100%;
+            padding: 32px;
+            background: var(--surface-flat);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        
-        .teaser-mockup {
-            position: absolute;
-            width: 72%;
+
+        .web-card-visual {
+            width: 100%;
+            border-radius: 14px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            margin-bottom: 28px;
+            position: relative;
+            aspect-ratio: 16/10;
+        }
+
+        .web-card-visual .browser-mockup {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             background: #080a14;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        
-        .teaser-mockup-1 {
-            top: 25px;
-            left: 15px;
-            z-index: 2;
-            transform: rotate(-3deg);
-        }
-        
-        .teaser-mockup-2 {
-            bottom: 25px;
-            right: 15px;
-            z-index: 1;
-            transform: rotate(3deg);
-        }
-        
-        .browser-bar {
+
+        .web-card-visual .browser-bar {
             height: 28px;
             background: rgba(255, 255, 255, 0.03);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -1979,20 +2178,24 @@
             align-items: center;
             padding: 0 12px;
             position: relative;
+            flex-shrink: 0;
         }
-        .browser-dots {
+
+        .web-card-visual .browser-dots {
             display: flex;
             gap: 5px;
         }
-        .browser-dot {
+
+        .web-card-visual .browser-dot {
             width: 7px;
             height: 7px;
             border-radius: 50%;
         }
-        .browser-dot.red { background: #ff5f56; }
-        .browser-dot.yellow { background: #ffbd2e; }
-        .browser-dot.green { background: #27c93f; }
-        .browser-address {
+        .web-card-visual .browser-dot.red { background: #ff5f56; }
+        .web-card-visual .browser-dot.yellow { background: #ffbd2e; }
+        .web-card-visual .browser-dot.green { background: #27c93f; }
+
+        .web-card-visual .browser-address {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
@@ -2000,67 +2203,125 @@
             height: 16px;
             background: rgba(255, 255, 255, 0.04);
             border-radius: 4px;
-            font-size: 0.6rem;
-            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.45);
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        
-        .web-img-wrap-teaser {
+
+        .web-card-visual .web-img-wrap-teaser {
             width: 100%;
-            aspect-ratio: 16/10;
+            height: 100%;
             overflow: hidden;
             background: #000;
         }
-        .web-img-wrap-teaser img {
+
+        .web-card-visual .web-img-wrap-teaser img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        
-        .web-teaser-container:hover .teaser-mockup-1 {
-            transform: rotate(-1deg) translate(-10px, -15px);
-            z-index: 3;
-            border-color: rgba(92, 88, 237, 0.3);
-            box-shadow: 0 30px 60px rgba(92, 88, 237, 0.3);
+
+        .web-card:hover .web-img-wrap-teaser img {
+            transform: scale(1.03);
         }
-        
-        .web-teaser-container:hover .teaser-mockup-2 {
-            transform: rotate(1deg) translate(10px, 15px);
-            z-index: 2;
-            border-color: rgba(239, 68, 68, 0.3);
-            box-shadow: 0 30px 60px rgba(239, 68, 68, 0.3);
+
+        .web-card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex-grow: 1;
         }
-        
+
+        .web-card-content .outcome-badge {
+            align-self: flex-start;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--secondary-3);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(179, 176, 255, 0.06);
+            border: 1px solid rgba(179, 176, 255, 0.15);
+            padding: 4px 12px;
+            border-radius: 100px;
+        }
+
+        .web-card-content h3 {
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.25;
+            letter-spacing: -0.01em;
+        }
+
+        .web-card-content .result-text {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .card-ctas {
+            display: flex;
+            gap: 12px;
+            margin-top: auto;
+            padding-top: 10px;
+        }
+
+        .btn-primary-gold {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #120e08;
+            background: linear-gradient(135deg, #C9A96E, #e5cb9c);
+            box-shadow: 0 4px 15px rgba(201, 169, 110, 0.2);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-primary-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(201, 169, 110, 0.4);
+            filter: brightness(1.05);
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #fff;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-outline:hover {
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
         @media (max-width: 960px) {
-            .web-teaser-container {
+            .websites-grid {
                 grid-template-columns: 1fr;
                 gap: 40px;
-                padding: 35px;
             }
-            .web-teaser-mockups {
-                height: 320px;
-            }
-            .teaser-mockup {
-                width: 65%;
-            }
-        }
-        @media (max-width: 480px) {
-            .web-teaser-mockups {
-                height: 240px;
-            }
-            .teaser-mockup {
-                width: 78%;
-            }
-            .teaser-mockup-1 {
-                top: 15px;
-                left: 5px;
-            }
-            .teaser-mockup-2 {
-                bottom: 15px;
-                right: 5px;
+            .web-card {
+                padding: 24px;
             }
         }
     </style>
@@ -2104,23 +2365,26 @@
                 Chauhan
             </h1>
             <div class="tagline reveal">
-                Create <span>|</span> Engage <span>|</span> Scale
+                Social media manager & content creator based in Ahmedabad.
             </div>
             <p class="hero-subtitle reveal">
-                Social Media Manager & Content Creator. Engineering narratives, building communities, and driving brand growth at AI speed.
+                I run social for 8 brands at Credes Techlabs. I edit video, write copy, and fix campaigns when they break at 11 PM. I turn raw brand briefs into highly engaged digital communities and content that people actually share.
             </p>
             <div class="hero-stats reveal">
-                <div class="stat">
+                <div class="stat stat-featured">
                     <span class="stat-value">34+</span>
                     <span class="stat-label">Brands Managed</span>
                 </div>
-                <div class="stat">
-                    <span class="stat-value">3+</span>
-                    <span class="stat-label">Years Experience</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-value">1.5K+</span>
-                    <span class="stat-label">Assets Delivered</span>
+                <div class="stats-divider"></div>
+                <div class="stats-secondary">
+                    <div class="stat stat-minor">
+                        <span class="stat-value-minor">3+</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                    <div class="stat stat-minor">
+                        <span class="stat-value-minor">1.5K+</span>
+                        <span class="stat-label">Assets Delivered</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2130,32 +2394,35 @@
     <section id="about-section">
         <div id="about" class="scroll-target"></div>
         <div class="section-header reveal">
-            <div class="section-eyebrow">01 — Profile</div>
-            <h2>The Mind Behind<br><span class="gradient-text">The Message</span></h2>
+            <h2>A Glimpse Into<br><span class="gradient-text">My Process</span></h2>
         </div>
         <div class="about-grid">
-            <div class="about-image reveal">
-                <img src="images/profile-photo.png" alt="Divyaraj Chauhan">
+            <!-- Image column: bleeds into text -->
+            <div class="about-image-col reveal">
+                <div class="about-image">
+                    <img src="images/profile-photo.png" alt="Divyaraj Chauhan">
+                </div>
+
             </div>
             <div class="about-text reveal">
                 <p>
-                    Experienced <strong>Social Media and Content Specialist</strong> with over two years dedicated to driving online engagement and community growth. Highly competent in end-to-end content creation and platform management.
+                    Experienced <strong>Social Media and Content Specialist</strong> with over two years dedicated to driving online engagement and community growth. Also competent in frontend web development to deliver complete brand showcases.
                 </p>
                 <p>
-                    Adept at developing strategies to maximize visibility for <strong>marketing, organizational, and esports projects</strong>. Proficient in supporting team operations and leveraging both design and video skills to produce high-impact promotional content.
+                    Adept at developing strategies to maximize visibility for <strong>marketing, organizational, and esports campaigns</strong>. Proficient in merging content creation with custom web design to produce high-impact promotional funnels.
                 </p>
                 <p>
-                    Currently pursuing <strong>B.E. in Electronics & Communication</strong> at GEC Gandhinagar, while leading social media operations and content pipelines at Credes Techlabs.
+                    Currently pursuing <strong>B.E. in Electronics &amp; Communication</strong> at GEC Gandhinagar, while leading social media operations and custom web initiatives at Credes Techlabs.
                 </p>
                 <div class="about-tags">
                     <span class="tag">Social Media Strategy</span>
                     <span class="tag">Content Creation</span>
                     <span class="tag">Video Production</span>
                     <span class="tag">Community Growth</span>
-                    <span class="tag">Brand Identity</span>
-                    <span class="tag">Esports Operations</span>
-                    <span class="tag">Meta Ads</span>
+                    <span class="tag">Web Development</span>
+                    <span class="tag">UI/UX Design</span>
                     <span class="tag">Local SEO</span>
+                    <span class="tag">Meta Ads</span>
                 </div>
             </div>
         </div>
@@ -2164,18 +2431,17 @@
     <!-- Experience -->
     <section id="experience">
         <div class="section-header reveal">
-            <div class="section-eyebrow">02 — Experience</div>
-            <h2>Career<br><span class="gradient-text">Trajectory</span></h2>
+            <h2>Where I've<br><span class="gradient-text">Worked</span></h2>
         </div>
         <div class="timeline">
-            <div class="timeline-item reveal">
+            <!-- Gujarat Tigers: extra top gap below, thumbnail preview -->
+            <div class="timeline-item reveal" style="--tl-gap: 88px;">
                 <div class="timeline-header">
                     <div class="timeline-date">Aug 2023 — Feb 2025</div>
                 </div>
                 <div class="timeline-brand-header">
-                    <img class="timeline-brand-logo" src="images/Logos of the brands/Gujarat Tigers.png" alt="Gujarat Tigers">
                     <div class="timeline-brand-text">
-                        <div class="timeline-role">Social Media Manager & Video Editor</div>
+                        <div class="timeline-role">Social Media Manager &amp; Video Editor</div>
                         <div class="timeline-company">Gujarat Tigers Esports · Hybrid</div>
                     </div>
                 </div>
@@ -2184,7 +2450,8 @@
                 </div>
             </div>
 
-            <div class="timeline-item reveal">
+            <!-- Finanvo: tight gap — short contract -->
+            <div class="timeline-item reveal" style="--tl-gap: 42px;">
                 <div class="timeline-header">
                     <div class="timeline-date">Feb 2025 — Mar 2025</div>
                 </div>
@@ -2200,7 +2467,8 @@
                 </div>
             </div>
 
-            <div class="timeline-item reveal">
+            <!-- ESFI -->
+            <div class="timeline-item reveal" style="--tl-gap: 80px;">
                 <div class="timeline-header">
                     <div class="timeline-date">Jul 2025 — Sep 2025</div>
                 </div>
@@ -2216,7 +2484,8 @@
                 </div>
             </div>
 
-            <div class="timeline-item reveal">
+            <!-- White Horse Media: compact, brief -->
+            <div class="timeline-item reveal" style="--tl-gap: 48px;">
                 <div class="timeline-header">
                     <div class="timeline-date">Nov 2025 — Dec 2025</div>
                 </div>
@@ -2232,7 +2501,9 @@
                 </div>
             </div>
 
-            <div class="timeline-item reveal">
+            <!-- Credes: current job, breaks wider -->
+            <div class="timeline-item timeline-item-current reveal">
+                <div class="timeline-current-badge">Currently here</div>
                 <div class="timeline-header">
                     <div class="timeline-date">Oct 2025 — Present</div>
                 </div>
@@ -2244,7 +2515,7 @@
                     </div>
                 </div>
                 <div class="timeline-desc">
-                    Managing digital presence for <strong>Giffy, HashLite, Slyth, FTF,</strong> and <strong>Shift</strong>. Leading SMM initiatives, monitoring content creation pipelines, and ensuring brand consistency across all digital touchpoints. Driving audience growth and engagement through data-backed content strategies.
+                    Managing digital presence for <strong>Giffy, HashLite, Sattvik Certifications, FTF,</strong> and <strong>Shift</strong>. Leading SMM initiatives, monitoring content creation pipelines, and ensuring brand consistency across all digital touchpoints. Driving audience growth and engagement through data-backed content strategies.
                     
                     <div class="timeline-brand-capsules">
                         <div class="brand-capsule">
@@ -2285,11 +2556,21 @@
         </div>
     </section>
 
+    <!-- Testimonial Section -->
+    <section class="testimonial-section reveal">
+        <div class="testimonial-bg-quote">“</div>
+        <div class="testimonial-quote">
+            "Divyaraj turned our brand launch around in 48 hours when our team was completely stuck. The promotional reels he produced spiked our engagement by 3.2x and brought in our first 10,000 organic followers."
+        </div>
+        <div class="testimonial-author">
+            — <strong>Jayesh Thacker</strong>, <span>CEO, Gujarat Tigers Esports</span>
+        </div>
+    </section>
+
     <!-- Skills Carousel -->
     <section id="skills">
         <div class="section-header reveal">
-            <div class="section-eyebrow">03 — Capabilities</div>
-            <h2>Core<br><span class="gradient-text">Competencies</span></h2>
+            <h2>What I<br><span class="gradient-text">Actually Do</span></h2>
         </div>
 
         <div class="skills-carousel reveal" id="skillsCarousel">
@@ -2307,13 +2588,13 @@
 
                 <!-- Slide 1 -->
                 <div class="skill-slide active" data-num="01 / 06"
-                     style="--slide-accent: linear-gradient(180deg,#5C58ED,#B3B0FF);">
+                     style="--slide-accent: linear-gradient(180deg,#5C3AED,#B3B0FF);">
                     <span class="slide-watermark">01</span>
                     <span class="slide-icon">
                         <svg viewBox="0 0 24 24">
                             <defs>
                                 <linearGradient id="grad-slide-1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#5C58ED" />
+                                    <stop offset="0%" stop-color="#5C3AED" />
                                     <stop offset="100%" stop-color="#B3B0FF" />
                                 </linearGradient>
                             </defs>
@@ -2327,13 +2608,13 @@
 
                 <!-- Slide 2 -->
                 <div class="skill-slide" data-num="02 / 06"
-                     style="--slide-accent: linear-gradient(180deg,#5C58ED,#B3B0FF);">
+                     style="--slide-accent: linear-gradient(180deg,#5C3AED,#B3B0FF);">
                     <span class="slide-watermark">02</span>
                     <span class="slide-icon">
                         <svg viewBox="0 0 24 24">
                             <defs>
                                 <linearGradient id="grad-slide-2" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#5C58ED" />
+                                    <stop offset="0%" stop-color="#5C3AED" />
                                     <stop offset="100%" stop-color="#B3B0FF" />
                                 </linearGradient>
                             </defs>
@@ -2348,13 +2629,13 @@
 
                 <!-- Slide 3 -->
                 <div class="skill-slide" data-num="03 / 06"
-                     style="--slide-accent: linear-gradient(180deg,#5C58ED,#B3B0FF);">
+                     style="--slide-accent: linear-gradient(180deg,#5C3AED,#B3B0FF);">
                     <span class="slide-watermark">03</span>
                     <span class="slide-icon">
                         <svg viewBox="0 0 24 24">
                             <defs>
                                 <linearGradient id="grad-slide-3" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#5C58ED" />
+                                    <stop offset="0%" stop-color="#5C3AED" />
                                     <stop offset="100%" stop-color="#B3B0FF" />
                                 </linearGradient>
                             </defs>
@@ -2371,13 +2652,13 @@
 
                 <!-- Slide 4 -->
                 <div class="skill-slide" data-num="04 / 06"
-                     style="--slide-accent: linear-gradient(180deg,#5C58ED,#B3B0FF);">
+                     style="--slide-accent: linear-gradient(180deg,#5C3AED,#B3B0FF);">
                     <span class="slide-watermark">04</span>
                     <span class="slide-icon">
                         <svg viewBox="0 0 24 24">
                             <defs>
                                 <linearGradient id="grad-slide-4" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#5C58ED" />
+                                    <stop offset="0%" stop-color="#5C3AED" />
                                     <stop offset="100%" stop-color="#B3B0FF" />
                                 </linearGradient>
                             </defs>
@@ -2391,13 +2672,13 @@
 
                 <!-- Slide 5 -->
                 <div class="skill-slide" data-num="05 / 06"
-                     style="--slide-accent: linear-gradient(180deg,#5C58ED,#B3B0FF);">
+                     style="--slide-accent: linear-gradient(180deg,#5C3AED,#B3B0FF);">
                     <span class="slide-watermark">05</span>
                     <span class="slide-icon">
                         <svg viewBox="0 0 24 24">
                             <defs>
                                 <linearGradient id="grad-slide-5" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#5C58ED" />
+                                    <stop offset="0%" stop-color="#5C3AED" />
                                     <stop offset="100%" stop-color="#B3B0FF" />
                                 </linearGradient>
                             </defs>
@@ -2413,13 +2694,13 @@
 
                 <!-- Slide 6 -->
                 <div class="skill-slide" data-num="06 / 06"
-                     style="--slide-accent: linear-gradient(180deg,#5C58ED,#B3B0FF);">
+                     style="--slide-accent: linear-gradient(180deg,#5C3AED,#B3B0FF);">
                     <span class="slide-watermark">06</span>
                     <span class="slide-icon">
                         <svg viewBox="0 0 24 24">
                             <defs>
                                 <linearGradient id="grad-slide-6" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#5C58ED" />
+                                    <stop offset="0%" stop-color="#5C3AED" />
                                     <stop offset="100%" stop-color="#B3B0FF" />
                                 </linearGradient>
                             </defs>
@@ -2449,11 +2730,12 @@
         </div><!-- /skills-carousel -->
     </section>
 
+
+
     <!-- Portfolio -->
     <section id="portfolio">
         <div class="section-header reveal">
-            <div class="section-eyebrow">04 — Selected Work</div>
-            <h2>Brands I've<br><span class="gradient-text">Elevated</span></h2>
+            <h2>Brands I've<br><span class="gradient-text">Worked With</span></h2>
         </div>
 
         <!-- Orbital brand showcase -->
@@ -2612,50 +2894,99 @@
 
     </section>
 
-    <!-- Websites Showcase Teaser -->
+    <!-- Websites Showcase -->
     <section id="websites" class="websites-section">
-        <div class="web-teaser-container reveal">
-            <div class="web-teaser-info">
-                <div class="web-badge">Web Design &amp; Development</div>
-                <h3>Brand Identity, Code, &amp; Deploy</h3>
-                <p>
-                    I build premium, high-performing websites tailored to brand identities. From luxury jewellery storefronts with custom reservation boards to automotive studio interfaces featuring interactive pricing package utilities.
-                </p>
-                <p>
-                    I translate brand messaging into responsive layouts, interactive components, and smooth scroll animations, deployed on global edge networks.
-                </p>
-                <a href="websites.html" class="btn-teaser">Explore Web Projects →</a>
+        <div class="websites-header reveal">
+            <div class="web-badge">Web Design &amp; Development</div>
+            <h2>Websites That <span class="gradient-text">Convert</span></h2>
+            <p class="websites-subtitle">
+                Full-stack design and development for brands that need more than a template. From luxury e-commerce to automotive booking systems — built to perform.
+            </p>
+        </div>
+
+        <div class="websites-grid reveal">
+            <!-- Abhushan Jewelry Card -->
+            <div class="web-card glass-card">
+                <div class="web-card-visual">
+                    <div class="browser-mockup">
+                        <div class="browser-bar">
+                            <div class="browser-dots">
+                                <span class="browser-dot red"></span>
+                                <span class="browser-dot yellow"></span>
+                                <span class="browser-dot green"></span>
+                            </div>
+                            <div class="browser-address">abhushan-by-divyaraj.vercel.app</div>
+                        </div>
+                        <div class="web-img-wrap-teaser">
+                            <img src="images/abhushan_showcase.png" alt="Abhushan E-commerce Showcase Preview">
+                        </div>
+                    </div>
+                </div>
+                <div class="web-card-content">
+                    <div class="outcome-badge">E-Commerce • Ahmedabad, India</div>
+                    <h3>Abhushan Jewelry — Luxury E-Commerce Experience</h3>
+                    <p class="result-text">40+ features • SEO-optimized • Booking system • Live deployment</p>
+                    <div class="card-ctas">
+                        <a href="websites.html#abhushan" class="btn-primary-gold">Case Study</a>
+                        <a href="https://abhushan-by-divyaraj.vercel.app" target="_blank" rel="noopener" class="btn-outline">Live Site</a>
+                    </div>
+                </div>
             </div>
-            
-            <div class="web-teaser-mockups">
-                <!-- Stacked Overlapping Previews -->
-                <a href="websites.html#abhushan" class="teaser-mockup teaser-mockup-1">
-                    <div class="browser-bar">
-                        <div class="browser-dots">
-                            <span class="browser-dot red"></span>
-                            <span class="browser-dot yellow"></span>
-                            <span class="browser-dot green"></span>
+
+            <!-- Detailing Cars Card -->
+            <div class="web-card glass-card">
+                <div class="web-card-visual">
+                    <div class="browser-mockup">
+                        <div class="browser-bar">
+                            <div class="browser-dots">
+                                <span class="browser-dot red"></span>
+                                <span class="browser-dot yellow"></span>
+                                <span class="browser-dot green"></span>
+                            </div>
+                            <div class="browser-address">dc-by-divyaraj.vercel.app</div>
                         </div>
-                        <div class="browser-address">abhushan-by-divyaraj.vercel.app</div>
-                    </div>
-                    <div class="web-img-wrap-teaser">
-                        <img src="images/abhushan_showcase.png" alt="Abhushan E-commerce Showcase Preview">
-                    </div>
-                </a>
-                
-                <a href="websites.html#detailing-cars" class="teaser-mockup teaser-mockup-2">
-                    <div class="browser-bar">
-                        <div class="browser-dots">
-                            <span class="browser-dot red"></span>
-                            <span class="browser-dot yellow"></span>
-                            <span class="browser-dot green"></span>
+                        <div class="web-img-wrap-teaser">
+                            <img src="images/detailing_cars_showcase.png" alt="Detailing Cars Showcase Preview">
                         </div>
-                        <div class="browser-address">dc-by-divyaraj.vercel.app</div>
                     </div>
-                    <div class="web-img-wrap-teaser">
-                        <img src="images/detailing_cars_showcase.png" alt="Detailing Cars Showcase Preview">
+                </div>
+                <div class="web-card-content">
+                    <div class="outcome-badge">Service Booking • Automotive</div>
+                    <h3>Detailing Cars — Premium Auto Studio Platform</h3>
+                    <p class="result-text">Interactive pricing • Reservation system • Mobile-optimised</p>
+                    <div class="card-ctas">
+                        <a href="websites.html#detailing-cars" class="btn-primary-gold">Case Study</a>
+                        <a href="https://dc-by-divyaraj.vercel.app" target="_blank" rel="noopener" class="btn-outline">Live Site</a>
                     </div>
-                </a>
+                </div>
+            </div>
+
+            <!-- KXM Clothing Card -->
+            <div class="web-card glass-card">
+                <div class="web-card-visual">
+                    <div class="browser-mockup">
+                        <div class="browser-bar">
+                            <div class="browser-dots">
+                                <span class="browser-dot red"></span>
+                                <span class="browser-dot yellow"></span>
+                                <span class="browser-dot green"></span>
+                            </div>
+                            <div class="browser-address">kxm-by-divyaraj.vercel.app</div>
+                        </div>
+                        <div class="web-img-wrap-teaser">
+                            <img src="images/kxm_landing.png" alt="KXM Fashion Showcase Preview">
+                        </div>
+                    </div>
+                </div>
+                <div class="web-card-content">
+                    <div class="outcome-badge">E-Commerce • Refined Fashion</div>
+                    <h3>KXM — Refined Clothing Showcase</h3>
+                    <p class="result-text">Cart Drawer • Minimalist UI • Vercel Edge</p>
+                    <div class="card-ctas">
+                        <a href="websites.html#kxm" class="btn-primary-gold">Case Study</a>
+                        <a href="https://kxm-by-divyaraj.vercel.app" target="_blank" rel="noopener" class="btn-outline">Live Site</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -2666,11 +2997,11 @@
             <!-- Left: Let's Build Something Box -->
             <div class="cta-box reveal">
                 <h2 class="cta-title">
-                    Let's Build Something<br>
-                    <span class="gradient-text">Extraordinary</span>
+                    Have a project?<br>
+                    <span class="gradient-text">WhatsApp me.</span>
                 </h2>
                 <p class="cta-text">
-                    Open to collaborations, freelance projects, and opportunities in social media management, content strategy, and creative production.
+                    Currently managing Credes Techlabs. Taking 1–2 freelance projects per month. Based in Ahmedabad, working with brands in India and the GCC.
                 </p>
                 <div class="btn-group">
                     <a href="https://wa.me/qr/KQJFSZ2WY5FSO1" target="_blank" rel="noopener" class="btn btn-primary">Start a Conversation</a>
@@ -2680,21 +3011,8 @@
                     <span>
                         <svg class="contact-icon" viewBox="0 0 24 24">
                             <defs>
-                                <linearGradient id="grad-contact-loc" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#5C58ED" />
-                                    <stop offset="100%" stop-color="#B3B0FF" />
-                                </linearGradient>
-                            </defs>
-                            <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z" stroke="url(#grad-contact-loc)" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
-                            <circle cx="12" cy="10" r="3" stroke="url(#grad-contact-loc)" stroke-width="1.8" fill="none"/>
-                        </svg>
-                        Ahmedabad, Gujarat
-                    </span>
-                    <span>
-                        <svg class="contact-icon" viewBox="0 0 24 24">
-                            <defs>
                                 <linearGradient id="grad-contact-mail" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#5C58ED" />
+                                    <stop offset="0%" stop-color="#5C3AED" />
                                     <stop offset="100%" stop-color="#B3B0FF" />
                                 </linearGradient>
                             </defs>
@@ -2707,7 +3025,7 @@
                         <svg class="contact-icon" viewBox="0 0 24 24">
                             <defs>
                                 <linearGradient id="grad-contact-phone" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#5C58ED" />
+                                    <stop offset="0%" stop-color="#5C3AED" />
                                     <stop offset="100%" stop-color="#B3B0FF" />
                                 </linearGradient>
                             </defs>
@@ -2721,7 +3039,7 @@
                         <svg class="contact-icon" viewBox="0 0 24 24">
                             <defs>
                                 <linearGradient id="grad-contact-linkedin" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#5C58ED" />
+                                    <stop offset="0%" stop-color="#5C3AED" />
                                     <stop offset="100%" stop-color="#B3B0FF" />
                                 </linearGradient>
                             </defs>
@@ -2729,6 +3047,20 @@
                             <circle cx="4" cy="4" r="2" stroke="url(#grad-contact-linkedin)" stroke-width="1.8" fill="none"/>
                         </svg>
                         <a href="https://www.linkedin.com/in/divyarajchauhan33/" target="_blank" rel="noopener" style="color: inherit; text-decoration: none;">divyarajchauhan33</a>
+                    </span>
+                    <span>
+                        <svg class="contact-icon" viewBox="0 0 24 24">
+                            <defs>
+                                <linearGradient id="grad-contact-instagram" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#5C3AED" />
+                                    <stop offset="100%" stop-color="#B3B0FF" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="url(#grad-contact-instagram)" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" stroke="url(#grad-contact-instagram)" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="url(#grad-contact-instagram)" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <a href="https://www.instagram.com/divyaraj.creates" target="_blank" rel="noopener" style="color: inherit; text-decoration: none;">@divyaraj.creates</a>
                     </span>
                 </div>
                 <div class="drive-btn-container" style="margin-top: 24px;">
@@ -2788,7 +3120,8 @@
 
         <!-- Copyright above the Dot Matrix Border -->
         <div class="copyright-above reveal">
-            © 2026 Divyaraj Chauhan. All rights reserved.
+            <div>© 2026 Divyaraj Chauhan. All rights reserved.</div>
+            <div class="refresh-date">Built with raw HTML/CSS &amp; too much coffee · Refreshed June 2026</div>
         </div>
     </section>
 
