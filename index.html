@@ -2315,6 +2315,200 @@
             transform: translateY(-2px);
         }
 
+        /* --- AI Cinema Lab Section --- */
+        .cinema-section {
+            position: relative;
+            padding: 100px 6% 80px;
+            max-width: 1300px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .cinema-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.03; /* SVG grain noise overlay */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            border-radius: 24px;
+        }
+
+        .cinema-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .cinema-header .cinema-badge {
+            align-self: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+            background: rgba(92, 88, 237, 0.08);
+            border: 1px solid rgba(92, 88, 237, 0.2);
+            padding: 4px 12px;
+            border-radius: 100px;
+        }
+
+        .cinema-header h2 {
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            font-weight: 850;
+            letter-spacing: -0.02em;
+            color: #fff;
+            line-height: 1.15;
+        }
+
+        .cinema-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .cinema-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .film-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .film-card:hover {
+            transform: translateY(-6px) scale(1.03) !important;
+        }
+
+        .film-card-visual {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 16px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.3);
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .film-card-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .film-card:hover .film-card-visual img {
+            transform: scale(1.05);
+        }
+
+        .play-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.25);
+            transition: background 0.3s ease;
+        }
+
+        .film-card:hover .play-overlay {
+            background: rgba(0, 0, 0, 0.45);
+        }
+
+        .play-icon {
+            width: 56px;
+            height: 56px;
+            color: #fff;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .film-card:hover .play-icon {
+            transform: scale(1.15);
+        }
+
+        .watch-badge {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translate(-50%, 15px);
+            background: rgba(92, 58, 237, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .film-card:hover .watch-badge {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        .film-card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .film-meta {
+            align-self: flex-start;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--secondary-3);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(179, 176, 255, 0.06);
+            border: 1px solid rgba(179, 176, 255, 0.15);
+            padding: 4px 12px;
+            border-radius: 100px;
+        }
+
+        .film-card-content h3 {
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.25;
+            letter-spacing: -0.01em;
+            margin-top: 4px;
+        }
+
+        .film-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .cinema-cta-wrap {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .cinema-cta-wrap .btn-primary-gold {
+            max-width: 320px;
+            width: 100%;
+        }
+
         @media (max-width: 960px) {
             .websites-grid {
                 grid-template-columns: 1fr;
@@ -2322,6 +2516,18 @@
             }
             .web-card {
                 padding: 24px;
+            }
+            .cinema-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .featured-film-card {
+                grid-template-columns: 1fr !important;
+                gap: 24px !important;
+                padding: 24px !important;
+            }
+            .featured-film-card .film-card-visual {
+                aspect-ratio: 16/9 !important;
             }
         }
     </style>
@@ -2345,6 +2551,7 @@
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#portfolio">Work</a></li>
                 <li><a href="#websites">Websites</a></li>
+                <li><a href="#ai-cinema">AI Cinema</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             
@@ -2988,6 +3195,86 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- AI Cinema Lab -->
+    <section id="ai-cinema" class="cinema-section">
+        <div class="cinema-header reveal">
+            <span class="cinema-badge">Generative Films</span>
+            <h2>AI Cinema <span class="gradient-text">Lab</span></h2>
+            <p class="cinema-subtitle">
+                I direct AI to tell stories that matter. Historical dramas. Brand films. Product showcases.
+            </p>
+        </div>
+        
+        <div class="cinema-container reveal">
+            <!-- Featured Card: The Last Ember -->
+            <a href="ai-cinema.html#last-ember" class="film-card glass-card featured-film-card" style="border-left: 3px solid #C9A96E; text-decoration: none; color: inherit; display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center; margin-bottom: 24px; padding: 40px;">
+                <div class="film-card-visual" style="margin-bottom: 0;">
+                    <img src="images/last-ember-thumb.jpg" alt="The Last Ember Thumbnail">
+                    <div class="play-overlay">
+                        <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </div>
+                    <div class="watch-badge">Watch Film &rarr;</div>
+                </div>
+                <div class="film-card-content" style="gap: 16px;">
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <span class="film-meta">~112 sec &bull; Fantasy &bull; Storyvord Internship Assignment</span>
+                        <span class="film-meta" style="color: #C9A96E; background: rgba(201, 169, 110, 0.08); border-color: rgba(201, 169, 110, 0.25);">Full Process Documented</span>
+                    </div>
+                    <h3 style="font-size: 2rem;">The Last Ember</h3>
+                    <p class="film-subtitle" style="font-size: 0.98rem; color: var(--text-muted); line-height: 1.6;">
+                        A 16-shot AI cinematic sequence with full process documentation — from prompt formula to mid-workflow adaptation. Built in 12 hours.
+                    </p>
+                    <span class="btn-outline text-center" style="display: inline-flex; align-items: center; justify-content: center; width: auto; align-self: flex-start; padding: 10px 24px; border-radius: 100px; font-size: 0.85rem; font-weight: 700;">Explore Process &rarr;</span>
+                </div>
+            </a>
+
+            <!-- Supporting Cards Grid -->
+            <div class="cinema-grid">
+                <!-- Card 1: Battle of Kasahrada -->
+                <a href="ai-cinema.html#kasahrada" class="film-card glass-card">
+                    <div class="film-card-visual">
+                        <img src="images/kasahrada-thumb.jpg" alt="Battle of Kasahrada: The Valor of Queen Nayika Devi">
+                        <div class="play-overlay">
+                            <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                        <div class="watch-badge">Watch Film &rarr;</div>
+                    </div>
+                    <div class="film-card-content">
+                        <span class="film-meta">1:47 &bull; Historical Micro-Drama &bull; 2025</span>
+                        <h3>Battle of Kasahrada</h3>
+                        <p class="film-subtitle">The Valor of Queen Nayika Devi</p>
+                    </div>
+                </a>
+
+                <!-- Card 2: Porsche 911 Turbo S -->
+                <a href="ai-cinema.html#porsche" class="film-card glass-card">
+                    <div class="film-card-visual">
+                        <img src="images/porsche-thumb.jpg" alt="Porsche 911 Turbo S: Luxury Automotive Showcase">
+                        <div class="play-overlay">
+                            <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                        <div class="watch-badge">Watch Film &rarr;</div>
+                    </div>
+                    <div class="film-card-content">
+                        <span class="film-meta">2:15 &bull; Automotive &bull; 2025</span>
+                        <h3>Porsche 911 Turbo S</h3>
+                        <p class="film-subtitle">Luxury Automotive Showcase</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="cinema-cta-wrap reveal">
+            <a href="ai-cinema.html" class="btn-primary-gold">Explore AI Cinema Lab &rarr;</a>
         </div>
     </section>
 

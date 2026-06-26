@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Cinema Lab — Generative Films & Human Direction — Divyaraj Chauhan</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="description" content="AI Cinema Lab by Divyaraj Chauhan. Premium AI-generated brand films, luxury product showcases, and research-backed historical micro-dramas.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #5C3AED;
+            --accent-1: #4D55CC;
+            --secondary-1: #0E192D;
+            --secondary-2: #262276;
+            --secondary-3: #B3B0FF;
+            --bg: #03040a;
+            --surface-flat: rgba(255, 255, 255, 0.02);
+            --surface: rgba(14, 25, 45, 0.45);
+            --text: #f0f0f5;
+            --text-muted: #8a8fb5;
+            --border: rgba(255, 255, 255, 0.06);
+            --font-serif: 'Playfair Display', Georgia, serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary-2);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* Background Atmosphere & Noise Overlay */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.3;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: var(--primary);
+            top: -200px;
+            left: -200px;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: var(--secondary-2);
+            bottom: -150px;
+            right: -150px;
+        }
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Navigation Header */
+        header {
+            padding: 30px 6%;
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(14, 25, 45, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-btn:hover {
+            color: #ffffff;
+            border-color: var(--primary);
+            background: rgba(92, 88, 237, 0.12);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -10px rgba(92, 88, 237, 0.4);
+        }
+
+        /* ─── Glass Cards ─── */
+        .glass-card {
+            background: var(--surface-flat);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 48px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 1.5px;
+            background: linear-gradient(135deg, rgba(92,88,237,0.4), transparent 40%, transparent 60%, rgba(179,176,255,0.2));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(92, 88, 237, 0.25);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+
+        /* ─── Hero Section ─── */
+        .cinema-hero {
+            position: relative;
+            width: 100%;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: #03040a;
+            background-image: url('images/kasahrada-hero-fallback.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .cinema-hero::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(to bottom, transparent, var(--bg));
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .cinema-hero video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .cinema-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(3, 4, 10, 0.3) 0%, rgba(3, 4, 10, 0.8) 60%, var(--bg) 100%);
+            z-index: 2;
+        }
+
+        .cinema-hero-content {
+            position: relative;
+            z-index: 5;
+            max-width: 900px;
+            padding: 80px 6%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .cinema-badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--secondary-3);
+            background: rgba(179, 176, 255, 0.08);
+            border: 1px solid rgba(179, 176, 255, 0.2);
+            padding: 6px 14px;
+            border-radius: 100px;
+            margin-bottom: 8px;
+        }
+
+        .cinema-hero-content h1 {
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            color: #fff;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #ffffff 0%, var(--secondary-3) 50%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cinema-hero-content p {
+            font-size: clamp(1.05rem, 2vw, 1.25rem);
+            color: rgba(255, 255, 255, 0.88);
+            max-width: 760px;
+            line-height: 1.6;
+        }
+
+        .cinema-hero-ctas {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        /* Buttons styling */
+        .btn-primary-gold {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 100px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #120e08;
+            background: linear-gradient(135deg, #C9A96E, #e5cb9c);
+            box-shadow: 0 4px 15px rgba(201, 169, 110, 0.2);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(201, 169, 110, 0.4);
+            filter: brightness(1.05);
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 100px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #fff;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+        }
+
+        .btn-outline:hover {
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* ─── Scroll Reveal Animation ─── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ─── Page Section Title Layout ─── */
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            font-weight: 850;
+            letter-spacing: -0.02em;
+            color: #fff;
+            line-height: 1.15;
+        }
+
+        /* ─── Process Section ─── */
+        .process-section {
+            padding: 80px 6% 60px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .process-card {
+            padding: 36px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100%;
+        }
+
+        .process-number {
+            font-family: var(--font-serif);
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--secondary-3), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .process-icon-wrap {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--secondary-3);
+        }
+
+        .process-icon-wrap svg {
+            width: 24px;
+            height: 24px;
+        }
+
+
+
+        .process-card h3 {
+            font-size: 1.3rem;
+            font-weight: 750;
+            color: #fff;
+        }
+
+        .process-card p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ─── Selected Works Section ─── */
+        .films-section {
+            padding: 100px 6% 80px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .films-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .film-row {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 48px;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .supporting-films-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .film-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 32px;
+            background: var(--surface-flat);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .film-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(92, 88, 237, 0.25);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+
+        .film-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 1.5px;
+            background: linear-gradient(135deg, rgba(92,88,237,0.4), transparent 40%, transparent 60%, rgba(179,176,255,0.2));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+
+        .film-card:hover::before {
+            opacity: 1;
+        }
+
+        .film-row-visual {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #000;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .film-row-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .film-row:hover .film-row-visual img {
+            transform: scale(1.03);
+        }
+
+        .play-btn-large {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(3, 4, 10, 0.25);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .film-row:hover .play-btn-large {
+            background: rgba(3, 4, 10, 0.45);
+        }
+
+        .play-btn-large svg {
+            width: 72px;
+            height: 72px;
+            color: #fff;
+            filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.6));
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .film-row:hover .play-btn-large svg {
+            transform: scale(1.12);
+        }
+
+        .film-row-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .film-meta {
+            align-self: flex-start;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--secondary-3);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(179, 176, 255, 0.06);
+            border: 1px solid rgba(179, 176, 255, 0.15);
+            padding: 4px 12px;
+            border-radius: 100px;
+        }
+
+        .film-row-content h2 {
+            font-size: 2rem;
+            font-weight: 850;
+            color: #fff;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .film-brief {
+            font-size: 0.98rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .film-actions {
+            display: flex;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .film-actions button {
+            flex: 1;
+        }
+
+        /* ─── Services Section ─── */
+        .services-section {
+            padding: 80px 6% 60px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .service-card {
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            border-radius: 20px;
+        }
+
+        /* Thin subtle border gradient override for services */
+        .service-card::before {
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(179,176,255,0.3), transparent 50%, rgba(92,88,237,0.3));
+        }
+
+        .service-card h3 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .service-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 28px;
+            flex-grow: 1;
+        }
+
+        .service-price-block {
+            margin-bottom: 24px;
+        }
+
+        .service-price-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .service-price-amount {
+            font-family: var(--font-serif);
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .service-price-amount span {
+            font-size: 0.85rem;
+            font-family: var(--font-sans);
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-left: 2px;
+        }
+
+        .service-card .btn-outline {
+            width: 100%;
+        }
+
+        /* ─── Tools Section ─── */
+        .tools-section {
+            padding: 60px 6% 80px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .tools-pill-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .tool-pill {
+            padding: 10px 22px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .tool-pill:hover {
+            color: #fff;
+            border-color: var(--primary);
+            background: rgba(92, 88, 237, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(92, 88, 237, 0.2);
+        }
+
+        /* ─── Bottom CTA ─── */
+        .bottom-cta-section {
+            padding: 100px 6% 120px;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .bottom-cta-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .bottom-cta-inner h2 {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 850;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+
+        .bottom-cta-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .bottom-cta-buttons .btn-primary-gold,
+        .bottom-cta-buttons .btn-outline {
+            min-width: 200px;
+        }
+
+        /* ─── Dynamic Video Modal ─── */
+        .video-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 1100;
+            background: rgba(3, 4, 10, 0.92);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 24px;
+        }
+
+        .video-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .video-modal-container {
+            width: 100%;
+            max-width: 1000px;
+            aspect-ratio: 16/9;
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+            transform: scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .video-modal.active .video-modal-container {
+            transform: scale(1);
+        }
+
+        .video-modal-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(14, 25, 45, 0.6);
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .modal-close-btn:hover {
+            background: #fff;
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        /* ─── Sliding Case Study Overlay ─── */
+        .overlay-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            background: rgba(3, 4, 10, 0.65);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .overlay-backdrop.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .case-study-drawer {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 600px;
+            height: 100%;
+            z-index: 1000;
+            background: #060913;
+            border-left: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: -15px 0 45px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .case-study-drawer.active {
+            right: 0;
+        }
+
+        .drawer-header {
+            padding: 30px 40px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .drawer-header-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .drawer-header-info h2 {
+            font-size: 1.8rem;
+            font-weight: 850;
+            color: #fff;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .drawer-close-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 32px;
+            line-height: 1;
+            cursor: pointer;
+            transition: color 0.3s;
+            padding: 0 5px;
+        }
+
+        .drawer-close-btn:hover {
+            color: #fff;
+        }
+
+        .drawer-content {
+            padding: 40px;
+            overflow-y: auto;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .drawer-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .drawer-section h3 {
+            font-size: 0.76rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--secondary-3);
+        }
+
+        .drawer-section p {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        /* Drawer specific quotes */
+        .drawer-quote {
+            border-left: 2px solid var(--primary);
+            padding-left: 20px;
+            margin-top: 10px;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .drawer-quote-author {
+            font-style: normal;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-top: 8px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+
+
+        /* Chapter step breakdown for Porsche */
+        .chapters-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .chapter-card {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .chapter-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .chapter-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ─── Media Queries ─── */
+        @media (max-width: 1200px) {
+            .process-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 960px) {
+            .film-row {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 30px;
+            }
+            .supporting-films-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .case-study-drawer {
+                width: 100%;
+            }
+            .drawer-header {
+                padding: 24px;
+            }
+            .drawer-content {
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            .bottom-cta-buttons {
+                flex-direction: column;
+                width: 100%;
+                gap: 12px;
+            }
+            .bottom-cta-buttons .btn-primary-gold,
+            .bottom-cta-buttons .btn-outline {
+                width: 100%;
+            }
+        }
+
+        /* ─── Reduced Motion Overrides ─── */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-delay: 0s !important;
+                animation-duration: 0s !important;
+                animation-iteration-count: 1 !important;
+                transition-delay: 0s !important;
+                transition-duration: 0s !important;
+                scroll-behavior: auto !important;
+            }
+            .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .glass-card:hover {
+                transform: none !important;
+            }
+            .film-row:hover .film-row-visual img {
+                transform: none !important;
+            }
+            .play-btn-large svg:hover {
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Background -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="noise"></div>
+
+    <!-- Navigation Header -->
+    <header>
+        <a href="index.html#ai-cinema" class="back-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Back to Portfolio
+        </a>
+        <a href="index.html#hero" class="logo">
+            <img src="images/logo.png" style="height: 32px; width: auto;" alt="DC.">
+        </a>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="cinema-hero">
+        <video autoplay loop muted playsinline poster="images/kasahrada-hero-fallback.jpg">
+            <source src="images/kasahrada-hero-loop.mp4" type="video/mp4">
+        </video>
+        <div class="cinema-hero-overlay"></div>
+        <div class="cinema-hero-content reveal">
+            <span class="cinema-badge">AI Filmmaking</span>
+            <h1>I direct AI to tell stories<br><span class="gradient-text">that matter.</span></h1>
+            <p>
+                I combine historical research, cinematic shot planning, and neural audio design to create films that feel human — because they are directed by one.
+            </p>
+            <div class="cinema-hero-ctas">
+                <a href="https://wa.me/qr/KQJFSZ2WY5FSO1" target="_blank" rel="noopener" class="btn-primary-gold">Start a Project &rarr;</a>
+                <a href="#films" class="btn-outline">Watch Showreel &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Process Section -->
+    <section class="process-section">
+        <div class="section-header reveal">
+            <span class="cinema-badge">Workflow</span>
+            <h2>How I <span class="gradient-text">Work</span></h2>
+        </div>
+        
+        <div class="process-grid">
+            <!-- Step 1 -->
+            <div class="process-card glass-card reveal">
+                <div class="process-number">01</div>
+                <div class="process-icon-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                </div>
+                <h3>Research & Scripting</h3>
+                <p>Script development, historical research, and creative direction. The human decision layer that defines narrative arcs.</p>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="process-card glass-card reveal">
+                <div class="process-number">02</div>
+                <div class="process-icon-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path>
+                        <path d="M12 8C13.1046 8 14 7.10457 14 6C14 4.89543 13.1046 4 12 4C10.8954 4 10 4.89543 10 6C10 7.10457 10.8954 8 12 8Z"></path>
+                        <path d="M6 12C7.10457 12 8 11.1046 8 10C8 8.89543 7.10457 8 6 8C4.89543 8 4 8.89543 4 10C4 11.1046 4.89543 12 6 12Z"></path>
+                        <path d="M18 12C19.1046 12 20 11.1046 20 10C20 8.89543 19.1046 8 18 8C16.8954 8 16 8.89543 16 10C16 11.1046 16.8954 12 18 12Z"></path>
+                        <path d="M10 16C10.5523 16 11 15.5523 11 15C11 14.4477 10.5523 14 10 14C9.44772 14 9 14.4477 9 15C9 15.5523 9.44772 16 10 16Z"></path>
+                        <path d="M14 16C14.5523 16 15 15.5523 15 15C15 14.4477 14.5523 14 14 14C13.4477 14 13 14.4477 13 15C13 15.5523 13.4477 16 14 16Z"></path>
+                    </svg>
+                </div>
+                <h3>Visual Design</h3>
+                <p>Cinematic frame generation, texture consistency controls, and establishing unified, premium project aesthetics.</p>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="process-card glass-card reveal">
+                <div class="process-number">03</div>
+                <div class="process-icon-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                        <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                    </svg>
+                </div>
+                <h3>Motion Control</h3>
+                <p>Realistic movement vectors, action sequences, and character-to-camera motion coherence — key for realistic film quality.</p>
+            </div>
+            
+            <!-- Step 4 -->
+            <div class="process-card glass-card reveal">
+                <div class="process-number">04</div>
+                <div class="process-icon-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2v20"></path>
+                        <path d="M17 5v14"></path>
+                        <path d="M22 9v6"></path>
+                        <path d="M7 9v6"></path>
+                        <path d="M2 5v14"></path>
+                    </svg>
+                </div>
+                <h3>Sound Design</h3>
+                <p>Neural voice synthesis matched to period contexts and original synchronized orchestral score compositions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Selected Works Section -->
+    <section id="films" class="films-section">
+        <div class="section-header reveal">
+            <span class="cinema-badge">Portfolio</span>
+            <h2>Selected <span class="gradient-text">Works</span></h2>
+        </div>
+        
+        <div class="films-container">
+            <!-- Featured Film: The Last Ember -->
+            <div class="film-row glass-card reveal featured-film" id="last-ember" style="border-left: 3px solid #C9A96E;">
+                <div class="film-row-visual">
+                    <img src="images/last-ember-thumb.jpg" alt="The Last Ember Thumbnail">
+                    <button class="play-btn-large watch-btn" data-video="Final Video/The Last Amber.mp4" aria-label="Play Film">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="film-row-content">
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <span class="film-meta">~112 sec &bull; Fantasy &bull; Storyvord Internship Assignment</span>
+                        <span class="film-meta" style="color: #C9A96E; background: rgba(201, 169, 110, 0.08); border-color: rgba(201, 169, 110, 0.25);">Full Process Documented</span>
+                    </div>
+                    <h2>The Last Ember</h2>
+                    <p class="film-brief">
+                        A 16-shot AI cinematic sequence with full process documentation — from prompt formula to mid-workflow adaptation. Built in 12 hours.
+                    </p>
+                    <div class="film-actions">
+                        <button class="btn-primary-gold watch-btn" data-video="Final Video/The Last Amber.mp4">Watch Film</button>
+                        <a href="https://amber-by-divyaraj.vercel.app/" target="_blank" rel="noopener" class="btn-outline" style="text-decoration: none;">View Full Process &rarr;</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Supporting Films Grid -->
+            <div class="supporting-films-grid">
+                <!-- Film 1: Kasahrada -->
+                <div class="film-card glass-card reveal" id="kasahrada">
+                    <div class="film-card-visual" style="aspect-ratio: 16/9; margin-bottom: 24px; position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); background: rgba(0, 0, 0, 0.3);">
+                        <img src="images/kasahrada-thumb.jpg" alt="Battle of Kasahrada Thumbnail" style="width: 100%; height: 100%; object-fit: cover;">
+                        <button class="play-btn-large watch-btn" data-video="Final Video/Rani Nayika Devi_Divyaraj.mp4" aria-label="Play Film" style="position: absolute; inset: 0; width: 100%; height: 100%; background: rgba(3,4,10,0.25); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                            <svg viewBox="0 0 24 24" fill="currentColor" style="width: 56px; height: 56px;">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="film-card-content" style="display: flex; flex-direction: column; gap: 8px;">
+                        <span class="film-meta">1:47 &bull; Historical &bull; 2025</span>
+                        <h3>Battle of Kasahrada</h3>
+                        <p class="film-subtitle" style="font-size: 0.95rem; color: var(--text-muted);">The Valor of Queen Nayika Devi</p>
+                        <p class="film-brief" style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
+                            An AI-driven cinematic micro-drama recreating the 1178 CE battle where Queen Nayika Devi defended Gujarat against Muhammad Ghori.
+                        </p>
+                        <div class="film-actions" style="margin-top: auto; display: flex; gap: 12px;">
+                            <button class="btn-primary-gold watch-btn" data-video="Final Video/Rani Nayika Devi_Divyaraj.mp4">Watch Film</button>
+                            <button class="btn-outline case-study-btn" data-case="kasahrada">Case Study &rarr;</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Film 2: Porsche -->
+                <div class="film-card glass-card reveal" id="porsche">
+                    <div class="film-card-visual" style="aspect-ratio: 16/9; margin-bottom: 24px; position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); background: rgba(0, 0, 0, 0.3);">
+                        <img src="images/porsche-thumb.jpg" alt="Porsche 911 Turbo S Thumbnail" style="width: 100%; height: 100%; object-fit: cover;">
+                        <button class="play-btn-large watch-btn" data-video="Final Video/1080P Porsche 911 Turbo S Promo.mp4" aria-label="Play Film" style="position: absolute; inset: 0; width: 100%; height: 100%; background: rgba(3,4,10,0.25); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                            <svg viewBox="0 0 24 24" fill="currentColor" style="width: 56px; height: 56px;">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="film-card-content" style="display: flex; flex-direction: column; gap: 8px;">
+                        <span class="film-meta">2:15 &bull; Automotive &bull; 2025</span>
+                        <h3>Porsche 911 Turbo S</h3>
+                        <p class="film-subtitle" style="font-size: 0.95rem; color: var(--text-muted);">Luxury Automotive Showcase</p>
+                        <p class="film-brief" style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
+                            A luxury-focused, AI-driven cinematic showcase built around the iconic white Porsche 911 Turbo S. Pure visual storytelling.
+                        </p>
+                        <div class="film-actions" style="margin-top: auto; display: flex; gap: 12px;">
+                            <button class="btn-primary-gold watch-btn" data-video="Final Video/1080P Porsche 911 Turbo S Promo.mp4">Watch Film</button>
+                            <button class="btn-outline case-study-btn" data-case="porsche">Case Study &rarr;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <div class="section-header reveal">
+            <span class="cinema-badge">Services</span>
+            <h2>What I Can <span class="gradient-text">Build For You</span></h2>
+        </div>
+        
+        <div class="services-grid">
+            <!-- Service 1 -->
+            <div class="service-card glass-card reveal">
+                <h3>Brand Films</h3>
+                <p class="service-desc">Cinematic brand stories tailored for key launches, rebrands, corporate announcements, and high-impact social campaigns.</p>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="service-card glass-card reveal">
+                <h3>Product Showcases</h3>
+                <p class="service-desc">Premium product reveals and closeups featuring beat-synchronized editorial cuts and detailed macro camera cinematography.</p>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="service-card glass-card reveal">
+                <h3>Historical Micro-Dramas</h3>
+                <p class="service-desc">AI-driven dramatic retelling of epic historical moments, built with academic research-backed realism and authentic voices.</p>
+            </div>
+
+            <!-- Service 4 -->
+            <div class="service-card glass-card reveal">
+                <h3>Social Packages</h3>
+                <p class="service-desc">5 to 10 tailored AI vertical video assets per month, aligned with custom brand models and a unified visual tone.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Bottom CTA -->
+    <section class="bottom-cta-section reveal">
+        <div class="bottom-cta-inner">
+            <h2>Have a story that needs telling?</h2>
+            <div class="bottom-cta-buttons">
+                <a href="https://wa.me/qr/KQJFSZ2WY5FSO1" target="_blank" rel="noopener" class="btn-primary-gold">Start a Project &rarr;</a>
+                <a href="diu_resume.html" target="_blank" class="btn-outline">View My Resume</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dynamic Video Modal -->
+    <div class="video-modal" id="videoModal">
+        <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">&times;</button>
+        <div class="video-modal-container">
+            <iframe id="videoIframe" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="display: none; width: 100%; height: 100%;"></iframe>
+            <video id="videoElement" controls autoplay playsinline style="display: none; width: 100%; height: 100%; object-fit: contain;"></video>
+        </div>
+    </div>
+
+    <!-- Sliding Case Study Drawer -->
+    <div class="overlay-backdrop" id="drawerBackdrop"></div>
+    <div class="case-study-drawer" id="caseStudyDrawer">
+        <div class="drawer-header">
+            <div class="drawer-header-info">
+                <span class="cinema-badge" id="drawerBadge">Case Study</span>
+                <h2 id="drawerTitle">Project Title</h2>
+            </div>
+            <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="Close case study">&times;</button>
+        </div>
+        <div class="drawer-content" id="drawerContent">
+            <!-- Dynamically populated -->
+        </div>
+    </div>
+
+    <!-- Case Study Data & Logic JavaScript -->
+    <script>
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.08,
+            rootMargin: '0px 0px -60px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Case Studies Data
+        const caseStudies = {
+            kasahrada: {
+                title: "Battle of Kasahrada: The Valor of Queen Nayika Devi",
+                badge: "Historical Micro-Drama • 2025",
+                brief: "Recreate the 1178 CE battle as a cinematic micro-drama, focusing on historical realism and emotional weight rather than a clinical documentary format.",
+                challenge: "AI video generation engines naturally struggle with complex, multi-subject human motion (such as sword combat and dynamic shields), structural character visual consistency across frames, and rendering specific 12th-century military armor.",
+                solution: "Deployed Higgsfield AI's visual motion controls to enforce realistic physical vectors for combat action. Integrated a strict structural frame-to-frame pipeline, combining image-to-video diffusion and post-render frame blending to control Queen Nayika's facial details. Faithfully recreated Gadaraghatta's dry, rocky terrain through customized background plate prompt structures.",
+                tools: ["ChatGPT", "Gemini", "Higgsfield AI", "Google Flow", "ElevenLabs", "Suno AI", "Google Vids"],
+                outcome: "A 1-minute, 47-second micro-drama featuring highly coherent battle layouts, period-accurate voice narratives, and a beat-synchronized cinematic orchestral score.",
+                quote: "Working on this project allowed me to push the boundaries of what is possible with current generative motion tools. It serves as proof that AI can be a powerful tool for preserving and celebrating our historical heritage.",
+                author: "Divyaraj Chauhan"
+            },
+            porsche: {
+                title: "Porsche 911 Turbo S: Luxury Automotive Showcase",
+                badge: "Automotive • 2025",
+                brief: "Build a premium brand showcase centered on the iconic white Porsche 911 Turbo S. Tell the story entirely through lighting, camera pans, and mechanical cuts without using any narrative voiceovers.",
+                challenge: "Simulating accurate lighting reflections (specular highlights) sliding across high-gloss curved car bodies, avoiding structural model morphing during rapid pans, and rendering photo-realistic wheel rotations without geometric distortions.",
+                solution: "Utilized Google Veo and Luma Dream Machine to handle fluid specular reflection physics. Structured the narrative flow in a 5-part shot breakdown to guide generative model context sequentially, going from details to high-speed movement.",
+                tools: ["Midjourney", "Veo", "Luma Dream Machine", "Premiere Pro", "CapCut"],
+                outcome: "A 2-minute, 15-second loop-ready high-end brand asset focused entirely on mechanical symmetry, cinematic lens work, and tight rhythmic audio transitions.",
+                quote: "Automotive cinematography is all about how light wraps around metal. With AI, you have to guide the engine to understand specular highlights and paint reflectivity, turning algorithms into virtual studio lights.",
+                author: "Divyaraj Chauhan",
+                chapters: [
+                    { title: "Chapter 1: Opening Reveal", desc: "Silhouette lighting panning across the active rear deck spoiler and sleek LED headlamps cutting through volumetric fog." },
+                    { title: "Chapter 2: Identity & Detail", desc: "Extreme macro shots focusing on the Porsche shield, chrome 'Turbo S' emblem, and detailed wheel caliper rims." },
+                    { title: "Chapter 3: Interior Craft", desc: "Slow camera glides over red leather seat stitching, carbon trim inserts, and the start-up sequence of the sport chrono dashboard." },
+                    { title: "Chapter 4: Performance Arc", desc: "High-speed tracking shots showing the white chassis cutting through rain-slicked curves, complete with natural motion blur." },
+                    { title: "Chapter 5: Closing Loop", desc: "The vehicle entering a dark, minimalist garage, headlights shutting down as the spoiler retracts, looping back seamlessly." }
+                ]
+            }
+        };
+
+        // UI Selectors
+        const videoModal = document.getElementById('videoModal');
+        const videoIframe = document.getElementById('videoIframe');
+        const videoElement = document.getElementById('videoElement');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        const drawer = document.getElementById('caseStudyDrawer');
+        const drawerBackdrop = document.getElementById('drawerBackdrop');
+        const drawerCloseBtn = document.getElementById('drawerCloseBtn');
+        
+        // Video Modal Handler
+        document.querySelectorAll('.watch-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const videoUrl = btn.getAttribute('data-video');
+                if (videoUrl) {
+                    if (videoUrl.includes('youtube.com') || videoUrl.includes('vimeo.com') || videoUrl.includes('embed')) {
+                        videoIframe.src = videoUrl + "?autoplay=1&rel=0";
+                        videoIframe.style.display = 'block';
+                        videoElement.style.display = 'none';
+                    } else {
+                        // Local video playing via video tag
+                        videoElement.src = videoUrl;
+                        videoElement.load();
+                        videoElement.play().catch(err => console.log("Auto-play blocked or failed", err));
+                        videoElement.style.display = 'block';
+                        videoIframe.style.display = 'none';
+                    }
+                    videoModal.classList.add('active');
+                }
+            });
+        });
+
+        const closeModal = () => {
+            videoModal.classList.remove('active');
+            // Reset sources to stop playback/audio
+            videoIframe.src = '';
+            videoElement.pause();
+            videoElement.src = '';
+            videoIframe.style.display = 'none';
+            videoElement.style.display = 'none';
+        };
+
+        modalCloseBtn.addEventListener('click', closeModal);
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) closeModal();
+        });
+
+        // Case Study Drawer Handler
+        const openCaseStudy = (caseId) => {
+            const data = caseStudies[caseId];
+            if (!data) return;
+
+            document.getElementById('drawerBadge').textContent = data.badge;
+            document.getElementById('drawerTitle').textContent = data.title;
+
+            // Generate content HTML
+            let contentHTML = `
+                <div class="drawer-section">
+                    <h3>The Brief</h3>
+                    <p>${data.brief}</p>
+                </div>
+                <div class="drawer-section">
+                    <h3>The Challenge</h3>
+                    <p>${data.challenge}</p>
+                </div>
+                <div class="drawer-section">
+                    <h3>My Solution</h3>
+                    <p>${data.solution}</p>
+                </div>
+            `;
+
+            if (data.chapters) {
+                contentHTML += `
+                    <div class="drawer-section">
+                        <h3>Shot Breakdown</h3>
+                        <div class="chapters-container">
+                `;
+                data.chapters.forEach(ch => {
+                    contentHTML += `
+                        <div class="chapter-card">
+                            <div class="chapter-title">${ch.title}</div>
+                            <div class="chapter-desc">${ch.desc}</div>
+                        </div>
+                    `;
+                });
+                contentHTML += `
+                        </div>
+                    </div>
+                `;
+            }
+
+
+            contentHTML += `
+                <div class="drawer-section">
+                    <h3>Key Outcome</h3>
+                    <p>${data.outcome}</p>
+                </div>
+            `;
+
+            document.getElementById('drawerContent').innerHTML = contentHTML;
+            
+            // Open Drawer
+            drawerBackdrop.classList.add('active');
+            drawer.classList.add('active');
+            
+            // Update URL hash without reload
+            history.pushState(null, null, '#' + caseId);
+        };
+
+        const closeDrawer = () => {
+            drawer.classList.remove('active');
+            drawerBackdrop.classList.remove('active');
+            // Remove hash from URL
+            history.pushState(null, null, ' ');
+        };
+
+        document.querySelectorAll('.case-study-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const caseId = btn.getAttribute('data-case');
+                openCaseStudy(caseId);
+            });
+        });
+
+        drawerCloseBtn.addEventListener('click', closeDrawer);
+        drawerBackdrop.addEventListener('click', closeDrawer);
+
+        // Global Event: Keyboard accessibility (Close modal & drawer on Escape)
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                closeDrawer();
+            }
+        });
+
+        // Auto-open based on URL Hash
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash && (hash === 'kasahrada' || hash === 'porsche')) {
+                openCaseStudy(hash);
+            }
+        });
+    </script>
+</body>
+</html>
