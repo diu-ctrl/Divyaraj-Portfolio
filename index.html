@@ -102,18 +102,68 @@
             position: fixed;
             top: 24px;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translate(-50%, -10px);
             z-index: 100;
             width: auto;
             max-width: 92%;
-            transition: all 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        nav.nav-visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, 0);
+        }
+
+        nav.nav-hover-active {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            transform: translate(-50%, 0) !important;
+        }
+
+        .nav-trigger-line {
+            position: fixed;
+            top: 18px; /* Slightly below the top edge */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 30px; /* Invisible height to bridge hover gap */
+            z-index: 101;
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-trigger-line::after {
+            content: '';
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary-3));
+            border-radius: 100px;
+            transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
+            box-shadow: 0 2px 10px rgba(92, 88, 237, 0.3);
+        }
+
+        .nav-trigger-line:hover::after {
+            width: 100px;
+            height: 6px;
+            background: #fff;
+        }
+
+        .nav-trigger-line.hidden {
+            opacity: 0;
+            transform: translate(-50%, -10px);
         }
 
         .nav-container {
             display: flex;
             align-items: center;
             gap: 36px;
-            padding: 8px 32px;
+            padding: 6px 28px;
             background: rgba(14, 25, 45, 0.8);
             backdrop-filter: blur(24px) saturate(1.3);
             -webkit-backdrop-filter: blur(24px) saturate(1.3);
@@ -127,7 +177,7 @@
         .logo {
             display: inline-flex;
             align-items: center;
-            height: 54px;
+            height: 44px;
             text-decoration: none;
             cursor: pointer;
             transition: opacity 0.2s ease;
@@ -284,9 +334,10 @@
             max-width: 1200px;
             width: 100%;
             margin: 0 auto;
-            padding: 160px 6% 120px;
+            padding: 110px 6% 120px;
             position: relative;
             z-index: 1;
+            transform: translateY(-20px); /* Slightly shifted up to balance bottom padding */
         }
 
         .hero::before {
@@ -365,19 +416,50 @@
             margin-bottom: 24px;
         }
 
+        #role-spinner {
+            display: inline-block;
+            font-weight: 500;
+            color: #fff;
+            position: relative;
+            letter-spacing: 0.05em;
+        }
+
+        .spinning-char {
+            display: inline-block;
+            min-width: 0.3em;
+            margin-right: 0.05em; /* Prevent letters from squishing together */
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+            animation: letter-spin 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
+        }
+
+        @keyframes letter-spin {
+            0% {
+                transform: rotateX(-360deg);
+                opacity: 0.3;
+                filter: blur(1px);
+            }
+            100% {
+                transform: rotateX(0deg);
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
         .hero-subtitle {
-            font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+            font-size: clamp(0.95rem, 2vw, 1.10rem);
             color: var(--text-muted);
-            max-width: 560px;
+            max-width: 580px;
             line-height: 1.6;
-            margin-bottom: 50px;
+            margin-bottom: 24px;
             font-weight: 400;
+            margin-top: 20px;
         }
 
         .hero-stats {
             display: flex;
             gap: 0;
-            margin-top: 20px;
+            margin-top: 0;
             align-items: center;
         }
 
@@ -2324,16 +2406,6 @@
             overflow: hidden;
         }
 
-        .cinema-section::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.03; /* SVG grain noise overlay */
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            border-radius: 24px;
-        }
 
         .cinema-header {
             text-align: center;
@@ -2540,6 +2612,9 @@
     <div class="orb orb-3"></div>
     <div class="noise"></div>
 
+    <!-- Floating Pill Navigation Trigger Line -->
+    <div class="nav-trigger-line" id="navTriggerLine"></div>
+
     <!-- Floating Pill Navigation -->
     <nav>
         <div class="nav-container" id="navContainer">
@@ -2572,7 +2647,7 @@
                 Chauhan
             </h1>
             <div class="tagline reveal">
-                Social media manager & content creator based in Ahmedabad.
+                <span id="role-spinner">Social Media Manager</span>
             </div>
             <p class="hero-subtitle reveal">
                 I run social for 8 brands at Credes Techlabs. I edit video, write copy, and fix campaigns when they break at 11 PM. I turn raw brand briefs into highly engaged digital communities and content that people actually share.
@@ -2580,17 +2655,17 @@
             <div class="hero-stats reveal">
                 <div class="stat stat-featured">
                     <span class="stat-value">34+</span>
-                    <span class="stat-label">Brands Managed</span>
+                    <span class="stat-label">Brands & Campaigns</span>
                 </div>
                 <div class="stats-divider"></div>
                 <div class="stats-secondary">
                     <div class="stat stat-minor">
                         <span class="stat-value-minor">3+</span>
-                        <span class="stat-label">Years Experience</span>
+                        <span class="stat-label">Years SMM & Filmmaking</span>
                     </div>
                     <div class="stat stat-minor">
                         <span class="stat-value-minor">1.5K+</span>
-                        <span class="stat-label">Assets Delivered</span>
+                        <span class="stat-label">Assets & Film Cuts</span>
                     </div>
                 </div>
             </div>
@@ -2613,15 +2688,19 @@
             </div>
             <div class="about-text reveal">
                 <p>
-                    Experienced <strong>Social Media and Content Specialist</strong> with over two years dedicated to driving online engagement and community growth. Also competent in frontend web development to deliver complete brand showcases.
+                    Experienced <strong>Social Media and Content Specialist and AI Filmmaker</strong> with over two years driving online engagement and community growth. Competent in frontend web development, I merge content creation with custom web design to deliver complete brand showcases.
                 </p>
                 <p>
-                    Adept at developing strategies to maximize visibility for <strong>marketing, organizational, and esports campaigns</strong>. Proficient in merging content creation with custom web design to produce high-impact promotional funnels.
+                    Through my <strong>AI Cinema Lab</strong> work, I combine historical research, cinematic shot planning, and tools like Midjourney, Veo, Luma Dream Machine, and ElevenLabs to produce films that feel human because they are directed by one, maximizing visibility for marketing, organizational, and esports campaigns.
                 </p>
                 <p>
-                    Currently pursuing <strong>B.E. in Electronics &amp; Communication</strong> at GEC Gandhinagar, while leading social media operations and custom web initiatives at Credes Techlabs.
+                    Currently pursuing a <strong>B.E. in Electronics &amp; Communication</strong> at GEC Gandhinagar, while leading social media operations and custom web initiatives at Credes Techlabs.
                 </p>
                 <div class="about-tags">
+                    <span class="tag">AI Filmmaking</span>
+                    <span class="tag">Generative Content</span>
+                    <span class="tag">Cinematic Prompt Engineering</span>
+                    <span class="tag">Neural Audio Design</span>
                     <span class="tag">Social Media Strategy</span>
                     <span class="tag">Content Creation</span>
                     <span class="tag">Video Production</span>
@@ -2642,7 +2721,7 @@
         </div>
         <div class="timeline">
             <!-- Gujarat Tigers: extra top gap below, thumbnail preview -->
-            <div class="timeline-item reveal" style="--tl-gap: 88px;">
+            <div class="timeline-item reveal">
                 <div class="timeline-header">
                     <div class="timeline-date">Aug 2023 — Feb 2025</div>
                 </div>
@@ -2658,7 +2737,7 @@
             </div>
 
             <!-- Finanvo: tight gap — short contract -->
-            <div class="timeline-item reveal" style="--tl-gap: 42px;">
+            <div class="timeline-item reveal">
                 <div class="timeline-header">
                     <div class="timeline-date">Feb 2025 — Mar 2025</div>
                 </div>
@@ -2675,7 +2754,7 @@
             </div>
 
             <!-- ESFI -->
-            <div class="timeline-item reveal" style="--tl-gap: 80px;">
+            <div class="timeline-item reveal">
                 <div class="timeline-header">
                     <div class="timeline-date">Jul 2025 — Sep 2025</div>
                 </div>
@@ -2692,7 +2771,7 @@
             </div>
 
             <!-- White Horse Media: compact, brief -->
-            <div class="timeline-item reveal" style="--tl-gap: 48px;">
+            <div class="timeline-item reveal">
                 <div class="timeline-header">
                     <div class="timeline-date">Nov 2025 — Dec 2025</div>
                 </div>
@@ -2794,7 +2873,7 @@
             <div class="skills-stage" id="skillsStage">
 
                 <!-- Slide 1 -->
-                <div class="skill-slide active" data-num="01 / 06"
+                <div class="skill-slide active" data-num="01 / 08"
                      style="--slide-accent: linear-gradient(180deg,#5C3AED,#B3B0FF);">
                     <span class="slide-watermark">01</span>
                     <span class="slide-icon">
@@ -2814,7 +2893,7 @@
                 </div>
 
                 <!-- Slide 2 -->
-                <div class="skill-slide" data-num="02 / 06"
+                <div class="skill-slide" data-num="02 / 08"
                      style="--slide-accent: linear-gradient(180deg,#5C3AED,#B3B0FF);">
                     <span class="slide-watermark">02</span>
                     <span class="slide-icon">
@@ -2825,17 +2904,20 @@
                                     <stop offset="100%" stop-color="#B3B0FF" />
                                 </linearGradient>
                             </defs>
-                            <path d="M2 18V9c0-1.1.9-2 2-2h16c1.1 0 2 .9 2 2v9c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2z" stroke="url(#grad-slide-2)" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
-                            <path d="M22 7l-3-3H5L2 7" stroke="url(#grad-slide-2)" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
-                            <path d="M2 7h20M6 4l3 3M11 4l3 3M16 4l3 3" stroke="url(#grad-slide-2)" stroke-width="1.8" stroke-linecap="round"/>
+                            <circle cx="12" cy="12" r="9" stroke="url(#grad-slide-2)" stroke-width="1.8" fill="none"/>
+                            <circle cx="12" cy="12" r="3" stroke="url(#grad-slide-2)" stroke-width="1.8" fill="none"/>
+                            <circle cx="12" cy="7" r="1.5" fill="url(#grad-slide-2)"/>
+                            <circle cx="12" cy="17" r="1.5" fill="url(#grad-slide-2)"/>
+                            <circle cx="7" cy="12" r="1.5" fill="url(#grad-slide-2)"/>
+                            <circle cx="17" cy="12" r="1.5" fill="url(#grad-slide-2)"/>
                         </svg>
                     </span>
-                    <div class="slide-name gradient-text">Video<br>Production</div>
-                    <div class="slide-desc">Premiere Pro, CapCut, Alight Motion. From short-form reels to long-form event coverage and cinematic promos.</div>
+                    <div class="slide-name gradient-text">AI Filmmaking &amp;<br>Generative Content</div>
+                    <div class="slide-desc">Directing AI-generated brand films, historical micro-dramas, and luxury automotive showcases. Proficient in Midjourney, Veo, Luma Dream Machine, Higgsfield AI, ElevenLabs, and Suno AI for full cinematic pipelines.</div>
                 </div>
 
                 <!-- Slide 3 -->
-                <div class="skill-slide" data-num="03 / 06"
+                <div class="skill-slide" data-num="03 / 08"
                      style="--slide-accent: linear-gradient(180deg,#5C3AED,#B3B0FF);">
                     <span class="slide-watermark">03</span>
                     <span class="slide-icon">
@@ -2846,19 +2928,21 @@
                                     <stop offset="100%" stop-color="#B3B0FF" />
                                 </linearGradient>
                             </defs>
-                            <path d="M12 22C17.5 22 22 17.5 22 12S17.5 2 12 2 2 6.5 2 12c0 1.93 1.57 3.5 3.5 3.5H7c.55 0 1 .45 1 1v1.5c0 2.2 1.8 4 4 4z" stroke="url(#grad-slide-3)" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
-                            <circle cx="7.5" cy="10.5" r="1.2" fill="url(#grad-slide-3)"/>
-                            <circle cx="11.5" cy="7.5" r="1.2" fill="url(#grad-slide-3)"/>
-                            <circle cx="16.5" cy="9.5" r="1.2" fill="url(#grad-slide-3)"/>
-                            <circle cx="15.5" cy="14.5" r="1.2" fill="url(#grad-slide-3)"/>
+                            <rect x="2" y="4" width="20" height="16" rx="2" ry="2" stroke="url(#grad-slide-3)" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+                            <path d="M2 8h20" stroke="url(#grad-slide-3)" stroke-width="1.8" stroke-linecap="round"/>
+                            <circle cx="5" cy="6" r="1" fill="url(#grad-slide-3)"/>
+                            <circle cx="8" cy="6" r="1" fill="url(#grad-slide-3)"/>
+                            <circle cx="11" cy="6" r="1" fill="url(#grad-slide-3)"/>
+                            <path d="M6 11l3 3-3 3" stroke="url(#grad-slide-3)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M11 16h5" stroke="url(#grad-slide-3)" stroke-width="1.8" stroke-linecap="round"/>
                         </svg>
                     </span>
-                    <div class="slide-name gradient-text">Graphic<br>Design</div>
-                    <div class="slide-desc">Photoshop and Canva. Brand systems, social assets, pitch decks, thumbnails, and marketing collateral.</div>
+                    <div class="slide-name gradient-text">Web Design &amp;<br>Development</div>
+                    <div class="slide-desc">Building high-performance, conversion-oriented websites and custom web funnels using HTML5, CSS3, Vanilla JS, and modern frontend deployment.</div>
                 </div>
 
                 <!-- Slide 4 -->
-                <div class="skill-slide" data-num="04 / 06"
+                <div class="skill-slide" data-num="04 / 08"
                      style="--slide-accent: linear-gradient(180deg,#5C3AED,#B3B0FF);">
                     <span class="slide-watermark">04</span>
                     <span class="slide-icon">
@@ -2869,16 +2953,17 @@
                                     <stop offset="100%" stop-color="#B3B0FF" />
                                 </linearGradient>
                             </defs>
-                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="url(#grad-slide-4)" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
-                            <circle cx="12" cy="13" r="4" stroke="url(#grad-slide-4)" stroke-width="1.8" fill="none"/>
+                            <path d="M2 18V9c0-1.1.9-2 2-2h16c1.1 0 2 .9 2 2v9c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2z" stroke="url(#grad-slide-4)" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+                            <path d="M22 7l-3-3H5L2 7" stroke="url(#grad-slide-4)" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+                            <path d="M2 7h20M6 4l3 3M11 4l3 3M16 4l3 3" stroke="url(#grad-slide-4)" stroke-width="1.8" stroke-linecap="round"/>
                         </svg>
                     </span>
-                    <div class="slide-name gradient-text">Photography &amp;<br>Videography</div>
-                    <div class="slide-desc">On-ground event coverage, product shoots, cinematic B-roll, and documentary-style storytelling.</div>
+                    <div class="slide-name gradient-text">Video<br>Production</div>
+                    <div class="slide-desc">Premiere Pro, CapCut, Alight Motion. From short-form reels to long-form event coverage and cinematic promos.</div>
                 </div>
 
                 <!-- Slide 5 -->
-                <div class="skill-slide" data-num="05 / 06"
+                <div class="skill-slide" data-num="05 / 08"
                      style="--slide-accent: linear-gradient(180deg,#5C3AED,#B3B0FF);">
                     <span class="slide-watermark">05</span>
                     <span class="slide-icon">
@@ -2889,18 +2974,19 @@
                                     <stop offset="100%" stop-color="#B3B0FF" />
                                 </linearGradient>
                             </defs>
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="url(#grad-slide-5)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-                            <circle cx="9" cy="7" r="4" stroke="url(#grad-slide-5)" stroke-width="1.8" fill="none"/>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke="url(#grad-slide-5)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="url(#grad-slide-5)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                            <path d="M12 22C17.5 22 22 17.5 22 12S17.5 2 12 2 2 6.5 2 12c0 1.93 1.57 3.5 3.5 3.5H7c.55 0 1 .45 1 1v1.5c0 2.2 1.8 4 4 4z" stroke="url(#grad-slide-5)" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+                            <circle cx="7.5" cy="10.5" r="1.2" fill="url(#grad-slide-5)"/>
+                            <circle cx="11.5" cy="7.5" r="1.2" fill="url(#grad-slide-5)"/>
+                            <circle cx="16.5" cy="9.5" r="1.2" fill="url(#grad-slide-5)"/>
+                            <circle cx="15.5" cy="14.5" r="1.2" fill="url(#grad-slide-5)"/>
                         </svg>
                     </span>
-                    <div class="slide-name gradient-text">Community<br>Engagement</div>
-                    <div class="slide-desc">Discord/Telegram management, influencer coordination, and building loyal audiences through authentic engagement.</div>
+                    <div class="slide-name gradient-text">Graphic<br>Design</div>
+                    <div class="slide-desc">Photoshop and Canva. Brand systems, social assets, pitch decks, thumbnails, and marketing collateral.</div>
                 </div>
 
                 <!-- Slide 6 -->
-                <div class="skill-slide" data-num="06 / 06"
+                <div class="skill-slide" data-num="06 / 08"
                      style="--slide-accent: linear-gradient(180deg,#5C3AED,#B3B0FF);">
                     <span class="slide-watermark">06</span>
                     <span class="slide-icon">
@@ -2911,16 +2997,59 @@
                                     <stop offset="100%" stop-color="#B3B0FF" />
                                 </linearGradient>
                             </defs>
-                            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" stroke="url(#grad-slide-6)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" stroke="url(#grad-slide-6)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M4 22h16" stroke="url(#grad-slide-6)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-                            <path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5c-.55 0-1-.45-1-1v-2.34" stroke="url(#grad-slide-6)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 2a15 15 0 0 1 6 12H6a15 15 0 0 1 6-12z" stroke="url(#grad-slide-6)" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="url(#grad-slide-6)" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+                            <circle cx="12" cy="13" r="4" stroke="url(#grad-slide-6)" stroke-width="1.8" fill="none"/>
+                        </svg>
+                    </span>
+                    <div class="slide-name gradient-text">Photography &amp;<br>Videography</div>
+                    <div class="slide-desc">On-ground event coverage, product shoots, cinematic B-roll, and documentary-style storytelling.</div>
+                </div>
+
+                <!-- Slide 7 -->
+                <div class="skill-slide" data-num="07 / 08"
+                     style="--slide-accent: linear-gradient(180deg,#5C3AED,#B3B0FF);">
+                    <span class="slide-watermark">07</span>
+                    <span class="slide-icon">
+                        <svg viewBox="0 0 24 24">
+                            <defs>
+                                <linearGradient id="grad-slide-7" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#5C3AED" />
+                                    <stop offset="100%" stop-color="#B3B0FF" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="url(#grad-slide-7)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                            <circle cx="9" cy="7" r="4" stroke="url(#grad-slide-7)" stroke-width="1.8" fill="none"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke="url(#grad-slide-7)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="url(#grad-slide-7)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                        </svg>
+                    </span>
+                    <div class="slide-name gradient-text">Community<br>Engagement</div>
+                    <div class="slide-desc">Discord/Telegram management, influencer coordination, and building loyal audiences through authentic engagement.</div>
+                </div>
+
+                <!-- Slide 8 -->
+                <div class="skill-slide" data-num="08 / 08"
+                     style="--slide-accent: linear-gradient(180deg,#5C3AED,#B3B0FF);">
+                    <span class="slide-watermark">08</span>
+                    <span class="slide-icon">
+                        <svg viewBox="0 0 24 24">
+                            <defs>
+                                <linearGradient id="grad-slide-8" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#5C3AED" />
+                                    <stop offset="100%" stop-color="#B3B0FF" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" stroke="url(#grad-slide-8)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" stroke="url(#grad-slide-8)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M4 22h16" stroke="url(#grad-slide-8)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                            <path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5c-.55 0-1-.45-1-1v-2.34" stroke="url(#grad-slide-8)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 2a15 15 0 0 1 6 12H6a15 15 0 0 1 6-12z" stroke="url(#grad-slide-8)" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
                         </svg>
                     </span>
                     <div class="slide-name gradient-text">Esports<br>Operations</div>
                     <div class="slide-desc">League ops, talent management, broadcast graphics, tournament logistics, and live production support.</div>
                 </div>
+
 
             </div><!-- /skills-stage -->
 
@@ -2932,6 +3061,8 @@
                 <span class="skills-dot" data-dot="3"></span>
                 <span class="skills-dot" data-dot="4"></span>
                 <span class="skills-dot" data-dot="5"></span>
+                <span class="skills-dot" data-dot="6"></span>
+                <span class="skills-dot" data-dot="7"></span>
             </div>
 
         </div><!-- /skills-carousel -->
@@ -3424,6 +3555,143 @@
     </div>
 
     <script>
+        // ─── Tagline Text Spinner ───
+        (function() {
+            const spinnerEl = document.getElementById('role-spinner');
+            if (!spinnerEl) return;
+
+            const roles = [
+                "Social Media Manager",
+                "AI Filmmaker",
+                "Generative Content Creator",
+                "Web Designer & Developer"
+            ];
+            
+            const chars = "XYZ!@#$%&*?+-=";
+            let currentWordIndex = 0;
+
+            function animateWord(word, shouldScramble) {
+                spinnerEl.innerHTML = '';
+                const letters = word.split('');
+                
+                letters.forEach((char, idx) => {
+                    const span = document.createElement('span');
+                    span.className = 'spinning-char';
+                    span.style.animationDelay = `${idx * 25}ms`;
+                    
+                    if (char === ' ') {
+                        span.innerHTML = '&nbsp;';
+                    } else {
+                        span.innerText = char;
+                    }
+                    
+                    spinnerEl.appendChild(span);
+                    
+                    if (shouldScramble && char !== ' ') {
+                        scrambleCharacter(span, char, idx);
+                    }
+                });
+            }
+
+            function scrambleCharacter(span, finalChar, index) {
+                const duration = 300 + (index * 30); // staggered stop times
+                const startTime = performance.now();
+                
+                function tick(now) {
+                    const elapsed = now - startTime;
+                    if (elapsed < duration) {
+                        span.innerText = chars[Math.floor(Math.random() * chars.length)];
+                        requestAnimationFrame(tick);
+                    } else {
+                        span.innerText = finalChar;
+                    }
+                }
+                requestAnimationFrame(tick);
+            }
+
+            function startSpinner() {
+                // Initialize first word without scramble
+                animateWord(roles[0], false);
+                
+                // Start looping
+                setInterval(() => {
+                    currentWordIndex = (currentWordIndex + 1) % roles.length;
+                    animateWord(roles[currentWordIndex], true);
+                }, 3500);
+            }
+
+            // Start spinner when page is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', startSpinner);
+            } else {
+                startSpinner();
+            }
+        })();
+
+        // ─── Navbar Scroll Fade-In & Hover Trigger ───
+        (function() {
+            const nav = document.querySelector('nav');
+            const trigger = document.getElementById('navTriggerLine');
+            if (!nav || !trigger) return;
+
+            let hoverTimeout;
+            let isOverTrigger = false;
+            let isOverNav = false;
+
+            function checkScroll() {
+                if (window.scrollY > 250) {
+                    nav.classList.add('nav-visible');
+                    trigger.classList.add('hidden');
+                    trigger.style.pointerEvents = 'none';
+                } else {
+                    nav.classList.remove('nav-visible');
+                    trigger.style.pointerEvents = 'auto';
+                    if (!isOverTrigger && !isOverNav) {
+                        trigger.classList.remove('hidden');
+                    }
+                }
+            }
+
+            function updateVisibility() {
+                clearTimeout(hoverTimeout);
+                if (isOverTrigger || isOverNav) {
+                    nav.classList.add('nav-hover-active');
+                    trigger.classList.add('hidden');
+                } else {
+                    hoverTimeout = setTimeout(() => {
+                        nav.classList.remove('nav-hover-active');
+                        if (!nav.classList.contains('nav-visible')) {
+                            trigger.classList.remove('hidden');
+                        }
+                    }, 400);
+                }
+            }
+
+            // Scroll listener
+            window.addEventListener('scroll', checkScroll);
+            checkScroll();
+
+            // Hover listeners for trigger
+            trigger.addEventListener('mouseenter', () => {
+                isOverTrigger = true;
+                updateVisibility();
+            });
+            trigger.addEventListener('mouseleave', () => {
+                isOverTrigger = false;
+                updateVisibility();
+            });
+
+            // Hover listeners for nav
+            nav.addEventListener('mouseenter', () => {
+                isOverNav = true;
+                updateVisibility();
+            });
+            nav.addEventListener('mouseleave', () => {
+                isOverNav = false;
+                updateVisibility();
+            });
+        })();
+
         // Custom Alert Functionality (Replaces standard browser alert)
         function showCustomAlert(message) {
             const alertBox = document.getElementById('customAlert');
